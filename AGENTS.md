@@ -57,6 +57,8 @@ Không đưa API key, mật khẩu, dữ liệu khách hàng thật vào workspa
 | Tuyển dụng | 22/09/2026 | Bộ 5 slide tiếng Anh Vinamilk SC Ops Intern 2026: xuất bản PPTX, PDF Vector 16:9 & HTML Deck | Vinamilk_Supply_Chain_Operations_PhamMinhHoang.pptx, .pdf, pdca-log.md #21 |
 | Thực hành | 28/09/2026 | Kết xuất Biểu đồ Phân tích Cơ cấu Sản phẩm C.P. (Singapore, EU, China): 300 DPI PNG, SVG Vector, Excel Clustered Column Chart | CP_Product_Mix_Singapore_EU_China.xlsx, .png, pdca-log.md #22 |
 | Chuyên đề BĐS | 30/09/2026 | Đóng gói Skill real-estate:lead-scoring & Web App Streamlit st.data_editor (Human-in-the-loop, AI Scoring Agent) | lead_scoring_skill.md, app_lead_scoring.py, pdca-log.md #23 |
+| Nâng cấp BĐS | 30/09/2026 | Nâng cấp Web App Streamlit v2.0 Pro (5 Tabs, BI Analytics Altair, Export Excel openpyxl, Call/Zalo) & Đồng bộ Git | app_lead_scoring.py, requirements.txt, pdca-log.md #24 |
+
 
 
 

@@ -1,52 +1,58 @@
 """
 =============================================================================
-HỆ THỐNG CHẤM ĐIỂM & PHÂN LOẠI KHÁCH HÀNG BẤT ĐỘNG SẢN (LEAD SCORING AI)
+HỆ THỐNG CHẤM ĐIỂM & PHÂN LOẠI KHÁCH HÀNG BẤT ĐỘNG SẢN (AI LEAD SCORING v2.0)
 Phát triển bởi: Phạm Minh Hoàng (AI4A - Antigravity)
 Dựa trên:
   1. Skill: real-estate:lead-scoring (SKILL.md & lead_scoring_skill.md)
   2. Quy chuẩn tiêu chí: knowledge-base/tieu_chi_cham_diem.txt
-  3. CSDL Khách hàng BĐS: Google Sheets 500+ Leads
+  3. Dữ liệu: khach_hang_bds_500.xlsx (hoặc Google Sheets 500 Leads)
 =============================================================================
 """
 
+import os
 import re
 import io
 import time
+from datetime import datetime
+import openpyxl
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
 import pandas as pd
+import altair as alt
 import streamlit as st
 
 # ---------------------------------------------------------------------------
-# CẤU HÌNH TRANG STREAMLIT
+# 1. CẤU HÌNH TRANG STREAMLIT & GIAO DIỆN
 # ---------------------------------------------------------------------------
 st.set_page_config(
-    page_title="AI Lead Scoring BĐS | Human-In-The-Loop",
+    page_title="AI Lead Scoring BĐS Pro | Quản Trị Khách Hàng Tiềm Năng",
     page_icon="🏢",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS cho phong cách Modern Enterprise UI
+# Custom CSS cho phong cách Modern Enterprise UI & Glassmorphism
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
     .main-header {
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        padding: 24px 28px;
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+        padding: 22px 28px;
         border-radius: 12px;
         color: #F8FAFC;
-        margin-bottom: 24px;
-        border-left: 6px solid #3B82F6;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        border-left: 6px solid #2563EB;
+        box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.12);
     }
     
     .kpi-card {
         background: #FFFFFF;
-        padding: 18px 20px;
+        padding: 16px 18px;
         border-radius: 10px;
         border: 1px solid #E2E8F0;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -55,200 +61,249 @@ st.markdown("""
     }
     .kpi-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08);
     }
     .kpi-title {
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 600;
         text-transform: uppercase;
         color: #64748B;
         letter-spacing: 0.5px;
     }
     .kpi-value {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
         font-weight: 700;
-        margin-top: 6px;
+        margin-top: 4px;
         color: #0F172A;
     }
     .kpi-sub {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         color: #94A3B8;
-        margin-top: 4px;
+        margin-top: 3px;
     }
     
     .handoff-box {
-        background: #F8FAFC;
-        border: 1px solid #CBD5E1;
-        border-radius: 10px;
-        padding: 20px;
-        margin-top: 15px;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 22px 26px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        margin-top: 10px;
     }
     
     .tag-hot {
         background-color: #FEE2E2;
         color: #DC2626;
-        padding: 3px 8px;
+        padding: 4px 10px;
         border-radius: 6px;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border: 1px solid #FCA5A5;
+        display: inline-block;
     }
     .tag-warm {
         background-color: #FEF3C7;
         color: #D97706;
-        padding: 3px 8px;
+        padding: 4px 10px;
         border-radius: 6px;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border: 1px solid #FCD34D;
+        display: inline-block;
     }
     .tag-cold {
         background-color: #F1F5F9;
-        color: #64748B;
-        padding: 3px 8px;
+        color: #475569;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border: 1px solid #CBD5E1;
+        display: inline-block;
+    }
+    
+    .quick-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
         border-radius: 6px;
         font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        margin-right: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
-# LOGIC AI SCORING ENGINE (DỰA TRÊN SKILL & TIEU_CHI_CHAM_DIEM.TXT)
+# 2. LOGIC AI LEAD SCORING ENGINE (THEO TIEU_CHI_CHAM_DIEM.TXT & SKILL)
 # ---------------------------------------------------------------------------
-def ai_score_lead(description: str, name: str = "", phone: str = "") -> dict:
+def ai_score_lead(description: str, name: str = "", phone: str = "", hot_threshold: int = 80, warm_threshold: int = 50) -> dict:
     """
-    Agentic Heuristic Lead Scoring Engine cho Bất Động Sản:
+    AI Lead Scoring Engine cho Bất Động Sản:
     Quét mô tả khách hàng theo 5 tiêu chí:
-      1. Ngân sách & Năng lực tài chính (0-30đ) + VIP/Phạt
-      2. Mức độ quan tâm & Khớp nhu cầu (0-25đ)
-      3. Thời gian & Tính cấp thiết (0-20đ)
-      4. Nguồn khách & Độ tin cậy (0-15đ)
-      5. Mức độ tương tác & Thiện chí (0-10đ)
-    Đồng thời áp dụng chuẩn:
-      - TIÊU CHÍ CỘNG 50 ĐIỂM (VIP / SIÊU TIỀM NĂNG)
-      - TIÊU CHÍ TRỪ 50 ĐIỂM (RÁC / KHÔNG TIỀM NĂNG)
+      1. Ngân sách & Năng lực tài chính (Budget: 0-30đ)
+      2. Mức độ quan tâm & Độ khớp nhu cầu (Need & Product Fit: 0-25đ)
+      3. Thời gian mua & Tính cấp thiết (Timeline & Urgency: 0-20đ)
+      4. Nguồn khách & Độ tin cậy (Lead Source: 0-15đ)
+      5. Mức độ tương tác & Thiện chí (Engagement: 0-10đ)
+    
+    Tích hợp chính xác 2 nhóm tiêu chí đặc thù từ tieu_chi_cham_diem.txt:
+      - TIÊU CHÍ CỘNG 50 ĐIỂM (VIP / SIÊU TIỀM NĂNG):
+        + Ngân sách lớn: cụ thể từ 20 tỷ trở lên hoặc "tài chính mạnh", "không thành vấn đề"
+        + Loại hình cao cấp: "Biệt thự đơn lập", "Penthouse", "Shophouse mặt đường lớn", "Quỹ đất công nghiệp", "Sàn văn phòng diện tích lớn"
+        + Vị trí đắc địa: "Quận 1", "Ven sông", "Vinhomes Ocean Park", "Phú Mỹ Hưng"
+        + Đối tượng: "Chủ doanh nghiệp", "Nhà đầu tư chuyên nghiệp", "Mua sỉ", "Mua số lượng lớn"
+        + Cấp thiết & Minh bạch: "Pháp lý chuẩn 100%", "Sổ hồng riêng", "Muốn gặp trực tiếp chủ đầu tư để đàm phán"
+      - TIÊU CHÍ TRỪ 50 ĐIỂM (RÁC / KHÔNG TIỀM NĂNG):
+        + Yêu cầu phi thực tế: giá thấp vô lý (nhà Q1 giá 1-2 tỷ, nhà trung tâm vài trăm triệu)
+        + Không có nhu cầu: "Nhầm số", "Không có nhu cầu", "Dữ liệu cũ", "Nhầm ngành"
+        + Khách hàng không thiện chí: "Hỏi giá cho vui", "Chưa có ý định mua", "Thái độ không hợp tác"
+        + Spam/Quảng cáo: "Bảo hiểm", "Vay vốn", "Mời chào dịch vụ"
+        + Thông tin liên lạc lỗi: "Thuê bao", "Gọi nhiều lần không bắt máy", "Không phản hồi Zalo"
     """
     if not isinstance(description, str) or not description.strip():
         return {
             "diem_so": 0,
-            "phan_loai": "❄️ COLD",
-            "ly_do_ai": "Mô tả rỗng hoặc không có dữ liệu",
-            "goi_y_sales": "Yêu cầu thu thập thêm thông tin từ khách",
-            "nhan_to_vip": [],
-            "nhan_to_rac": [],
+            "trang_thai": "COLD",
+            "ly_do_ai": "Mô tả trống hoặc không có thông tin nhu cầu",
+            "goi_y_sales": "Chưa có thông tin để tư vấn, cần thu thập thêm",
             "sla": "Chăm sóc tự động",
-            "trang_thai_duyet": "Chưa duyệt"
+            "tags": ["Trống"]
         }
 
     text = description.lower()
+    detected_tags = []
     
     # -----------------------------------------------------------------------
-    # 1. QUÉT DẤU HIỆU RÁC / TRỪ 50 ĐIỂM (JUNK & RED FLAGS)
+    # A. RÀ SOÁT TIÊU CHÍ TRỪ 50 ĐIỂM (KHÁCH HÀNG RÁC / KHÔNG TIỀM NĂNG)
     # -----------------------------------------------------------------------
     junk_reasons = []
     
-    # a. Không có nhu cầu / Dữ liệu cũ
-    if any(k in text for k in ["nhầm số", "không có nhu cầu", "dữ liệu cũ", "nhầm ngành", "lộn số"]):
-        junk_reasons.append("Báo nhầm số / không có nhu cầu BĐS / data trộn ngành")
+    # 1. Không có nhu cầu / dữ liệu cũ / nhầm số
+    if any(k in text for k in ["nhầm số", "không có nhu cầu", "dữ liệu cũ", "nhầm ngành", "lộn số", "không nhu cầu"]):
+        junk_reasons.append("Nhầm số / không có nhu cầu BĐS / data cũ trộn ngành")
+        detected_tags.append("Nhầm số/Không nhu cầu")
         
-    # b. Khách không thiện chí / Hỏi cho vui
-    if any(k in text for k in ["hỏi giá cho vui", "chưa có ý định mua", "thái độ không hợp tác", "không hợp tác"]):
-        junk_reasons.append("Hỏi giá cho vui / thái độ không hợp tác")
+    # 2. Khách không thiện chí / hỏi cho vui
+    if any(k in text for k in ["hỏi giá cho vui", "chưa có ý định mua", "thái độ không hợp tác", "không hợp tác", "cho vui"]):
+        junk_reasons.append("Hỏi giá cho vui / chưa có ý định mua / thái độ không hợp tác")
+        detected_tags.append("Hỏi cho vui")
         
-    # c. Spam / Quảng cáo ngược
+    # 3. Spam / quảng cáo dịch vụ khác
     if any(k in text for k in ["spam", "bảo hiểm", "vay vốn", "mời chào dịch vụ", "quảng cáo ngược"]):
-        junk_reasons.append("Spam chào bán dịch vụ khác / chào vay / bảo hiểm")
+        junk_reasons.append("Spam dịch vụ bảo hiểm / vay vốn / mời chào ngoài ngành")
+        detected_tags.append("Spam dịch vụ")
         
-    # d. Lỗi liên lạc nghiêm trọng
-    if any(k in text for k in ["thuê bao", "không bắt máy", "không phản hồi zalo", "không nghe máy"]):
-        junk_reasons.append("Số điện thoại thuê bao / gọi nhiều lần không nghe máy")
+    # 4. Lỗi liên lạc nghiêm trọng
+    if any(k in text for k in ["thuê bao", "không bắt máy", "không phản hồi zalo", "không nghe máy", "chặn số"]):
+        junk_reasons.append("Số thuê bao / gọi nhiều lần không bắt máy / không rep Zalo")
+        detected_tags.append("Lỗi liên lạc")
         
-    # e. Yêu cầu phi thực tế
+    # 5. Yêu cầu phi thực tế so với thị trường
     irrational_patterns = [
         r"nhà\s+q1\s+giá\s+1",
         r"nhà\s+quận\s+1\s+giá\s+1",
         r"quận\s+1\s+giá\s+1\s*[-–]?\s*2\s*tỷ",
         r"thuê.*nguyên\s+căn.*2\s*triệu.*trung\s+tâm",
         r"thuê.*2\s*triệu.*trung\s+tâm",
-        r"giá\s+thấp\s+vô\s+lý",
-        r"vài\s+trăm\s+triệu.*hồ\s+bơi"
+        r"vài\s+trăm\s+triệu.*hồ\s+bơi",
+        r"giá\s+thấp\s+vô\s+lý"
     ]
     for pat in irrational_patterns:
         if re.search(pat, text):
-            junk_reasons.append("Đòi hỏi mức giá phi thực tế so với thị trường")
+            junk_reasons.append("Yêu cầu giá phi thực tế (VD: Nhà Q1 giá 1-2 tỷ / Thuê TT 2 triệu)")
+            detected_tags.append("Giá phi thực tế")
             break
 
     # -----------------------------------------------------------------------
-    # 2. QUÉT DẤU HIỆU VIP / CỘNG 50 ĐIỂM (VIP ACCELERATOR)
+    # B. RÀ SOÁT TIÊU CHÍ CỘNG 50 ĐIỂM (KHÁCH HÀNG VIP / SIÊU TIỀM NĂNG)
     # -----------------------------------------------------------------------
     vip_reasons = []
     
-    # a. Ngân sách cực lớn / Không thành vấn đề
-    vip_budget_kw = ["trên 20 tỷ", "trên 30 tỷ", "20 tỷ", "30 tỷ", "50 tỷ", "tài chính cực mạnh", "tài chính mạnh", "không thành vấn đề", "thanh toán thẳng", "tiền mặt sẵn"]
+    # 1. Ngân sách lớn
+    vip_budget_kw = ["trên 20 tỷ", "trên 30 tỷ", "20 tỷ", "30 tỷ", "50 tỷ", "tài chính mạnh", "tài chính cực mạnh", "không thành vấn đề", "thanh toán thẳng", "tiền mặt sẵn"]
     if any(k in text for k in vip_budget_kw):
-        vip_reasons.append("Ngân sách lớn (≥20-30 tỷ / Thanh toán thẳng / Tài chính cực mạnh)")
+        vip_reasons.append("Ngân sách lớn ≥20-30 tỷ / tài chính mạnh / thanh toán thẳng")
+        detected_tags.append("Tài chính ≥20-30 tỷ")
         
-    # b. Loại hình sản phẩm cao cấp
+    # 2. Loại hình cao cấp
     vip_products = ["biệt thự đơn lập", "penthouse", "shophouse mặt đường lớn", "quỹ đất công nghiệp", "sàn văn phòng", "diện tích lớn", "2000m2", "hồ bơi riêng", "thang máy riêng"]
     if any(k in text for k in vip_products):
-        vip_reasons.append("Loại hình cao cấp (Biệt thự/Penthouse/Shophouse sỉ/Đất CN >2000m2)")
+        vip_reasons.append("Loại hình cao cấp (Biệt thự đơn lập / Penthouse / Shophouse / Đất CN >2000m2)")
+        detected_tags.append("Biệt thự/Penthouse/Đất CN")
         
-    # c. Vị trí đắc địa & Phân khu VIP
+    # 3. Vị trí đắc địa
     vip_locations = ["ven sông", "phân khu cao cấp nhất", "quận 1", "vinhomes ocean park", "phú mỹ hưng"]
     if any(k in text for k in vip_locations):
-        vip_reasons.append("Vị trí đắc địa (Ven sông/Quận 1/Phú Mỹ Hưng/Ocean Park)")
+        vip_reasons.append("Vị trí đắc địa (Ven sông / Quận 1 / Ocean Park / Phú Mỹ Hưng)")
+        detected_tags.append("Vị trí đắc địa")
         
-    # d. Đối tượng khách hàng VIP
-    vip_clients = ["chủ doanh nghiệp", "nhà đầu tư chuyên nghiệp", "mua sỉ", "gom sỉ", "5-10 căn"]
+    # 4. Đối tượng khách hàng VIP
+    vip_clients = ["chủ doanh nghiệp", "nhà đầu tư chuyên nghiệp", "mua sỉ", "mua số lượng lớn", "gom sỉ", "5-10 căn"]
     if any(k in text for k in vip_clients):
-        vip_reasons.append("Đối tượng VIP (Chủ doanh nghiệp/Nhà đầu tư gom sỉ)")
+        vip_reasons.append("Đối tượng VIP (Chủ doanh nghiệp / Nhà đầu tư gom sỉ)")
+        detected_tags.append("Chủ DN/Mua sỉ")
         
-    # e. Tính cấp thiết & Minh bạch cao
+    # 5. Tính cấp thiết & Minh bạch cao
     vip_urgency = ["pháp lý chuẩn 100%", "sổ hồng riêng", "gặp trực tiếp chủ đầu tư", "giám đốc dự án", "đã từng mua nhiều dự án"]
     if any(k in text for k in vip_urgency):
-        vip_reasons.append("Đòi hỏi pháp lý 100% / Muốn gặp CĐT / Khách quen tập đoàn")
+        vip_reasons.append("Pháp lý chuẩn 100% / Muốn gặp CĐT / Khách quen tập đoàn")
+        detected_tags.append("Pháp lý chuẩn/Gặp CĐT")
 
     # -----------------------------------------------------------------------
-    # 3. TÍNH ĐIỂM CHI TIẾT 5 TIÊU CHÍ (BASE 0 - 100 ĐIỂM)
+    # C. ĐÁNH GIÁ 5 TIÊU CHÍ CƠ SỞ (THANG 100 ĐIỂM)
     # -----------------------------------------------------------------------
-    # Tiêu chí 1: Ngân sách (0 - 30đ)
+    # 1. Ngân sách (0 - 30 điểm)
     p_budget = 10
     if vip_reasons:
         p_budget = 30
     elif any(k in text for k in ["8-10 tỷ", "8 đến 10 tỷ", "10 tỷ", "12 tỷ", "15 tỷ"]):
         p_budget = 25
+        detected_tags.append("8-15 tỷ")
     elif any(k in text for k in ["4-5 tỷ", "4 đến 5 tỷ", "5 tỷ", "6 tỷ", "7 tỷ"]):
         p_budget = 18
+        detected_tags.append("4-7 tỷ")
     elif any(k in text for k in ["2-3 tỷ", "2 đến 3 tỷ", "3 tỷ", "dưới 50 triệu/tháng", "50 triệu"]):
-        p_budget = 15
+        p_budget = 14
+        detected_tags.append("2-3 tỷ")
     elif junk_reasons:
         p_budget = 0
         
-    # Tiêu chí 2: Mức độ quan tâm / Độ khớp sản phẩm (0 - 25đ)
+    # 2. Mức độ quan tâm / Khớp nhu cầu (0 - 25 điểm)
     p_interest = 12
     if any(k in text for k in ["penthouse", "biệt thự", "shophouse", "sàn văn phòng", "đất công nghiệp"]):
         p_interest = 25
     elif any(k in text for k in ["căn hộ 2pn", "nhà phố liền kề", "mặt bằng kinh doanh spa", "đất nền vùng ven"]):
         p_interest = 20
+        detected_tags.append("Căn hộ/Nhà phố/Mặt bằng")
     elif any(k in text for k in ["cân nhắc giữa 2 dự án", "chính sách chiết khấu", "hỗ trợ vay ngân hàng"]):
         p_interest = 18
+        detected_tags.append("Vay ngân hàng/Cân nhắc")
         
-    # Tiêu chí 3: Thời gian mua & Tính cấp thiết (0 - 20đ)
+    # 3. Thời gian mua & Tính cấp thiết (0 - 20 điểm)
     p_timeline = 10
-    if any(k in text for k in ["cuối tuần này", "trong tuần", "ký hợp đồng dài hạn", "ngay", "muốn đi xem nhà mẫu"]):
+    if any(k in text for k in ["cuối tuần này", "trong tuần", "ký hợp đồng dài hạn", "ngay", "muốn đi xem nhà mẫu", "tháng này"]):
         p_timeline = 20
+        detected_tags.append("Xem nhà cuối tuần/Ký HĐ ngay")
     elif any(k in text for k in ["đầu tư dài hạn", "đang cân nhắc"]):
         p_timeline = 14
+        detected_tags.append("Đầu tư dài hạn")
     elif any(k in text for k in ["chưa có ý định", "cho vui"]):
         p_timeline = 0
         
-    # Tiêu chí 4: Nguồn khách (0 - 15đ)
+    # 4. Nguồn khách & Uy tín (0 - 15 điểm)
     p_source = 10
     if any(k in text for k in ["đã từng mua nhiều dự án", "khách quen", "chủ doanh nghiệp lớn"]):
         p_source = 15
-    elif any(k in text for k in ["đăng ký xem nhà mẫu", "spa tại quận 1"]):
+        detected_tags.append("Khách quen tập đoàn")
+    elif any(k in text for k in ["đăng ký xem nhà mẫu", "spa tại quận 1", "tìm thuê"]):
         p_source = 12
     elif any(k in text for k in ["dữ liệu cũ", "nhầm số"]):
         p_source = 0
         
-    # Tiêu chí 5: Tương tác & Thiện chí (0 - 10đ)
+    # 5. Mức độ tương tác (0 - 10 điểm)
     p_engagement = 8
     if any(k in text for k in ["muốn gặp trực tiếp", "muốn đi xem nhà mẫu", "yêu cầu"]):
         p_engagement = 10
@@ -258,130 +313,238 @@ def ai_score_lead(description: str, name: str = "", phone: str = "") -> dict:
     base_score = p_budget + p_interest + p_timeline + p_source + p_engagement
     
     # -----------------------------------------------------------------------
-    # 4. KẾT HỢP ĐIỂM THƯỞNG / PHẠT VÀ PHÂN LOẠI
+    # D. TỔNG HỢP ĐIỂM & GỢI Ý TRẠNG THÁI (HOT / WARM / COLD)
     # -----------------------------------------------------------------------
     total_score = base_score
     
     if junk_reasons:
-        # Áp dụng tiêu chí TRỪ 50 ĐIỂM
+        # Tiêu chí trừ 50 điểm
         total_score -= 50
-        total_score = max(0, min(total_score, 45))  # Khóa trần COLD
-        phan_loai = "❄️ COLD"
-        sla = "Chăm sóc tự động / Không phân Sales"
-        ly_do = f"⛔ Phát hiện dấu hiệu rác (-50đ): {'; '.join(junk_reasons)}"
+        total_score = max(0, min(total_score, 40))
+        trang_thai = "COLD"
+        ly_do = f"⛔ Trừ 50đ (Dấu hiệu rác/loại trừ): {'; '.join(junk_reasons)}"
         goi_y = "Loại bỏ khỏi danh sách gọi hàng ngày; đưa vào kịch bản nuôi dưỡng tự động hoặc Blacklist."
+        sla = "Chăm sóc tự động / Không phân Sales"
         
     elif vip_reasons:
-        # Áp dụng tiêu chí CỘNG 50 ĐIỂM
+        # Tiêu chí cộng 50 điểm
         total_score += 50
-        total_score = min(100, max(85, total_score))  # Đảm bảo phân khúc HOT VIP
-        phan_loai = "🔥 HOT"
-        sla = "≤ 15 Phút (Ưu tiên số 1)"
-        ly_do = f"🌟 Đạt tiêu chí Siêu VIP (+50đ): {'; '.join(vip_reasons)}"
-        goi_y = f"Bàn giao ngay cho Trưởng phòng/Top Sales gọi trong 15p. Chuẩn bị tài liệu VIP & hồ sơ pháp lý 100%."
+        total_score = min(100, max(85, total_score))
+        trang_thai = "HOT"
+        ly_do = f"🌟 Cộng 50đ (Khách VIP/Siêu tiềm năng): {'; '.join(vip_reasons)}"
+        goi_y = "Bàn giao ngay cho Trưởng phòng/Top Sales gọi trong vòng 15 phút. Chuẩn bị hồ sơ pháp lý & layout VIP."
+        sla = "≤ 15 Phút (Golden Speed to Lead)"
         
     else:
-        # Phân loại dựa trên điểm cơ sở
-        if total_score >= 80 or any(k in text for k in ["xem nhà mẫu vào cuối tuần này", "ký hợp đồng dài hạn"]):
-            total_score = min(100, max(80, total_score))
-            phan_loai = "🔥 HOT"
-            sla = "≤ 15-30 Phút"
+        # Điểm cơ sở
+        if total_score >= hot_threshold or any(k in text for k in ["xem nhà mẫu vào cuối tuần này", "ký hợp đồng dài hạn"]):
+            total_score = min(100, max(hot_threshold, total_score))
+            trang_thai = "HOT"
             ly_do = "Nhu cầu rõ ràng, thời gian cấp thiết (hẹn xem nhà cuối tuần/ký HĐ ngay)."
             goi_y = "Gọi điện xác nhận lịch hẹn xem nhà mẫu / sa bàn trong ngày hôm nay."
-        elif total_score >= 50:
-            phan_loai = "⚡ WARM"
-            sla = "≤ 2 - 4 Giờ"
+            sla = "≤ 15-30 Phút"
+        elif total_score >= warm_threshold:
+            trang_thai = "WARM"
             ly_do = "Có nhu cầu thực tế tầm trung, đang cân nhắc tài chính/chính sách chiết khấu."
             goi_y = "Gửi trọn bộ bảng giá, bảng tính dòng tiền ngân hàng qua Zalo và hẹn lịch tư vấn sâu."
+            sla = "≤ 2 - 4 Giờ"
         else:
-            phan_loai = "❄️ COLD"
-            sla = "Chăm sóc tự động"
+            trang_thai = "COLD"
             ly_do = "Nhu cầu chưa cụ thể hoặc thời gian mua dài hạn."
             goi_y = "Gửi bản tin thị trường định kỳ, chưa cần ưu tiên gọi trực tiếp."
+            sla = "Chăm sóc tự động"
 
     return {
         "diem_so": int(total_score),
-        "phan_loai": phan_loai,
+        "trang_thai": trang_thai,
         "ly_do_ai": ly_do,
         "goi_y_sales": goi_y,
-        "nhan_to_vip": vip_reasons,
-        "nhan_to_rac": junk_reasons,
         "sla": sla,
-        "trang_thai_duyet": "Chưa duyệt"
+        "tags": detected_tags if detected_tags else ["Khác"]
     }
 
 
 # ---------------------------------------------------------------------------
-# HÀM TẢI DỮ LIỆU TỪ GOOGLE SHEETS HOẶC LOCAL CACHE
+# 3. TẢI DỮ LIỆU TỪ EXCEL CỤC BỘ HOẶC GOOGLE SHEETS
 # ---------------------------------------------------------------------------
+LOCAL_FILE = "khach_hang_bds_500.xlsx"
 DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM/export?format=csv&gid=1542775777"
 
-@st.cache_data(show_spinner=False)
-def load_dataset(source_url: str):
-    """Tải dữ liệu từ URL Google Sheets CSV export"""
+def load_data(source_type="local", custom_url="", uploaded_file=None):
+    """Nạp dữ liệu từ file local, Google Sheets link hoặc uploaded file"""
+    df = None
     try:
-        df = pd.read_csv(source_url)
-        # Chuẩn hóa tên cột
-        df.columns = [c.strip().lower() for c in df.columns]
-        # Đảm bảo các cột cần thiết
-        if "id" not in df.columns:
-            df["id"] = range(1, len(df) + 1)
-        if "sdt" in df.columns:
-            df["sdt"] = df["sdt"].astype(str).str.replace(r"\.0$", "", regex=True)
-            # Thêm số 0 đầu nếu thiếu
-            df["sdt"] = df["sdt"].apply(lambda x: "0" + x if len(x) == 9 else x)
-        return df
+        if source_type == "local" and os.path.exists(LOCAL_FILE):
+            df = pd.read_excel(LOCAL_FILE)
+        elif source_type == "sheet" and custom_url:
+            if "export?format=csv" not in custom_url and "/edit" in custom_url:
+                custom_url = re.sub(r"/edit.*", "/export?format=csv&gid=1542775777", custom_url)
+            df = pd.read_csv(custom_url)
+        elif source_type == "upload" and uploaded_file is not None:
+            if uploaded_file.name.endswith(".xlsx"):
+                df = pd.read_excel(uploaded_file)
+            else:
+                df = pd.read_csv(uploaded_file)
+        elif os.path.exists(LOCAL_FILE):
+            df = pd.read_excel(LOCAL_FILE)
+            
+        if df is not None:
+            df.columns = [c.strip().lower() for c in df.columns]
+            if "id" not in df.columns:
+                df.insert(0, "id", range(1, len(df) + 1))
+            if "sdt" in df.columns:
+                df["sdt"] = df["sdt"].astype(str).str.replace(r"\.0$", "", regex=True)
+                df["sdt"] = df["sdt"].apply(lambda x: "0" + x if len(x) == 9 and not x.startswith("0") else x)
+            return df
     except Exception as e:
-        st.error(f"Lỗi tải dữ liệu từ Google Sheets: {e}")
-        # Dữ liệu fallback dự phòng nếu không có mạng
-        return pd.DataFrame([
-            {"id": 127, "ten_khach": "Bùi Phương Tâm", "sdt": "0790240040", "nhu_cau_mo_ta": "Khách hàng VIP, quan tâm biệt thự đơn lập phân khu cao cấp nhất. Ngân sách trên 30 tỷ, thanh toán thẳng. Yêu cầu vị trí ven sông, hướng Đông Nam."},
-            {"id": 28, "ten_khach": "Trần Hoàng Dũng", "sdt": "0943392982", "nhu_cau_mo_ta": "Chủ doanh nghiệp lớn, cần tìm quỹ đất công nghiệp hoặc sàn văn phòng diện tích trên 2000m2 tại khu Đông. Tài chính cực mạnh, yêu cầu pháp lý chuẩn 100%."},
-            {"id": 3, "ten_khach": "Lý Đức Cường", "sdt": "0953430096", "nhu_cau_mo_ta": "Quan tâm căn hộ 2PN tại Quận 7 cho gia đình trẻ. Tài chính khoảng 4-5 tỷ, cần hỗ trợ vay ngân hàng 70%. Muốn đi xem nhà mẫu vào cuối tuần này."},
-            {"id": 5, "ten_khach": "Ngô Anh Mai", "sdt": "0784760799", "nhu_cau_mo_ta": "Tìm nhà phố liền kề khu vực nội thành, ưu tiên gần trường học và bệnh viện. Ngân sách 8-10 tỷ. Đang cân nhắc giữa 2 dự án, cần tư vấn thêm về chính sách chiết khấu."},
-            {"id": 20, "ten_khach": "Hồ Phương Mai", "sdt": "0915805255", "nhu_cau_mo_ta": "Hỏi giá cho vui, chưa có ý định mua trong năm nay. Ngân sách rất thấp so với mặt bằng chung (đòi mua nhà Q1 giá 1 tỷ)."},
-            {"id": 70, "ten_khach": "Hồ Đức Lan", "sdt": "0991102318", "nhu_cau_mo_ta": "Spam, gọi điện đến chỉ để quảng cáo ngược lại dịch vụ bảo hiểm."},
-            {"id": 7, "ten_khach": "Đặng Hoàng Dũng", "sdt": "0953795436", "nhu_cau_mo_ta": "Số điện thoại hay bị thuê bao, gọi nhiều lần không bắt máy. Nhắn tin Zalo không phản hồi."},
-            {"id": 1, "ten_khach": "Phan Văn Hoa", "sdt": "0894782782", "nhu_cau_mo_ta": "Đang tìm thuê mặt bằng kinh doanh spa tại Quận 1, diện tích khoảng 80-100m2. Giá thuê mong muốn dưới 50 triệu/tháng. Cần ký hợp đồng dài hạn."}
-        ])
+        st.error(f"Lỗi đọc dữ liệu: {e}")
+        
+    return pd.DataFrame([
+        {"id": 1, "ten_khach": "Bùi Phương Tâm", "sdt": "0790240040", "nhu_cau_mo_ta": "Khách hàng VIP, quan tâm biệt thự đơn lập phân khu cao cấp nhất. Ngân sách trên 30 tỷ, thanh toán thẳng. Yêu cầu vị trí ven sông, hướng Đông Nam."},
+        {"id": 2, "ten_khach": "Hồ Hồng Linh", "sdt": "0915805255", "nhu_cau_mo_ta": "Khách hàng nhầm số, không có nhu cầu về bất động sản. Có vẻ là dữ liệu cũ."},
+        {"id": 3, "ten_khach": "Lý Đức Cường", "sdt": "0953430096", "nhu_cau_mo_ta": "Quan tâm căn hộ 2PN tại Quận 7 cho gia đình trẻ. Tài chính khoảng 4-5 tỷ, cần hỗ trợ vay ngân hàng 70%. Muốn đi xem nhà mẫu vào cuối tuần này."},
+        {"id": 4, "ten_khach": "Lê Anh Lan", "sdt": "0914842426", "nhu_cau_mo_ta": "Khách hàng tìm mua Penthouse diện tích lớn, yêu cầu có hồ bơi riêng và sân vườn trên cao. Tài chính không thành vấn đề."},
+        {"id": 5, "ten_khach": "Ngô Anh Mai", "sdt": "0784760799", "nhu_cau_mo_ta": "Tìm nhà phố liền kề khu vực nội thành, ưu tiên gần trường học và bệnh viện. Ngân sách 8-10 tỷ. Đang cân nhắc giữa 2 dự án, cần tư vấn thêm về chính sách chiết khấu."}
+    ])
 
 
 # ---------------------------------------------------------------------------
-# KHỞI TẠO SESSION STATE
+# 4. HÀM TẠO FILE EXCEL LEADS_SCORED.XLSX ĐỊNH DẠNG DOANH NGHIỆP
+# ---------------------------------------------------------------------------
+def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
+    """Tạo workbook Excel định dạng sang trọng, chuẩn doanh nghiệp từ danh sách khách đã duyệt"""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Leads Đã Duyệt"
+    ws.views.sheetView[0].showGridLines = True
+
+    # Palette màu doanh nghiệp
+    navy_header = PatternFill(start_color="1E3A8A", end_color="1E3A8A", fill_type="solid")
+    font_header = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+    
+    font_body = Font(name="Calibri", size=10)
+    font_bold = Font(name="Calibri", size=10, bold=True)
+    
+    fill_hot = PatternFill(start_color="FEE2E2", end_color="FEE2E2", fill_type="solid")
+    font_hot = Font(name="Calibri", size=10, bold=True, color="DC2626")
+    
+    fill_warm = PatternFill(start_color="FEF3C7", end_color="FEF3C7", fill_type="solid")
+    font_warm = Font(name="Calibri", size=10, bold=True, color="D97706")
+    
+    fill_cold = PatternFill(start_color="F1F5F9", end_color="F1F5F9", fill_type="solid")
+    font_cold = Font(name="Calibri", size=10, color="475569")
+    
+    thin_side = Side(border_style="thin", color="D1D5DB")
+    border_all = Border(left=thin_side, right=thin_side, top=thin_side, bottom=thin_side)
+
+    # Tiêu đề bảng cột
+    columns = [
+        ("Mã KH", "id", 10, "center"),
+        ("Tên Khách Hàng", "ten_khach", 22, "left"),
+        ("Số Điện Thoại", "sdt", 16, "center"),
+        ("Điểm Số", "diem_so", 12, "center"),
+        ("Trạng Thái", "trang_thai", 15, "center"),
+        ("Đã Duyệt", "da_duyet", 12, "center"),
+        ("Lý Do AI Chấm Điểm", "ly_do_ai", 45, "left"),
+        ("Mô Tả Nhu Cầu Gốc", "nhu_cau_mo_ta", 50, "left"),
+        ("Ghi Chú Sales", "ghi_chu_sales", 25, "left")
+    ]
+
+    # Ghi header
+    for col_idx, (header_text, _, width, _) in enumerate(columns, 1):
+        cell = ws.cell(row=1, column=col_idx, value=header_text)
+        cell.font = font_header
+        cell.fill = navy_header
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        cell.border = border_all
+        ws.column_dimensions[get_column_letter(col_idx)].width = width
+
+    ws.row_dimensions[1].height = 28
+
+    # Ghi dữ liệu từng dòng
+    for row_idx, (_, row_data) in enumerate(approved_df.iterrows(), 2):
+        tier = str(row_data.get("trang_thai", "")).upper()
+        
+        for col_idx, (_, key, _, align) in enumerate(columns, 1):
+            val = row_data.get(key, "")
+            if key == "da_duyet":
+                val = "Đã duyệt" if val else "Chưa duyệt"
+            cell = ws.cell(row=row_idx, column=col_idx, value=val)
+            cell.font = font_body
+            cell.alignment = Alignment(horizontal=align, vertical="center", wrap_text=(key in ["ly_do_ai", "nhu_cau_mo_ta"]))
+            cell.border = border_all
+            
+            # Format riêng cột trạng thái
+            if key == "trang_thai":
+                if "HOT" in tier:
+                    cell.fill = fill_hot
+                    cell.font = font_hot
+                elif "WARM" in tier:
+                    cell.fill = fill_warm
+                    cell.font = font_warm
+                else:
+                    cell.fill = fill_cold
+                    cell.font = font_cold
+            elif key == "diem_so":
+                cell.font = font_bold
+                
+        ws.row_dimensions[row_idx].height = 24
+
+    # Xuất ra buffer bytes
+    buf = io.BytesIO()
+    wb.save(buf)
+    return buf.getvalue()
+
+
+# ---------------------------------------------------------------------------
+# 5. KHỞI TẠO VÀ ĐỒNG BỘ SESSION STATE
 # ---------------------------------------------------------------------------
 if "leads_df" not in st.session_state:
-    raw_df = load_dataset(DEFAULT_SHEET_URL)
+    initial_df = load_data(source_type="local")
     
-    # Khởi tạo các cột AI Scoring ban đầu nếu chưa có
-    if "diem_so" not in raw_df.columns:
-        raw_df["diem_so"] = 0
-        raw_df["phan_loai"] = "Chưa quét"
-        raw_df["trang_thai_duyet"] = "Chưa duyệt"
-        raw_df["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
-        raw_df["goi_y_sales"] = ""
-        raw_df["ghi_chu_sales"] = ""
+    # Khởi tạo các cột nghiệp vụ chuẩn
+    if "da_duyet" not in initial_df.columns:
+        initial_df.insert(0, "da_duyet", False)
+    if "diem_so" not in initial_df.columns:
+        initial_df["diem_so"] = 0
+    if "trang_thai" not in initial_df.columns:
+        initial_df["trang_thai"] = "COLD"
+    if "ly_do_ai" not in initial_df.columns:
+        initial_df["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
+    if "ghi_chu_sales" not in initial_df.columns:
+        initial_df["ghi_chu_sales"] = ""
         
-    st.session_state.leads_df = raw_df
-    st.session_state.has_scored = False
+    st.session_state.leads_df = initial_df
+    st.session_state.has_run_scoring = False
+
+if "hot_thresh" not in st.session_state:
+    st.session_state.hot_thresh = 80
+if "warm_thresh" not in st.session_state:
+    st.session_state.warm_thresh = 50
+if "auto_approve_hot" not in st.session_state:
+    st.session_state.auto_approve_hot = True
 
 
 # ---------------------------------------------------------------------------
-# GIAO DIỆN CHÍNH
+# 6. HEADER BANNER DOANH NGHIỆP
 # ---------------------------------------------------------------------------
-
-# Header Banner
 st.markdown("""
 <div class="main-header">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-            <h2 style="margin: 0; font-size: 1.6rem; font-weight: 700;">🏢 AI Lead Scoring BĐS — Human-In-The-Loop System</h2>
-            <p style="margin: 6px 0 0 0; color: #94A3B8; font-size: 0.95rem;">
-                Tự động hóa thẩm định khách hàng tiềm năng 5 tiêu chí (BANT-SE) kết hợp duyệt thủ công qua <code>st.data_editor</code>
+            <h2 style="margin: 0; font-size: 1.55rem; font-weight: 700; letter-spacing: -0.5px;">
+                🏢 AI Lead Scoring Bất Động Sản Pro — Enterprise Edition
+            </h2>
+            <p style="margin: 5px 0 0 0; color: #94A3B8; font-size: 0.92rem;">
+                Tự động thẩm định khách hàng 5 tiêu chí theo <code>tieu_chi_cham_diem.txt</code> • Phê duyệt Human-In-The-Loop qua <code>st.data_editor</code>
             </p>
         </div>
-        <div style="text-align: right;">
-            <span style="background: #2563EB; color: #FFF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+        <div style="display: flex; gap: 8px;">
+            <span style="background: #2563EB; color: #FFF; padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.3px;">
                 Skill: real-estate:lead-scoring
+            </span>
+            <span style="background: #059669; color: #FFF; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                v2.0 Pro
             </span>
         </div>
     </div>
@@ -389,157 +552,169 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Sidebar Điều Khiển
+# ---------------------------------------------------------------------------
+# 7. SIDEBAR ĐIỀU KHIỂN & CẤU HÌNH NGUỒN DỮ LIỆU
+# ---------------------------------------------------------------------------
 with st.sidebar:
-    st.header("⚙️ Bảng Điều Khiển")
+    st.header("⚙️ Nguồn Dữ Liệu & Bộ Máy AI")
     
-    st.markdown("### 📥 Nguồn Dữ Liệu")
-    data_source_mode = st.radio("Chọn nguồn:", ["Google Sheets Trực Tuyến", "Tải file CSV/Excel lên", "Dữ liệu Mẫu 8 Lead"])
+    source_choice = st.radio(
+        "Chọn nguồn nạp dữ liệu:",
+        ["File khach_hang_bds_500.xlsx (Mặc định)", "Link Google Sheets Trực Tuyến", "Tải file Excel/CSV từ máy"],
+        index=0
+    )
     
-    if data_source_mode == "Google Sheets Trực Tuyến":
-        sheet_url = st.text_input("URL Google Sheet CSV:", value=DEFAULT_SHEET_URL)
-        if st.button("🔄 Tải Lại Dữ Liệu Từ Sheet", use_container_width=True):
-            st.session_state.leads_df = load_dataset(sheet_url)
-            st.session_state.has_scored = False
+    if source_choice == "File khach_hang_bds_500.xlsx (Mặc định)":
+        if st.button("🔄 Nạp Lại Dữ Liệu Từ File Gốc", use_container_width=True):
+            loaded = load_data(source_type="local")
+            loaded.insert(0, "da_duyet", False)
+            loaded["diem_so"] = 0
+            loaded["trang_thai"] = "COLD"
+            loaded["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
+            loaded["ghi_chu_sales"] = ""
+            st.session_state.leads_df = loaded
+            st.session_state.has_run_scoring = False
+            st.success("Đã nạp lại file khach_hang_bds_500.xlsx!")
             st.rerun()
             
-    elif data_source_mode == "Tải file CSV/Excel lên":
-        uploaded_file = st.file_uploader("Chọn file CSV hoặc Excel:", type=["csv", "xlsx"])
-        if uploaded_file is not None:
-            if uploaded_file.name.endswith(".csv"):
-                new_df = pd.read_csv(uploaded_file)
-            else:
-                new_df = pd.read_excel(uploaded_file)
-            new_df.columns = [c.strip().lower() for c in new_df.columns]
-            st.session_state.leads_df = new_df
-            st.session_state.has_scored = False
-            st.success(f"Đã nạp {len(new_df)} dòng dữ liệu!")
+    elif source_choice == "Link Google Sheets Trực Tuyến":
+        sheet_link = st.text_input("Nhập link Google Sheet:", value=DEFAULT_SHEET_URL)
+        if st.button("🌐 Tải Dữ Liệu Từ Google Sheet", use_container_width=True):
+            loaded = load_data(source_type="sheet", custom_url=sheet_link)
+            loaded.insert(0, "da_duyet", False)
+            loaded["diem_so"] = 0
+            loaded["trang_thai"] = "COLD"
+            loaded["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
+            loaded["ghi_chu_sales"] = ""
+            st.session_state.leads_df = loaded
+            st.session_state.has_run_scoring = False
+            st.success(f"Đã tải {len(loaded)} dòng từ Google Sheets!")
+            st.rerun()
             
-    elif data_source_mode == "Dữ liệu Mẫu 8 Lead":
-        if st.button("Nạp 8 Hồ Sơ Điển Hình", use_container_width=True):
-            st.session_state.leads_df = load_dataset("invalid_url_to_force_fallback")
-            st.session_state.has_scored = False
+    elif source_choice == "Tải file Excel/CSV từ máy":
+        up_file = st.file_uploader("Chọn file (.xlsx, .csv):", type=["xlsx", "csv"])
+        if up_file is not None and st.button("📥 Nạp File Tải Lên", use_container_width=True):
+            loaded = load_data(source_type="upload", uploaded_file=up_file)
+            loaded.insert(0, "da_duyet", False)
+            loaded["diem_so"] = 0
+            loaded["trang_thai"] = "COLD"
+            loaded["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
+            loaded["ghi_chu_sales"] = ""
+            st.session_state.leads_df = loaded
+            st.session_state.has_run_scoring = False
+            st.success(f"Đã nạp {len(loaded)} dòng từ file upload!")
             st.rerun()
 
     st.markdown("---")
-    st.markdown("### 🤖 Tự Động Hóa Chấm Điểm")
+    st.subheader("🤖 AI Scoring Engine")
+    st.caption("Quét và chấm điểm tự động theo 5 tiêu chí: Ngân sách, Nhu cầu, Thời gian, Nguồn, Tương tác (+/- 50đ VIP/Rác).")
     
-    limit_leads = st.number_input("Số lượng Lead cần quét (0 = Toàn bộ):", min_value=0, max_value=len(st.session_state.leads_df), value=min(50, len(st.session_state.leads_df)))
+    max_scan = len(st.session_state.leads_df)
+    scan_limit = st.slider("Số lượng khách cần chấm điểm:", min_value=1, max_value=max_scan, value=min(500, max_scan))
     
-    btn_run_ai = st.button("🚀 Chạy AI Scoring (Agent)", type="primary", use_container_width=True)
-    
-    if btn_run_ai:
-        progress_bar = st.progress(0)
-        status_text = st.empty()
+    if st.button("🚀 Kích Hoạt AI Scoring", type="primary", use_container_width=True):
+        progress = st.progress(0)
+        status = st.empty()
         
-        target_df = st.session_state.leads_df.copy()
-        total_rows = len(target_df) if limit_leads == 0 else limit_leads
+        df_target = st.session_state.leads_df.copy()
         
-        for idx in range(total_rows):
-            desc = str(target_df.at[idx, "nhu_cau_mo_ta"])
-            name = str(target_df.at[idx, "ten_khach"]) if "ten_khach" in target_df.columns else ""
-            phone = str(target_df.at[idx, "sdt"]) if "sdt" in target_df.columns else ""
+        for i in range(scan_limit):
+            desc = str(df_target.at[i, "nhu_cau_mo_ta"])
+            name = str(df_target.at[i, "ten_khach"]) if "ten_khach" in df_target.columns else ""
+            phone = str(df_target.at[i, "sdt"]) if "sdt" in df_target.columns else ""
             
-            res = ai_score_lead(desc, name, phone)
-            target_df.at[idx, "diem_so"] = res["diem_so"]
-            target_df.at[idx, "phan_loai"] = res["phan_loai"]
-            target_df.at[idx, "ly_do_ai"] = res["ly_do_ai"]
-            target_df.at[idx, "goi_y_sales"] = res["goi_y_sales"]
+            res = ai_score_lead(desc, name, phone, hot_threshold=st.session_state.hot_thresh, warm_threshold=st.session_state.warm_thresh)
+            df_target.at[i, "diem_so"] = res["diem_so"]
+            df_target.at[i, "trang_thai"] = res["trang_thai"]
+            df_target.at[i, "ly_do_ai"] = res["ly_do_ai"]
             
-            # Giữ nguyên trạng thái duyệt nếu đã duyệt trước đó
-            if "trang_thai_duyet" not in target_df.columns or target_df.at[idx, "trang_thai_duyet"] == "Chưa duyệt":
-                # Tự động gợi ý trạng thái
-                if res["phan_loai"] == "🔥 HOT":
-                    target_df.at[idx, "trang_thai_duyet"] = "Chưa duyệt (Gợi ý: Duyệt Giao Sales)"
-                elif res["phan_loai"] == "⚡ WARM":
-                    target_df.at[idx, "trang_thai_duyet"] = "Chưa duyệt"
-                else:
-                    target_df.at[idx, "trang_thai_duyet"] = "Chưa duyệt (Gợi ý: Blacklist/Lọc bỏ)"
-                    
-            if idx % 5 == 0 or idx == total_rows - 1:
-                progress_bar.progress((idx + 1) / total_rows)
-                status_text.text(f"Đang quét hồ sơ {idx+1}/{total_rows}: {name}...")
+            # Gợi ý tự động duyệt nếu là khách HOT và đang bật cấu hình
+            if st.session_state.auto_approve_hot and res["trang_thai"] == "HOT" and not df_target.at[i, "da_duyet"]:
+                df_target.at[i, "da_duyet"] = True
                 
-        time.sleep(0.3)
-        progress_bar.empty()
-        status_text.empty()
-        st.session_state.leads_df = target_df
-        st.session_state.has_scored = True
-        st.success(f"Hoàn thành chấm điểm cho {total_rows} khách hàng!")
+            if i % 15 == 0 or i == scan_limit - 1:
+                progress.progress((i + 1) / scan_limit)
+                status.caption(f"Đang phân tích khách {i+1}/{scan_limit}: {name}...")
+                
+        time.sleep(0.2)
+        progress.empty()
+        status.empty()
+        st.session_state.leads_df = df_target
+        st.session_state.has_run_scoring = True
+        st.success(f"Đã chấm điểm thành công cho {scan_limit} khách hàng!")
         st.rerun()
 
     st.markdown("---")
-    st.markdown("### 📋 Thao Tác Nhanh")
-    if st.button("✅ Duyệt Hàng Loạt: Giao Hết HOT Leads", use_container_width=True):
-        mask = st.session_state.leads_df["phan_loai"] == "🔥 HOT"
-        st.session_state.leads_df.loc[mask, "trang_thai_duyet"] = "✅ Đã duyệt - Giao Sales"
-        st.success(f"Đã duyệt giao Sales cho {mask.sum()} HOT Leads!")
-        st.rerun()
-        
-    if st.button("⛔ Blacklist Hàng Loạt: Loại COLD Lead Rác", use_container_width=True):
-        mask = st.session_state.leads_df["phan_loai"] == "❄️ COLD"
-        st.session_state.leads_df.loc[mask, "trang_thai_duyet"] = "⛔ Từ chối / Blacklist"
-        st.warning(f"Đã chuyển {mask.sum()} COLD Leads vào Blacklist!")
-        st.rerun()
+    st.subheader("📌 Tác Vụ Duyệt Hàng Loạt")
+    col_s1, col_s2 = st.columns(2)
+    with col_s1:
+        if st.button("✅ Duyệt HOT", use_container_width=True, help="Tích chọn duyệt cho toàn bộ khách hàng HOT"):
+            mask = st.session_state.leads_df["trang_thai"] == "HOT"
+            st.session_state.leads_df.loc[mask, "da_duyet"] = True
+            st.success(f"Đã duyệt {mask.sum()} khách HOT!")
+            st.rerun()
+    with col_s2:
+        if st.button("❌ Bỏ Duyệt", use_container_width=True, help="Bỏ chọn duyệt tất cả"):
+            st.session_state.leads_df["da_duyet"] = False
+            st.info("Đã hủy tích chọn duyệt cho tất cả khách hàng.")
+            st.rerun()
 
 
 # ---------------------------------------------------------------------------
-# THẺ CHỈ SỐ KPI TỔNG QUAN
+# 8. YÊU CẦU 6: HIỂN THỊ METRIC TỔNG QUAN (5 METRICS CHUẨN)
 # ---------------------------------------------------------------------------
 df = st.session_state.leads_df
 
 total_leads = len(df)
-hot_count = len(df[df["phan_loai"] == "🔥 HOT"]) if "phan_loai" in df.columns else 0
-warm_count = len(df[df["phan_loai"] == "⚡ WARM"]) if "phan_loai" in df.columns else 0
-cold_count = len(df[df["phan_loai"] == "❄️ COLD"]) if "phan_loai" in df.columns else 0
+hot_count = len(df[df["trang_thai"] == "HOT"])
+warm_count = len(df[df["trang_thai"] == "WARM"])
+cold_count = len(df[df["trang_thai"] == "COLD"])
+approved_count = len(df[df["da_duyet"] == True])
 
-approved_count = len(df[df["trang_thai_duyet"].astype(str).str.contains("Đã duyệt", na=False)]) if "trang_thai_duyet" in df.columns else 0
-pending_count = total_leads - approved_count
+m1, m2, m3, m4, m5 = st.columns(5)
 
-col1, col2, col3, col4, col5 = st.columns(5)
-
-with col1:
+with m1:
     st.markdown(f"""
     <div class="kpi-card">
         <div class="kpi-title">Tổng Khách Hàng</div>
         <div class="kpi-value">{total_leads:,}</div>
-        <div class="kpi-sub">Hồ sơ trong hệ thống</div>
+        <div class="kpi-sub">Hồ sơ dữ liệu</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col2:
+with m2:
     st.markdown(f"""
     <div class="kpi-card" style="border-top: 4px solid #EF4444;">
-        <div class="kpi-title" style="color: #DC2626;">🔥 Khách Hàng HOT</div>
-        <div class="kpi-value" style="color: #DC2626;">{hot_count}</div>
+        <div class="kpi-title" style="color: #DC2626;">🔥 Khách HOT</div>
+        <div class="kpi-value" style="color: #DC2626;">{hot_count:,}</div>
         <div class="kpi-sub">{hot_count/max(1, total_leads):.1%} cơ hội chốt cao</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col3:
+with m3:
     st.markdown(f"""
     <div class="kpi-card" style="border-top: 4px solid #F59E0B;">
-        <div class="kpi-title" style="color: #D97706;">⚡ Khách Hàng WARM</div>
-        <div class="kpi-value" style="color: #D97706;">{warm_count}</div>
+        <div class="kpi-title" style="color: #D97706;">⚡ Khách WARM</div>
+        <div class="kpi-value" style="color: #D97706;">{warm_count:,}</div>
         <div class="kpi-sub">{warm_count/max(1, total_leads):.1%} cần chăm sóc</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col4:
+with m4:
     st.markdown(f"""
     <div class="kpi-card" style="border-top: 4px solid #64748B;">
-        <div class="kpi-title">❄️ Khách Hàng COLD</div>
-        <div class="kpi-value">{cold_count}</div>
-        <div class="kpi-sub">{cold_count/max(1, total_leads):.1%} lọc rác / Drip</div>
+        <div class="kpi-title" style="color: #475569;">❄️ Khách COLD</div>
+        <div class="kpi-value" style="color: #475569;">{cold_count:,}</div>
+        <div class="kpi-sub">{cold_count/max(1, total_leads):.1%} nuôi dưỡng / Rác</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col5:
+with m5:
     st.markdown(f"""
     <div class="kpi-card" style="border-top: 4px solid #10B981;">
-        <div class="kpi-title" style="color: #059669;">✅ Con Người Đã Duyệt</div>
-        <div class="kpi-value" style="color: #059669;">{approved_count}</div>
-        <div class="kpi-sub">{pending_count} hồ sơ đang chờ</div>
+        <div class="kpi-title" style="color: #059669;">✅ Đã Duyệt</div>
+        <div class="kpi-value" style="color: #059669;">{approved_count:,}</div>
+        <div class="kpi-sub">{approved_count/max(1, total_leads):.1%} sẵn sàng xuất file</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -547,198 +722,432 @@ st.write("")
 
 
 # ---------------------------------------------------------------------------
-# BỘ LỌC DỮ LIỆU HIỂN THỊ
+# 9. ĐIỀU HƯỚNG TABS ĐA NĂNG
 # ---------------------------------------------------------------------------
-st.markdown("### 🔍 Bộ Lọc Danh Sách")
-f_col1, f_col2, f_col3 = st.columns([1.5, 1.5, 3])
+tab_main, tab_card, tab_analytics, tab_quick, tab_config = st.tabs([
+    "📋 Bảng Duyệt Khách Hàng (st.data_editor)",
+    "📇 Thẻ Bàn Giao Lead Chi Tiết & Kịch Bản Sales",
+    "📊 Báo Cáo Phân Tích Thông Minh (BI Analytics)",
+    "⚡ Thẩm Định Nhanh 1 Khách Hàng",
+    "⚙️ Cấu Hình Ma Trận Điểm Số"
+])
 
-with f_col1:
-    filter_tier = st.multiselect(
-        "Lọc theo Phân loại AI:",
-        options=["🔥 HOT", "⚡ WARM", "❄️ COLD", "Chưa quét"],
-        default=[]
+
+# ===========================================================================
+# TAB 1: BẢNG DUYỆT KHÁCH HÀNG (YÊU CẦU 3, 4, 5)
+# ===========================================================================
+with tab_main:
+    # Bộ lọc danh sách
+    f1, f2, f3 = st.columns([1.5, 1.5, 3])
+    with f1:
+        filter_status = st.multiselect(
+            "Lọc theo Trạng Thái:",
+            options=["HOT", "WARM", "COLD"],
+            default=[],
+            help="Lọc danh sách theo trạng thái phân loại"
+        )
+    with f2:
+        filter_approval = st.selectbox(
+            "Lọc theo Duyệt:",
+            options=["Tất cả", "Chỉ khách ĐÃ duyệt", "Chỉ khách CHƯA duyệt"],
+            index=0
+        )
+    with f3:
+        search_text = st.text_input(
+            "🔎 Tìm kiếm nhanh (Tên khách, SĐT, hoặc Từ khóa nhu cầu):",
+            placeholder="Nhập tên, số điện thoại, hoặc từ khóa mô tả..."
+        )
+
+    # Áp dụng bộ lọc hiển thị
+    filtered_df = df.copy()
+
+    if filter_status:
+        filtered_df = filtered_df[filtered_df["trang_thai"].isin(filter_status)]
+
+    if filter_approval == "Chỉ khách ĐÃ duyệt":
+        filtered_df = filtered_df[filtered_df["da_duyet"] == True]
+    elif filter_approval == "Chỉ khách CHƯA duyệt":
+        filtered_df = filtered_df[filtered_df["da_duyet"] == False]
+
+    if search_text.strip():
+        q = search_text.strip().lower()
+        mask = (
+            filtered_df["ten_khach"].astype(str).str.lower().str.contains(q) |
+            filtered_df["sdt"].astype(str).str.contains(q) |
+            filtered_df["nhu_cau_mo_ta"].astype(str).str.lower().str.contains(q) |
+            filtered_df["ly_do_ai"].astype(str).str.lower().str.contains(q)
+        )
+        filtered_df = filtered_df[mask]
+
+    st.markdown("### 📝 Bảng Dữ Liệu Khách Hàng (Tương tác duyệt & Chỉnh sửa điểm)")
+    st.caption("💡 **Hướng dẫn cho Sales:** Tích chọn cột **`Đã duyệt`** để chọn khách cần xuất Excel. Bạn có thể **sửa trực tiếp Điểm Số** (0 - 100) hoặc đổi **Trạng Thái** (HOT / WARM / COLD) trên bảng, sau đó bấm **💾 Lưu Thay Đổi**.")
+
+    # Cấu hình st.data_editor
+    column_config = {
+        "da_duyet": st.column_config.CheckboxColumn(
+            "Đã duyệt",
+            help="Tích chọn để duyệt khách hàng này",
+            default=False,
+            width="small"
+        ),
+        "id": st.column_config.NumberColumn(
+            "Mã KH",
+            help="ID duy nhất của khách hàng",
+            disabled=True,
+            width="small"
+        ),
+        "ten_khach": st.column_config.TextColumn(
+            "Tên Khách Hàng",
+            width="medium"
+        ),
+        "sdt": st.column_config.TextColumn(
+            "Số Điện Thoại",
+            width="small"
+        ),
+        "diem_so": st.column_config.NumberColumn(
+            "Điểm Số",
+            help="Thang điểm từ 0 đến 100 theo 5 tiêu chí (Sales có thể chỉnh sửa)",
+            min_value=0,
+            max_value=100,
+            step=1,
+            width="small"
+        ),
+        "trang_thai": st.column_config.SelectboxColumn(
+            "Trạng Thái",
+            help="3 lựa chọn phân loại chính xác: HOT / WARM / COLD (tự động gợi ý theo điểm)",
+            options=["HOT", "WARM", "COLD"],
+            width="small",
+            required=True
+        ),
+        "ghi_chu_sales": st.column_config.TextColumn(
+            "Ghi Chú Sales",
+            help="Ghi chú phản hồi thực tế từ chuyên viên tư vấn",
+            width="medium"
+        ),
+        "ly_do_ai": st.column_config.TextColumn(
+            "Lý Do AI Chấm Điểm",
+            help="Dấu hiệu nhận diện từ tieu_chi_cham_diem.txt",
+            disabled=True,
+            width="large"
+        ),
+        "nhu_cau_mo_ta": st.column_config.TextColumn(
+            "Mô Tả Nhu Cầu Gốc",
+            help="Nội dung nhu cầu khách để lại",
+            disabled=True,
+            width="large"
+        )
+    }
+
+    display_cols = [
+        "da_duyet", "id", "ten_khach", "sdt", "diem_so", "trang_thai", 
+        "ghi_chu_sales", "ly_do_ai", "nhu_cau_mo_ta"
+    ]
+    for col in display_cols:
+        if col not in filtered_df.columns:
+            filtered_df[col] = ""
+
+    edited_df = st.data_editor(
+        filtered_df[display_cols],
+        column_config=column_config,
+        use_container_width=True,
+        num_rows="dynamic",
+        height=430,
+        key="lead_scoring_editor"
     )
 
-with f_col2:
-    filter_status = st.multiselect(
-        "Lọc theo Trạng thái duyệt:",
-        options=sorted(list(set(df["trang_thai_duyet"].dropna().astype(str)))),
-        default=[]
-    )
+    # Nút thao tác lưu & xuất Excel
+    col_act1, col_act2, col_act3 = st.columns([2.5, 2.5, 3])
 
-with f_col3:
-    search_query = st.text_input("🔎 Tìm kiếm theo Tên khách, SĐT, hoặc Từ khóa nhu cầu:", placeholder="Nhập từ khóa...")
+    with col_act1:
+        if st.button("💾 Lưu Thay Đổi Vừa Chỉnh Sửa", type="secondary", use_container_width=True):
+            sub_update = edited_df[["id", "da_duyet", "diem_so", "trang_thai", "ghi_chu_sales"]].set_index("id")
+            
+            # Tự động gợi ý trạng thái theo điểm số nếu người dùng thay đổi điểm
+            for row_id, r in sub_update.iterrows():
+                sc = r["diem_so"]
+                if sc >= st.session_state.hot_thresh and r["trang_thai"] != "HOT":
+                    sub_update.at[row_id, "trang_thai"] = "HOT"
+                elif st.session_state.warm_thresh <= sc < st.session_state.hot_thresh and r["trang_thai"] != "WARM":
+                    sub_update.at[row_id, "trang_thai"] = "WARM"
+                elif sc < st.session_state.warm_thresh and r["trang_thai"] != "COLD":
+                    sub_update.at[row_id, "trang_thai"] = "COLD"
+                    
+            master = st.session_state.leads_df.set_index("id")
+            master.update(sub_update)
+            st.session_state.leads_df = master.reset_index()
+            st.success("Đã lưu các chỉnh sửa và cập nhật trạng thái tương ứng!")
+            st.rerun()
 
-# Áp dụng bộ lọc
-filtered_df = df.copy()
-if filter_tier:
-    filtered_df = filtered_df[filtered_df["phan_loai"].isin(filter_tier)]
-if filter_status:
-    filtered_df = filtered_df[filtered_df["trang_thai_duyet"].isin(filter_status)]
-if search_query:
-    q = search_query.lower()
-    mask = (
-        filtered_df["ten_khach"].astype(str).str.lower().str.contains(q) |
-        filtered_df["sdt"].astype(str).str.contains(q) |
-        filtered_df["nhu_cau_mo_ta"].astype(str).str.lower().str.contains(q)
-    )
-    filtered_df = filtered_df[mask]
+    with col_act2:
+        btn_export = st.button("✅ Duyệt và Xuất Excel", type="primary", use_container_width=True)
 
+    approved_leads = st.session_state.leads_df[st.session_state.leads_df["da_duyet"] == True]
 
-# ---------------------------------------------------------------------------
-# BẢNG TƯƠNG TÁC DUYỆT TRẠNG THÁI VỚI ST.DATA_EDITOR (HUMAN-IN-THE-LOOP)
-# ---------------------------------------------------------------------------
-st.markdown("---")
-st.markdown("### 📝 Bảng Duyệt Khách Hàng Tiềm Năng (Human Approval Table)")
-st.caption("💡 **Hướng dẫn:** Bạn có thể nhấp đúp trực tiếp vào cột **`Trạng Thái Duyệt`**, **`Điểm AI`** hoặc **`Ghi Chú Sales`** để điều chỉnh, sau đó nhấn **Lưu Thay Đổi** phía dưới.")
+    if btn_export:
+        if len(approved_leads) == 0:
+            st.warning("⚠️ Hiện chưa có khách hàng nào được tích chọn 'Đã duyệt'. Vui lòng tích chọn ít nhất một khách hàng ở cột 'Đã duyệt' hoặc bấm '✅ Duyệt HOT' tại menu bên trái trước khi xuất Excel.")
+        else:
+            excel_bytes = generate_excel_bytes(approved_leads)
+            export_filename = "leads_scored.xlsx"
+            with open(export_filename, "wb") as f:
+                f.write(excel_bytes)
+            st.success(f"🎉 Đã xuất thành công {len(approved_leads)} khách hàng đã duyệt vào file `{export_filename}`!")
 
-# Cấu hình hiển thị cột cho st.data_editor
-column_config = {
-    "id": st.column_config.NumberColumn("ID", width="small", disabled=True),
-    "ten_khach": st.column_config.TextColumn("Tên Khách Hàng", width="medium"),
-    "sdt": st.column_config.TextColumn("Số Điện Thoại", width="small"),
-    "diem_so": st.column_config.NumberColumn(
-        "Điểm AI",
-        help="Thang điểm từ 0 đến 100 theo 5 tiêu chí BANT-SE",
-        min_value=0,
-        max_value=100,
-        step=1,
-        width="small"
-    ),
-    "phan_loai": st.column_config.SelectboxColumn(
-        "Phân Loại AI",
-        options=["🔥 HOT", "⚡ WARM", "❄️ COLD", "Chưa quét"],
-        width="small"
-    ),
-    "trang_thai_duyet": st.column_config.SelectboxColumn(
-        "Trạng Thái Duyệt (Human Action)",
-        help="Con người duyệt trạng thái để bàn giao Sales hoặc loại bỏ",
-        options=[
-            "Chưa duyệt",
-            "✅ Đã duyệt - Giao Sales",
-            "⚡ Cần xác minh thêm",
-            "⛔ Từ chối / Blacklist",
-            "Chưa duyệt (Gợi ý: Duyệt Giao Sales)",
-            "Chưa duyệt (Gợi ý: Blacklist/Lọc bỏ)"
-        ],
-        width="medium",
-        required=True
-    ),
-    "nhu_cau_mo_ta": st.column_config.TextColumn("Nhu Cầu Mô Tả Gốc", width="large", disabled=True),
-    "ly_do_ai": st.column_config.TextColumn("Lý Do & Dấu Hiệu AI Bắt Được", width="large", disabled=True),
-    "goi_y_sales": st.column_config.TextColumn("Kịch Bản Gợi Ý Cho Sales", width="large", disabled=True),
-    "ghi_chu_sales": st.column_config.TextColumn("Ghi Chú Của Người Duyệt / Sales", width="medium")
-}
-
-# Chọn các cột để hiển thị trên data_editor
-display_cols = [
-    "id", "ten_khach", "sdt", "diem_so", "phan_loai", 
-    "trang_thai_duyet", "ghi_chu_sales", "ly_do_ai", "goi_y_sales", "nhu_cau_mo_ta"
-]
-# Bổ sung các cột nếu thiếu
-for col in display_cols:
-    if col not in filtered_df.columns:
-        filtered_df[col] = ""
-
-edited_df = st.data_editor(
-    filtered_df[display_cols],
-    column_config=column_config,
-    use_container_width=True,
-    num_rows="dynamic",
-    height=420,
-    key="lead_data_editor"
-)
-
-# Nút lưu thay đổi từ editor vào state
-col_btn1, col_btn2, col_btn3 = st.columns([2, 2, 4])
-
-with col_btn1:
-    if st.button("💾 Lưu Thay Đổi Duyệt", type="primary", use_container_width=True):
-        # Cập nhật ngược lại session_state.leads_df dựa trên ID
-        main_df = st.session_state.leads_df.set_index("id")
-        updated_sub = edited_df.set_index("id")
-        main_df.update(updated_sub)
-        st.session_state.leads_df = main_df.reset_index()
-        st.success("Đã lưu thành công các thay đổi từ bảng duyệt!")
-        st.rerun()
-
-with col_btn2:
-    # Xuất file CSV đã duyệt
-    csv_buffer = io.StringIO()
-    st.session_state.leads_df.to_csv(csv_buffer, index=False, encoding="utf-8-sig")
-    st.download_button(
-        label="📥 Xuất Báo Cáo CSV",
-        data=csv_buffer.getvalue(),
-        file_name="Lead_Scoring_Human_Approved.csv",
-        mime="text/csv",
-        use_container_width=True
-    )
+    if len(approved_leads) > 0:
+        excel_data = generate_excel_bytes(approved_leads)
+        with col_act3:
+            st.download_button(
+                label=f"📥 Tải Về File leads_scored.xlsx ({len(approved_leads)} khách)",
+                data=excel_data,
+                file_name="leads_scored.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True
+            )
 
 
-# ---------------------------------------------------------------------------
-# CHI TIẾT THẺ BÀN GIAO LEAD (LEAD HANDOFF CARD VIEWER)
-# ---------------------------------------------------------------------------
-st.markdown("---")
-st.markdown("### 📇 Xem Chi Tiết Thẻ Bàn Giao Lead (Lead Handoff Card)")
+# ===========================================================================
+# TAB 2: THẺ BÀN GIAO LEAD CHI TIẾT & KỊCH BẢN SALES
+# ===========================================================================
+with tab_card:
+    st.markdown("### 📇 Thẻ Bàn Giao Khách Hàng Tiềm Năng (Lead Handoff Card)")
+    st.caption("Cung cấp đầy đủ thông tin bối cảnh, bằng chứng AI nhận diện và kịch bản mở lời chuẩn hóa giúp Sales chốt hẹn xem nhà.")
 
-lead_options = [f"ID #{row['id']} - {row['ten_khach']} ({row['phan_loai']} - {row['diem_so']}đ)" for _, row in filtered_df.iterrows()]
+    card_options = [
+        f"Mã KH #{row['id']} — {row['ten_khach']} ({row['trang_thai']} - {row['diem_so']}đ)"
+        for _, row in filtered_df.iterrows()
+    ]
 
-if lead_options:
-    selected_option = st.selectbox("Chọn một khách hàng để xem phiếu bàn giao Sales chi tiết:", options=lead_options)
-    selected_id = int(selected_option.split(" - ")[0].replace("ID #", ""))
-    selected_row = df[df["id"] == selected_id].iloc[0]
-    
-    tier_class = "tag-hot" if "HOT" in str(selected_row["phan_loai"]) else ("tag-warm" if "WARM" in str(selected_row["phan_loai"]) else "tag-cold")
-    
-    st.markdown(f"""
-    <div class="handoff-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 14px;">
-            <div>
-                <span style="font-size: 1.3rem; font-weight: 700; color: #0F172A;">{selected_row['ten_khach']}</span>
-                <span style="margin-left: 12px; font-size: 1.1rem; color: #2563EB; font-weight: 600;">📞 {selected_row['sdt']}</span>
-            </div>
-            <div>
-                <span class="{tier_class}">{selected_row['phan_loai']}</span>
-                <span style="margin-left: 10px; font-size: 1.2rem; font-weight: 700; color: #1E293B;">Điểm AI: {selected_row['diem_so']}/100</span>
-                <span style="margin-left: 12px; background: #E0E7FF; color: #3730A3; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Trạng thái: {selected_row['trang_thai_duyet']}</span>
-            </div>
-        </div>
+    if card_options:
+        selected_option = st.selectbox(
+            "Chọn khách hàng để xem phiếu bàn giao:",
+            options=card_options,
+            key="card_lead_selector"
+        )
+        selected_id = int(selected_option.split(" — ")[0].replace("Mã KH #", ""))
+        sel_lead = df[df["id"] == selected_id].iloc[0]
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <h5 style="margin: 0 0 6px 0; color: #475569;">🎯 Nhu Cầu Gốc Của Khách:</h5>
-                <p style="background: #FFFFFF; padding: 12px; border-radius: 6px; border: 1px solid #E2E8F0; color: #1E293B; line-height: 1.5;">
-                    "{selected_row['nhu_cau_mo_ta']}"
-                </p>
-                <h5 style="margin: 12px 0 6px 0; color: #475569;">🧠 Phân Tích Logic & Bằng Chứng AI:</h5>
-                <p style="background: #EFF6FF; padding: 12px; border-radius: 6px; border: 1px solid #BFDBFE; color: #1E40AF; line-height: 1.5;">
-                    {selected_row['ly_do_ai']}
-                </p>
+        tier_tag = "tag-hot" if sel_lead["trang_thai"] == "HOT" else ("tag-warm" if sel_lead["trang_thai"] == "WARM" else "tag-cold")
+        duyet_badge = "✅ ĐÃ DUYỆT" if sel_lead["da_duyet"] else "⏳ CHƯA DUYỆT"
+        duyet_bg = "#DCFCE7" if sel_lead["da_duyet"] else "#F1F5F9"
+        duyet_color = "#15803D" if sel_lead["da_duyet"] else "#64748B"
+        
+        # Phone call & Zalo link
+        clean_phone = re.sub(r"\D", "", str(sel_lead['sdt']))
+        if clean_phone.startswith("84"):
+            clean_phone = "0" + clean_phone[2:]
+            
+        zalo_link = f"https://zalo.me/{clean_phone}"
+        tel_link = f"tel:{clean_phone}"
+        
+        # Tạo hook kịch bản mở lời thông minh
+        if sel_lead["trang_thai"] == "HOT":
+            script_text = f"Dạ em chào anh/chị {sel_lead['ten_khach']}, em là phụ trách phân khúc cao cấp tại dự án. Em nhận được thông tin anh/chị đang tìm hiểu dòng sản phẩm biệt thự/penthouse với ngân sách tài chính mạnh. Hiện bên em đang có suất ngoại giao vị trí đẹp ven sông vừa mở bán, em xin phép gửi thông tin mặt bằng chi tiết qua Zalo cho anh/chị trước nhé ạ!"
+        elif sel_lead["trang_thai"] == "WARM":
+            script_text = f"Dạ em chào anh/chị {sel_lead['ten_khach']}, em thấy anh/chị đang quan tâm căn hộ/nhà phố và cân nhắc phương án vay ngân hàng. Em đã chuẩn bị sẵn bảng tính tiến độ dòng tiền và chính sách chiết khấu tốt nhất tuần này, em gửi qua Zalo anh/chị xem thử nhé ạ!"
+        else:
+            script_text = f"Dạ em chào anh/chị {sel_lead['ten_khach']}, em liên hệ để gửi tặng anh/chị cẩm nang quy hoạch và bản tin thị trường BĐS tháng này ạ."
+
+        st.markdown(f"""
+        <div class="handoff-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="font-size: 1.45rem; font-weight: 700; color: #0F172A;">{sel_lead['ten_khach']}</span>
+                    <span style="margin-left: 14px; font-size: 1.15rem; color: #2563EB; font-weight: 600;">📞 {sel_lead['sdt']}</span>
+                    <a href="{tel_link}" style="margin-left: 10px; background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; text-decoration: none; font-weight: 600;">📱 Bấm Gọi</a>
+                    <a href="{zalo_link}" target="_blank" style="margin-left: 6px; background: #E0F2FE; color: #0284C7; border: 1px solid #BAE6FD; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; text-decoration: none; font-weight: 600;">💬 Nhắn Zalo</a>
+                </div>
+                <div>
+                    <span class="{tier_tag}">{sel_lead['trang_thai']}</span>
+                    <span style="margin-left: 10px; font-size: 1.2rem; font-weight: 700; color: #1E293B;">Điểm: {sel_lead['diem_so']}/100</span>
+                    <span style="margin-left: 12px; background: {duyet_bg}; color: {duyet_color}; padding: 5px 12px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;">
+                        {duyet_badge}
+                    </span>
+                </div>
             </div>
-            <div>
-                <h5 style="margin: 0 0 6px 0; color: #059669;">🔑 Kịch Bản Mở Lời Đề Xuất (Sales Icebreaker Hook):</h5>
-                <p style="background: #ECFDF5; padding: 12px; border-radius: 6px; border: 1px solid #A7F3D0; color: #065F46; line-height: 1.5; font-weight: 500;">
-                    {selected_row['goi_y_sales']}
-                </p>
-                <h5 style="margin: 12px 0 6px 0; color: #475569;">⏱️ Cam Kết Thời Gian Phản Hồi (SLA):</h5>
-                <p style="background: #FFFBEB; padding: 10px; border-radius: 6px; border: 1px solid #FDE68A; color: #92400E; font-weight: 600;">
-                    {"Gọi trong vòng ≤ 15 phút (Golden 15 Minutes)" if "HOT" in str(selected_row['phan_loai']) else ("Liên hệ trong vòng ≤ 2-4 giờ" if "WARM" in str(selected_row['phan_loai']) else "Drip Marketing tự động / Không phân bổ Sales")}
-                </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div>
+                    <h5 style="margin: 0 0 6px 0; color: #475569; font-weight: 600;">🎯 Nhu Cầu Gốc Của Khách:</h5>
+                    <p style="background: #F8FAFC; padding: 14px; border-radius: 8px; border: 1px solid #E2E8F0; color: #1E293B; line-height: 1.6; font-size: 0.93rem;">
+                        "{sel_lead['nhu_cau_mo_ta']}"
+                    </p>
+                    <h5 style="margin: 14px 0 6px 0; color: #475569; font-weight: 600;">🧠 Căn Cứ & Bằng Chứng AI Nhận Diện:</h5>
+                    <p style="background: #EFF6FF; padding: 14px; border-radius: 8px; border: 1px solid #BFDBFE; color: #1E40AF; line-height: 1.6; font-size: 0.93rem;">
+                        {sel_lead['ly_do_ai']}
+                    </p>
+                </div>
+                <div>
+                    <h5 style="margin: 0 0 6px 0; color: #059669; font-weight: 600;">🔑 Gợi Ý Kịch Bản Mở Lời Cho Sales (Icebreaker Hook):</h5>
+                    <p style="background: #ECFDF5; padding: 14px; border-radius: 8px; border: 1px solid #A7F3D0; color: #065F46; line-height: 1.6; font-weight: 500; font-size: 0.93rem;">
+                        "{script_text}"
+                    </p>
+                    <h5 style="margin: 14px 0 6px 0; color: #475569; font-weight: 600;">⏱️ Cam Kết Thời Gian Phản Hồi (SLA Handoff Protocol):</h5>
+                    <p style="background: #FFFBEB; padding: 12px 14px; border-radius: 8px; border: 1px solid #FDE68A; color: #92400E; font-weight: 600; font-size: 0.92rem;">
+                        {"Gọi trong vòng ≤ 15 phút (Golden 15 Minutes) • Phân bổ Trưởng phòng/Top Sales" if sel_lead["trang_thai"] == "HOT" else ("Liên hệ trong vòng ≤ 2-4 giờ làm việc • Gửi bảng tính dòng tiền" if sel_lead["trang_thai"] == "WARM" else "Chăm sóc tự động 24h bằng Email Drip / Tin ZNS • Không phân Sales gọi trực tiếp")}
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.info("Không có khách hàng nào phù hợp với bộ lọc hiện tại.")
+        """, unsafe_allow_html=True)
+        
+        # Cho phép copy kịch bản mở lời
+        st.text_area("📋 Sao chép nhanh tin nhắn gửi khách:", value=script_text, height=75)
+    else:
+        st.info("Không có khách hàng nào phù hợp với bộ lọc hiện tại.")
+
+
+# ===========================================================================
+# TAB 3: BÁO CÁO PHÂN TÍCH THÔNG MINH (BI ANALYTICS)
+# ===========================================================================
+with tab_analytics:
+    st.markdown("### 📊 Báo Cáo Phân Tích Dữ Liệu Khách Hàng Tiềm Năng")
+    
+    col_c1, col_c2 = st.columns(2)
+    
+    with col_c1:
+        st.subheader("Cơ cấu Khách Hàng theo Phân Hạng")
+        tier_counts = df["trang_thai"].value_counts().reset_index()
+        tier_counts.columns = ["Trạng Thái", "Số Lượng"]
+        
+        chart_tier = alt.Chart(tier_counts).mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8).encode(
+            x=alt.X("Trạng Thái:N", title="Phân Hạng"),
+            y=alt.Y("Số Lượng:Q", title="Số Lượng Khách"),
+            color=alt.Color("Trạng Thái:N", scale=alt.Scale(
+                domain=["HOT", "WARM", "COLD"],
+                range=["#DC2626", "#F59E0B", "#64748B"]
+            ), legend=None),
+            tooltip=["Trạng Thái", "Số Lượng"]
+        ).properties(height=280)
+        st.altair_chart(chart_tier, use_container_width=True)
+
+    with col_c2:
+        st.subheader("Phân Phối Điểm Số (Score Distribution)")
+        chart_hist = alt.Chart(df).mark_bar(color="#2563EB", opacity=0.75).encode(
+            x=alt.X("diem_so:Q", bin=alt.Bin(maxbins=20), title="Điểm Số AI (0 - 100)"),
+            y=alt.Y("count()", title="Tần Suất / Số Lượng"),
+            tooltip=["count()"]
+        ).properties(height=280)
+        st.altair_chart(chart_hist, use_container_width=True)
+
+    st.markdown("---")
+    col_c3, col_c4 = st.columns(2)
+    
+    with col_c3:
+        st.subheader("Tỷ Lệ Duyệt Hồ Sơ")
+        approval_summary = pd.DataFrame({
+            "Trạng Thái": ["Đã Duyệt", "Chưa Duyệt"],
+            "Số Lượng": [approved_count, total_leads - approved_count]
+        })
+        chart_appr = alt.Chart(approval_summary).mark_arc(innerRadius=60).encode(
+            theta=alt.Theta(field="Số Lượng", type="quantitative"),
+            color=alt.Color(field="Trạng Thái", type="nominal", scale=alt.Scale(
+                domain=["Đã Duyệt", "Chưa Duyệt"],
+                range=["#10B981", "#E2E8F0"]
+            )),
+            tooltip=["Trạng Thái", "Số Lượng"]
+        ).properties(height=260)
+        st.altair_chart(chart_appr, use_container_width=True)
+
+    with col_c4:
+        st.subheader("Ước Tính Giá Trị Cơ Hội (Sales Pipeline)")
+        est_hot_value = hot_count * 15 # Giả định TB 15 tỷ/hot lead
+        est_warm_value = warm_count * 6 # Giả định TB 6 tỷ/warm lead
+        st.markdown(f"""
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px;">
+            <p style="margin: 0; color: #64748B; font-weight: 600;">💰 Tổng giá trị giỏ hàng tiềm năng HOT:</p>
+            <h3 style="margin: 6px 0 14px 0; color: #DC2626;">~ {est_hot_value:,} Tỷ VNĐ</h3>
+            <p style="margin: 0; color: #64748B; font-weight: 600;">⚡ Tổng giá trị giỏ hàng tiềm năng WARM:</p>
+            <h3 style="margin: 6px 0 0 0; color: #D97706;">~ {est_warm_value:,} Tỷ VNĐ</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+# ===========================================================================
+# TAB 4: THẨM ĐỊNH NHANH 1 KHÁCH HÀNG MỚI
+# ===========================================================================
+with tab_quick:
+    st.markdown("### ⚡ Thẩm Định Nhanh 1 Khách Hàng (Single Lead Quick Assessment)")
+    st.caption("Nhập nhanh thông tin của một khách hàng mới từ cuộc gọi, form web hoặc Zalo để AI chấm điểm tức thì.")
+
+    with st.form("quick_lead_form"):
+        col_q1, col_q2 = st.columns(2)
+        with col_q1:
+            q_name = st.text_input("Tên khách hàng:", placeholder="VD: Nguyễn Văn An")
+        with col_q2:
+            q_phone = st.text_input("Số điện thoại:", placeholder="VD: 0912345678")
+            
+        q_desc = st.text_area(
+            "Mô tả nhu cầu khách để lại:",
+            placeholder="VD: Anh An quan tâm biệt thự đơn lập ven sông, tài chính khoảng 25 tỷ thanh toán thẳng, muốn xem nhà mẫu cuối tuần này...",
+            height=110
+        )
+        
+        btn_quick_eval = st.form_submit_button("🚀 Chấm Điểm Ngay", type="primary")
+
+    if btn_quick_eval:
+        if not q_desc.strip():
+            st.error("Vui lòng nhập mô tả nhu cầu khách hàng.")
+        else:
+            q_res = ai_score_lead(q_desc, q_name, q_phone, hot_threshold=st.session_state.hot_thresh, warm_threshold=st.session_state.warm_thresh)
+            
+            st.markdown("#### 🎯 Kết Quả Đánh Giá AI:")
+            q_col1, q_col2, q_col3 = st.columns(3)
+            with q_col1:
+                st.metric("Điểm Số", f"{q_res['diem_so']}/100")
+            with q_col2:
+                st.metric("Phân Hạng", q_res["trang_thai"])
+            with q_col3:
+                st.metric("Cam Kết SLA", q_res["sla"])
+                
+            st.info(f"**Căn cứ AI:** {q_res['ly_do_ai']}")
+            st.success(f"**Gợi ý kịch bản mở lời:** {q_res['goi_y_sales']}")
+            
+            # Nút thêm khách vào bảng chính
+            if st.button("➕ Thêm Khách Hàng Này Vào Danh Sách Quản Trị", type="secondary"):
+                new_id = len(st.session_state.leads_df) + 1
+                new_row = {
+                    "da_duyet": True if q_res["trang_thai"] == "HOT" else False,
+                    "id": new_id,
+                    "ten_khach": q_name if q_name else f"Khách Hàng #{new_id}",
+                    "sdt": q_phone if q_phone else "Chưa có",
+                    "diem_so": q_res["diem_so"],
+                    "trang_thai": q_res["trang_thai"],
+                    "ly_do_ai": q_res["ly_do_ai"],
+                    "nhu_cau_mo_ta": q_desc,
+                    "ghi_chu_sales": "Được thẩm định nhanh qua Tab Quick Assessment"
+                }
+                st.session_state.leads_df = pd.concat([st.session_state.leads_df, pd.DataFrame([new_row])], ignore_index=True)
+                st.success(f"Đã lưu khách hàng #{new_id} vào danh sách quản trị!")
+                st.rerun()
+
+
+# ===========================================================================
+# TAB 5: CẤU HÌNH MA TRẬN ĐIỂM SỐ
+# ===========================================================================
+with tab_config:
+    st.markdown("### ⚙️ Cấu Hình Ma Trận Điểm Số & Ngưỡng Phân Hạng")
+    st.caption("Cho phép Trưởng phòng kinh doanh tùy chỉnh ngưỡng điểm và cơ chế tự động theo chiến dịch từng dự án.")
+
+    col_cfg1, col_cfg2 = st.columns(2)
+    with col_cfg1:
+        st.session_state.hot_thresh = st.slider("Ngưỡng điểm HOT (Điểm ≥ ngưỡng này):", min_value=70, max_value=95, value=st.session_state.hot_thresh)
+        st.session_state.warm_thresh = st.slider("Ngưỡng điểm WARM (Điểm ≥ ngưỡng này):", min_value=40, max_value=75, value=st.session_state.warm_thresh)
+    with col_cfg2:
+        st.session_state.auto_approve_hot = st.checkbox("Tự động tích chọn duyệt cho khách hàng HOT khi AI quét xong", value=st.session_state.auto_approve_hot)
+        st.markdown("""
+        **Quy tắc tiêu chuẩn (tieu_chi_cham_diem.txt):**
+        - Thưởng VIP: +50 điểm (≥ 20-30 tỷ, Shophouse sỉ, Penthouse, Đất CN > 2000m2)
+        - Phạt Rác: -50 điểm (Nhầm số, đòi mua Q1 giá 1 tỷ, spam bảo hiểm, thuê bao)
+        """)
 
 
 # ---------------------------------------------------------------------------
-# FOOTER BẢN QUYỀN
+# 14. FOOTER BẢN QUYỀN
 # ---------------------------------------------------------------------------
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; color: #94A3B8; font-size: 0.82rem; padding: 15px 0;">
+<div style="text-align: center; color: #94A3B8; font-size: 0.82rem; padding: 12px 0;">
     Phát triển bởi <b>Phạm Minh Hoàng</b> — Khóa học <i>Agentic AI with Google Antigravity</i> • Cố vấn: <b>MT Đức Thuận</b> (AI4A)<br>
-    Tuân thủ quy chuẩn bảo mật PII Nghị định 13/2023/NĐ-CP & Mô hình Human-In-The-Loop
+    Tuân thủ quy chuẩn bảo mật dữ liệu PII Nghị định 13/2023/NĐ-CP & Mô hình Human-In-The-Loop
 </div>
 """, unsafe_allow_html=True)
