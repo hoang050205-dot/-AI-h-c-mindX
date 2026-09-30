@@ -1177,22 +1177,28 @@
 - **Đã thực hiện:**
   1. Cập nhật file [.gitignore](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/.gitignore) loại trừ triệt để `.streamlit/secrets.toml`, `secrets.toml`, `service_account.json`, `*.json` liên quan đến credential.
   2. Tạo file mẫu cấu hình [.streamlit/secrets.toml.example](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/.streamlit/secrets.toml.example) với đầy đủ các trường thông tin của GCP Service Account JSON.
-  3. Cập nhật [requirements.txt](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/requirements.txt) bổ sung hai thư viện `gspread>=5.10.0` và `google-auth>=2.20.0`.
-  4. Nâng cấp [app_lead_scoring.py](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/app_lead_scoring.py):
+  3. Đọc tệp Service Account Key JSON của người dùng (`lead-scoring-sa@project-63e5b440-f1e1-45b3-99b.iam.gserviceaccount.com`), tự động ghi cấu hình bí mật vào `.streamlit/secrets.toml`.
+  4. Cập nhật [requirements.txt](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/requirements.txt) bổ sung hai thư viện `gspread>=5.10.0` và `google-auth>=2.20.0`.
+  5. Nâng cấp [app_lead_scoring.py](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/app_lead_scoring.py):
      - Hàm `get_gspread_client()` nạp linh hoạt từ `st.secrets["gcp_service_account"]` hoặc file local.
-     - Hàm `load_private_sheet(sheet_id)` mở sheet qua `client.open_by_key(sheet_id)` và đọc records.
-     - Tích hợp thêm tùy chọn `🔒 Google Sheets Private (Service Account)` tại Sidebar kèm chỉ báo trạng thái kết nối thời gian thực.
-     - Bổ sung tài liệu hướng dẫn từng bước chi tiết vào **Tab 5** trong ứng dụng.
-  5. Kiểm tra tính tương thích: Không làm thay đổi logic tính điểm cơ sở 5 tiêu chí hay cơ chế cộng/trừ 50 điểm trong `tieu_chi_cham_diem.txt`.
+     - Hàm `load_private_sheet(sheet_id)` tự động nhận diện cả URL Google Sheets đầy đủ (bóc tách `sheet_id` và tham số `gid`), mở worksheet tương ứng và đọc dữ liệu.
+     - Bổ sung hàm `sync_scores_to_private_sheet(sheet_id, df_scored)`: tự động tạo/cập nhật worksheet `Ket_Qua_Cham_Diem` trên Google Sheet riêng tư của người dùng, đẩy kết quả chấm điểm (Điểm số, Phân loại HOT/WARM/COLD, Lý do, Hành động SLA đề xuất, Trạng thái duyệt).
+     - Giao diện Sidebar hiển thị email Service Account đã chứng thực và đường dẫn Sheet mặc định.
+     - Thêm nút hành động `🚀 Đẩy Điểm Sang Sheet Private` tại Tab 1 để đồng bộ tức thì.
+  6. Kiểm tra tính tương thích: Không làm thay đổi logic tính điểm cơ sở 5 tiêu chí hay cơ chế cộng/trừ 50 điểm trong `tieu_chi_cham_diem.txt`.
 
 ### 🔍 CHECK
 - **Đạt mục tiêu không?** Đạt 100% tất cả các yêu cầu.
-- **Kiểm định thực tế:**
-  - Kiểm tra `git status`: `.streamlit/secrets.toml` được Git bỏ qua hoàn toàn, không thể bị commit nhầm.
-  - Script kiểm thử `py_compile` và chạy ngầm thành công không lỗi syntax hay dependency.
-  - Khi chưa có khóa, ứng dụng xử lý an toàn (Graceful fallback) và hiển thị thông báo hướng dẫn người dùng cấu hình mà không làm crash app.
+- **Kiểm định thực tế Bước 6:**
+  - Đã chạy script kiểm tra quyền truy cập trên Google Sheet `149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM` ("leads_for_gsheet học"):
+    - Quyền xác nhận: `lead-scoring-sa@project-63e5b440-f1e1-45b3-99b.iam.gserviceaccount.com` sở hữu vai trò `writer` (Người chỉnh sửa).
+  - Đọc thành công toàn bộ 500 khách hàng từ worksheet `Sheet1` (gid `1542775777`).
+  - Đã tạo thành công worksheet `Ket_Qua_Cham_Diem` trên Google Sheet của người dùng để sẵn sàng nhận dữ liệu điểm số.
+  - Kiểm tra `git status`: `.streamlit/secrets.toml` và các file `*.json` chứa khóa được Git bỏ qua hoàn toàn, bảo mật tuyệt đối.
+  - Cú pháp Python được xác thực qua `py_compile` (exit code 0).
 
 ### 🔄 ACT
-- Hướng dẫn người dùng các bước thực hiện trên Google Cloud Console và chia sẻ quyền trên Google Sheet.
+- Đẩy toàn bộ mã nguồn ứng dụng và tài liệu lên GitHub repository (`main` và `master`).
+- Xóa bỏ PAT token khỏi Git remote URL ngay sau lệnh push.
 - Cập nhật nhật ký phát triển trong `AGENTS.md`.
 

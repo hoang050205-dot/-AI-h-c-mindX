@@ -404,15 +404,28 @@ def load_private_sheet(sheet_id_or_url: str, worksheet_identifier=0):
     if client is None:
         raise ValueError(
             "Chưa tìm thấy cấu hình Google Cloud Service Account!\n"
-            "Vui lòng tạo file `.streamlit/secrets.toml` chứa khóa `[gcp_service_account]` (xem mẫu tại `.streamlit/secrets.toml.example`)."
+            "Vui lòng kiểm tra lại file `.streamlit/secrets.toml`."
         )
         
-    sheet_id = sheet_id_or_url.strip()
-    if "spreadsheets/d/" in sheet_id:
-        match = re.search(r"spreadsheets/d/([a-zA-Z0-9-_]+)", sheet_id)
+    raw_str = sheet_id_or_url.strip()
+    
+    # 1. Trích xuất gid nếu có trong URL
+    gid = None
+    if "gid=" in raw_str:
+        gid_match = re.search(r"gid=([0-9]+)", raw_str)
+        if gid_match:
+            gid = int(gid_match.group(1))
+            
+    # 2. Trích xuất sheet_id từ URL
+    if "spreadsheets/d/" in raw_str:
+        match = re.search(r"spreadsheets/d/([a-zA-Z0-9-_]+)", raw_str)
         if match:
             sheet_id = match.group(1)
-            
+        else:
+            sheet_id = raw_str
+    else:
+        sheet_id = raw_str
+        
     try:
         spreadsheet = client.open_by_key(sheet_id)
     except Exception as e:
@@ -421,7 +434,13 @@ def load_private_sheet(sheet_id_or_url: str, worksheet_identifier=0):
             "Hãy kiểm tra lại xem bạn đã bấm 'Chia sẻ' (Share) bảng tính này cho email của Service Account chưa!"
         )
         
-    if isinstance(worksheet_identifier, int):
+    # Chọn worksheet theo gid hoặc identifier
+    if gid is not None:
+        try:
+            worksheet = spreadsheet.get_worksheet_by_id(gid)
+        except Exception:
+            worksheet = spreadsheet.sheet1
+    elif isinstance(worksheet_identifier, int):
         worksheet = spreadsheet.get_worksheet(worksheet_identifier)
     else:
         worksheet = spreadsheet.worksheet(worksheet_identifier)
@@ -438,6 +457,44 @@ def load_private_sheet(sheet_id_or_url: str, worksheet_identifier=0):
         df = pd.DataFrame(records)
         
     return df
+
+
+def sync_scores_to_private_sheet(sheet_id_or_url: str, current_df: pd.DataFrame, target_tab_title="Ket_Qua_Cham_Diem"):
+    """Đồng bộ điểm và phân loại AI ngược trở lại một tab riêng trên Google Sheet Private"""
+    client = get_gspread_client()
+    if client is None:
+        return False, "Chưa tìm thấy cấu hình Service Account trong `.streamlit/secrets.toml`!"
+        
+    raw_str = sheet_id_or_url.strip()
+    if "spreadsheets/d/" in raw_str:
+        match = re.search(r"spreadsheets/d/([a-zA-Z0-9-_]+)", raw_str)
+        sheet_id = match.group(1) if match else raw_str
+    else:
+        sheet_id = raw_str
+        
+    try:
+        sh = client.open_by_key(sheet_id)
+        target_ws = None
+        for ws in sh.worksheets():
+            if ws.title == target_tab_title:
+                target_ws = ws
+                break
+        if target_ws is None:
+            target_ws = sh.add_worksheet(title=target_tab_title, rows=len(current_df) + 20, cols=12)
+            
+        export_cols = ["id", "ten_khach", "sdt", "diem_so", "trang_thai", "da_duyet", "ly_do_ai", "ghi_chu_sales", "nhu_cau_mo_ta"]
+        valid_cols = [c for c in export_cols if c in current_df.columns]
+        sub_df = current_df[valid_cols].copy()
+        if "da_duyet" in sub_df.columns:
+            sub_df["da_duyet"] = sub_df["da_duyet"].apply(lambda x: "Đã duyệt" if x else "Chưa duyệt")
+            
+        data_to_write = [valid_cols] + sub_df.astype(str).values.tolist()
+        target_ws.clear()
+        target_ws.update(data_to_write)
+        return True, f"Đã đồng bộ thành công {len(sub_df)} hồ sơ vào tab '{target_tab_title}' trên Google Sheet!"
+    except Exception as e:
+        return False, f"Lỗi đồng bộ Google Sheet: {e}"
+
 
 
 # ---------------------------------------------------------------------------
@@ -660,7 +717,8 @@ with st.sidebar:
     elif source_choice == "🔒 Google Sheets Private (Service Account)":
         sa_ready = get_gspread_client() is not None
         if sa_ready:
-            st.success("🟢 Service Account đã kết nối sẵn sàng!")
+            st.success("🟢 Service Account đã kết nối & xác thực thành công!")
+            st.caption("📧 `lead-scoring-sa@project-63e5b440-f1e1-45b3-99b.iam.gserviceaccount.com`")
         else:
             st.warning("⚠️ Chưa cấu hình secrets.toml cho Service Account.")
             with st.expander("ℹ️ Hướng dẫn cấu hình nhanh"):
@@ -671,9 +729,9 @@ with st.sidebar:
                 """)
                 
         private_id_input = st.text_input(
-            "Nhập Sheet ID Private:",
-            value=DEFAULT_PRIVATE_SHEET_ID,
-            help="Mã ID nằm giữa /d/ và /edit trong URL Google Sheet"
+            "Nhập Link hoặc ID Google Sheet:",
+            value="https://docs.google.com/spreadsheets/d/149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM/edit?gid=1542775777#gid=1542775777",
+            help="Dán URL đầy đủ hoặc mã ID của Google Sheet"
         )
         
         if st.button("🔐 Nạp Dữ Liệu Private Sheet", use_container_width=True):
@@ -687,10 +745,11 @@ with st.sidebar:
                     loaded["ghi_chu_sales"] = ""
                     st.session_state.leads_df = loaded
                     st.session_state.has_run_scoring = False
-                    st.success(f"Đã nạp thành công {len(loaded)} dòng từ Private Google Sheet!")
+                    st.success(f"🎉 Đã nạp thành công {len(loaded)} dòng từ Google Sheet Private: 'leads_for_gsheet học'!")
                     st.rerun()
                 else:
                     st.error("Không thể đọc dữ liệu. Vui lòng kiểm tra lại cấu hình Service Account và quyền Share!")
+
             
     # 3. Google Sheets Public
     elif source_choice == "🌐 Link Google Sheets Public (CSV Export)":
@@ -1016,10 +1075,32 @@ with tab_main:
                 use_container_width=True
             )
 
+    # Khối Đồng Bộ Lên Google Sheets Private
+    st.markdown("---")
+    st.markdown("#### ☁️ Đồng Bộ Kết Quả Lên Google Sheets Private")
+    sync_c1, sync_c2 = st.columns([4, 2])
+    with sync_c1:
+        target_sheet_url_input = st.text_input(
+            "Link hoặc ID Google Sheet cần đồng bộ kết quả:",
+            value="https://docs.google.com/spreadsheets/d/149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM/edit?gid=1542775777#gid=1542775777",
+            help="Dữ liệu sẽ được tự động ghi vào tab 'Ket_Qua_Cham_Diem' trong bảng tính này"
+        )
+    with sync_c2:
+        st.write("")
+        st.write("")
+        if st.button("🚀 Đẩy Điểm Sang Sheet Private", type="secondary", use_container_width=True):
+            with st.spinner("Đang đồng bộ dữ liệu sang Google Sheets..."):
+                ok, msg = sync_scores_to_private_sheet(target_sheet_url_input, st.session_state.leads_df)
+                if ok:
+                    st.success(f"🎉 {msg}")
+                else:
+                    st.error(f"❌ {msg}")
+
 
 # ===========================================================================
 # TAB 2: THẺ BÀN GIAO LEAD CHI TIẾT & KỊCH BẢN SALES
 # ===========================================================================
+
 with tab_card:
     st.markdown("### 📇 Thẻ Bàn Giao Khách Hàng Tiềm Năng (Lead Handoff Card)")
     st.caption("Cung cấp đầy đủ thông tin bối cảnh, bằng chứng AI nhận diện và kịch bản mở lời chuẩn hóa giúp Sales chốt hẹn xem nhà.")
