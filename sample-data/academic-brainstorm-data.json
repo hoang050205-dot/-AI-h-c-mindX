@@ -1,0 +1,76 @@
+{
+  "project_name": "Tự Động Hóa Thu Thập Dữ Liệu Học Viên & Báo Cáo Đánh Giá Giảng Viên",
+  "date": "2026-09-11",
+  "author": "Minh Hoàng (Academic / Training Officer)",
+  "mentor": "MT Đức Thuận",
+  "version": "1.0.0",
+  "contract": {
+    "outcome": {
+      "title": "Outcome (Kết quả đầu ra)",
+      "desc": "Custom Skill 'academic:training-ops' tự động hóa trọn gói: Thu thập dữ liệu phân tán -> Chuẩn hóa Excel Master (kèm sheet tổng hợp KPI giảng viên) -> Xuất Báo cáo Phân tích Sư phạm & Hiệu suất Giảng dạy gửi Ban Giám đốc.",
+      "artifact": "outputs/reports/Academic_Student_Grades_Master.xlsx & outputs/reports/Academic_Teacher_Performance_Report.md"
+    },
+    "constraints": {
+      "title": "Constraints (Ràng buộc & Ranh giới)",
+      "desc": "Bảo mật PII (ẩn SĐT/Email cá nhân học viên); chuẩn hóa thang điểm số học 0-10 (không để text rác hay lỗi NaN); tích hợp cơ chế dự phòng Offline Mock Data khi web nguồn bị chặn hoặc chưa có mạng.",
+      "rule": "Bảo mật PII, Deterministic Scoring, Zero Hallucination"
+    },
+    "non_goals": {
+      "title": "Non-goals (Những thứ KHÔNG làm)",
+      "desc": "Không tự động gửi email cảnh báo điểm trực tiếp cho học viên/phụ huynh mà chưa có phê duyệt; không ghi đè trực tiếp vào DB core của trường/LMS; không tự động chấm bài luận.",
+      "boundary": "Chỉ xử lý thu thập, chuẩn hóa, phân tích & lập báo cáo học vụ"
+    },
+    "acceptance_criteria": {
+      "title": "Acceptance Criteria (Tiêu chí nghiệm thu)",
+      "desc": "Lọc sạch 100% bản ghi lỗi; tỷ lệ trùng lặp 0%; 100% giảng viên có đủ chỉ số thống kê (Pass Rate %, Điểm TB, Phân phối điểm); Dashboard Excel mở mượt mà không lỗi công thức.",
+      "metric": "100% dữ liệu chuẩn hóa, sai số tính toán = 0"
+    }
+  },
+  "approaches": [
+    {
+      "id": "app_1",
+      "name": "Approach 1: Lean / Direct (Python openpyxl Scraper)",
+      "badge": "Nhanh & Tiết kiệm",
+      "badge_type": "viable",
+      "concept": "1 script Python đơn lẻ thu thập từ danh sách URL cố định, chuẩn hóa bằng Regex/Pandas và xuất thẳng Excel/Markdown.",
+      "pros": ["Triển khai trong 1-2 giờ", "Chi phí 0 token", "Dễ chạy định kỳ bằng cron"],
+      "cons": ["Kém linh hoạt khi giao diện web thay đổi", "Thiếu chiều sâu phân tích sư phạm định tính"],
+      "key_assumption": "Web nguồn giữ nguyên cấu trúc DOM và không yêu cầu đăng nhập phức tạp.",
+      "first_failure_point": "Trang web nguồn đổi cấu trúc bảng HTML làm kịch bản cào dữ liệu bị crash."
+    },
+    {
+      "id": "app_2",
+      "name": "Approach 2: Workflow / Agentic Pipeline (3 Tác Tử + Checkpoint)",
+      "badge": "Khuyên dùng (Recommended)",
+      "badge_type": "recommended",
+      "concept": "Pipeline tác tử: Harvester Agent (thu thập/tìm kiếm nguồn) -> Cleaner Engine (chuẩn hóa số học & khử trùng) -> Human Checkpoint -> Academic Analyst Agent (phân tích hiệu suất giảng viên & viết báo cáo).",
+      "pros": ["Kết hợp hoàn hảo giữa độ chính xác số học (Python) và suy luận sư phạm (LLM)", "Có trạm kiểm duyệt dữ liệu an toàn", "Dễ dàng thích ứng khi nguồn dữ liệu thay đổi"],
+      "cons": ["Cần định nghĩa cấu trúc Handoff Schema chặt chẽ giữa các bước"],
+      "key_assumption": "Dữ liệu trung gian sau bước Cleaner có đầy đủ trường định danh giảng viên và điểm số.",
+      "first_failure_point": "Nguồn thu thập bị thiếu thông tin Giảng viên phụ trách khiến không thể phân cụm thống kê."
+    },
+    {
+      "id": "app_3",
+      "name": "Approach 3: Scalable / Tool-Augmented (Headless Browser + SQLite DB + Streamlit)",
+      "badge": "Quá tải (Overkill)",
+      "badge_type": "overkill",
+      "concept": "Xây dựng hệ thống Crawler ngầm với Playwright, lưu trữ cơ sở dữ liệu SQLite/Postgres theo dõi biến động điểm qua nhiều kỳ và dựng Web App Streamlit.",
+      "pros": ["Theo dõi biến động điểm dài hạn", "Dashboard web trực quan tương tác đa chiều"],
+      "cons": ["Mất nhiều ngày thiết lập", "Cồng kềnh, chi phí bảo trì cao so với nhu cầu làm báo cáo nội bộ định kỳ"],
+      "key_assumption": "Cần theo dõi hàng chục nghìn học viên và có máy chủ chuyên dụng vận hành.",
+      "first_failure_point": "Playwright bị chặn bởi Cloudflare/Bot-detection hoặc xung đột thư viện headless trên máy trạm."
+    }
+  ],
+  "recommendation": {
+    "chosen": "Approach 2 (Workflow / Agentic Pipeline)",
+    "rationale": "Phương án 2 giải quyết trọn vẹn cả 4 bài toán của nhân viên đào tạo: Tự tìm kiếm dữ liệu -> Làm sạch chính xác không sai số -> Kiểm duyệt an toàn -> Báo cáo sư phạm sâu sắc. Tuân thủ triệt để nguyên tắc KISS và Course Heuristic.",
+    "next_step": "Đóng gói Skill 'academic:training-ops' vào .agents/skills/ và bổ sung chu kỳ PDCA #05 vào docs/pdca-log.md."
+  },
+  "workflow_nodes": [
+    {"step": "1. Harvester", "name": "Thu Thập Nguồn", "detail": "Web Scout / Form Harvester / Synthetic Mockup", "icon": "🌐"},
+    {"step": "2. Cleaner", "name": "Chuẩn Hóa Số Học", "detail": "Ép kiểu float thang 10, khử trùng, ẩn PII", "icon": "🧹"},
+    {"step": "3. Checkpoint", "name": "Duyệt Dữ Liệu", "detail": "Xác nhận bảng điểm trước khi tính KPI", "icon": "👁️"},
+    {"step": "4. Master Excel", "name": "Xuất Bảng Tính", "detail": "Sheet Học viên + Sheet KPI Giảng viên", "icon": "📊"},
+    {"step": "5. Analyst", "name": "Báo Cáo Sư Phạm", "detail": "Đánh giá phân hóa, đề xuất Ban Giám Đốc", "icon": "📝"}
+  ]
+}

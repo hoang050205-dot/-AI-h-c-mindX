@@ -1,0 +1,98 @@
+{
+  "project_name": "Đóng Gói Chuyên Gia Kiểm Tra & Thẩm Định Bộ Chứng Từ XNK (customs:doc-auditor v2.0) với Hệ Thống 36 Bẫy Lỗi & Sai Lệch",
+  "date": "2026-09-16",
+  "author": "Minh Hoàng (Documentation Audit Specialist)",
+  "mentor": "MT Đức Thuận",
+  "version": "2.0.0",
+  "contract": {
+    "outcome": {
+      "title": "Outcome (Kết quả đầu ra)",
+      "desc": "Đóng gói hoàn chỉnh Skill customs:doc-auditor v2.0 theo chuẩn Antigravity; Xây dựng công cụ CLI audit_docs.py kiểm toán 5 lớp độc lập tích hợp Danh mục 36 Bẫy lỗi chứng từ thực tế (Logic thời gian, Thực thể & Typo Levenshtein, Khối lượng/Số kiện, Trị giá/HS Code, và Bẫy Pháp lý C/O); Bộ dữ liệu mẫu nâng cao; Sổ tay tra cứu 36 bẫy lỗi; Xuất Báo cáo Thẩm định 4 phần với Ma trận sai lệch co giãn động từ 0 đến N lỗi.",
+      "artifact": ".agents/skills/customs-doc-auditor/ (SKILL.md, scripts/audit_docs.py, resources/, examples/)"
+    },
+    "constraints": {
+      "title": "Constraints (Ràng buộc & Ranh giới)",
+      "desc": "Mọi kết luận sai lệch và đề xuất xử lý phải căn cứ pháp luật và thông lệ quốc tế hiện hành: Luật Hải quan 54/2014, Thông tư 38/2015, TT 39/2018, TT 121/2025/TT-BTC, Nghị định 128/2020/NĐ-CP, Nghị định 69/2018, UCP 600 và Incoterms 2020. Hoàn toàn chạy offline trên Windows, bảo mật dữ liệu doanh nghiệp.",
+      "rule": "100% kiểm tra chính xác số học, ngày tháng và đối chiếu chéo thực thể theo danh mục 36 bẫy lỗi"
+    },
+    "non_goals": {
+      "title": "Non-goals (Những thứ KHÔNG làm)",
+      "desc": "Không cố định số lượng lỗi (ma trận co giãn động); Không tự động gửi tờ khai lên hệ thống VNACCS mà dừng lại ở vai trò Thẩm định & Cảnh báo tiền kiểm tra; Không xử lý ảnh scan chất lượng quá kém vượt ngoài khả năng nhận diện văn bản.",
+      "boundary": "Tập trung thẩm định tính logic, số học, câu chữ, pháp lý và đưa ra khuyến nghị khắc phục tối ưu"
+    },
+    "acceptance_criteria": {
+      "title": "Acceptance Criteria (Tiêu chí nghiệm thu)",
+      "desc": "Hệ thống bao quát trọn vẹn danh mục 36 bẫy lỗi chứng từ XNK; Ma trận sai lệch tự động hiển thị đầy đủ mã lỗi (L1-01 -> L5-05), rủi ro hải quan và đề xuất khắc phục cụ thể; Thời gian xử lý < 1 giây; Báo cáo chuẩn 4 phần có verified checklist và khuyến nghị 3 nhóm đối tác.",
+      "metric": "Đạt 100% độ chính xác kiểm toán, thời gian phản hồi < 500ms"
+    }
+  },
+  "approaches": [
+    {
+      "id": "app_1",
+      "name": "Approach 1: Modular Python Audit Engine v2.0 (36-Error Catalog) + LLM Specialist Agent",
+      "badge": "Khuyên dùng (Recommended)",
+      "badge_type": "recommended",
+      "concept": "Xây dựng engine Python audit_docs.py kiến trúc mô-đun hóa, hỗ trợ kiểm tra linh hoạt 36 bẫy lỗi thực tế: tính toán số học từng dòng, cộng dồn Subtotal, kiểm tra định dạng ngày tháng đa chuẩn, tính khoảng cách Levenshtein bắt lỗi chính tả thực thể, rà soát Incoterms và hạn C/O, kết hợp cùng Agent chuyên gia tư vấn pháp lý hải quan.",
+      "pros": [
+        "Không bị giới hạn vào một ca kiểm thử cố định nào, co giãn linh hoạt từ 0 đến hàng chục lỗi",
+        "Độ chính xác số học và thời gian 100% tuyệt đối",
+        "Có mã định danh bẫy lỗi chuẩn hóa (L1-01 đến L5-05) dễ dàng đối chiếu",
+        "Tốc độ kiểm toán siêu nhanh (dưới 500ms), bảo mật offline 100%"
+      ],
+      "cons": [
+        "Cần dữ liệu chứng từ đã được số hóa hoặc trích xuất dạng văn bản có cấu trúc"
+      ],
+      "key_assumption": "Dữ liệu chứng từ giữ được các trường thông tin cơ bản để bóc tách.",
+      "first_failure_point": "Chứng từ viết tay hoàn toàn hoặc bản scan bị mất góc làm mất số liệu."
+    },
+    {
+      "id": "app_2",
+      "name": "Approach 2: Pure LLM Zero-Shot Prompting",
+      "badge": "Dễ ảo giác số học (Viable but Risky)",
+      "badge_type": "viable",
+      "concept": "Đưa toàn văn nội dung chứng từ vào prompt dài và dựa hoàn toàn vào khả năng đọc hiểu của LLM để tìm kiếm các điểm mâu thuẫn.",
+      "pros": [
+        "Không cần viết script code Python phụ trợ",
+        "Triển khai cực kỳ nhanh chỉ với một file SKILL.md"
+      ],
+      "cons": [
+        "Dễ bị ảo giác số học khi nhân bảng đơn giá x số lượng nhiều dòng",
+        "Có thể bỏ sót sai lệch trọng lượng nhỏ (làm tròn số 12.345,67 kg vs 12.345 kg)",
+        "Dễ nhầm lẫn giữa các định dạng ngày tháng DD/MM/YYYY và MM/DD/YYYY"
+      ],
+      "key_assumption": "LLM duy trì độ chính xác tính toán 100% qua hàng chục con số trong prompt.",
+      "first_failure_point": "Gặp hóa đơn có 20 dòng sản phẩm với các số thập phân phức tạp."
+    },
+    {
+      "id": "app_3",
+      "name": "Approach 3: Heavy Cloud Vision SaaS Integration",
+      "badge": "Phức tạp & Rủi ro bảo mật (Overkill / Fragile)",
+      "badge_type": "overkill",
+      "concept": "Kết nối API bên ngoài tới các nền tảng OCR thương mại để tự động quét toàn bộ file PDF ảnh của doanh nghiệp.",
+      "pros": [
+        "Xử lý được các file scan PDF trực tiếp không cần trích xuất text"
+      ],
+      "cons": [
+        "Vi phạm nghiêm trọng Quy tắc 5 của Workspace (Bảo mật thông tin thương mại, giá mua bán và khách hàng)",
+        "Phụ thuộc kết nối Internet và mất chi phí bản quyền API hàng tháng",
+        "Khó tùy biến theo các quy tắc kiểm tra nghiệp vụ đặc thù của Hải quan Việt Nam"
+      ],
+      "key_assumption": "Hạ tầng mạng luôn ổn định và doanh nghiệp cho phép gửi dữ liệu mật lên đám mây.",
+      "first_failure_point": "Nhà cung cấp SaaS thay đổi API hoặc chặn IP mạng Việt Nam."
+    }
+  ],
+  "recommendation": {
+    "chosen": "Approach 1: Modular Python Audit Engine v2.0 (36-Error Catalog) + LLM Specialist Agent",
+    "rationale": "Phương án 1 đáp ứng hoàn hảo yêu cầu thực tế của người dùng: Loại bỏ hoàn toàn tư duy 'cố định 6 lỗi', mở rộng thành hệ thống kiểm soát 36 bẫy lỗi nghiệp vụ kinh điển, có khả năng co giãn ma trận sai lệch tự động từ 0 đến N lỗi và đưa ra lộ trình khắc phục sắc sảo phân quyền 3 bên (Shipper, Hãng tàu, Người truyền tờ khai).",
+    "next_step": "Hoàn tất kiểm thử nghiệm thu và đưa Skill customs:doc-auditor vào vận hành chính thức."
+  },
+  "workflow_nodes": [
+    {"step": "1. Input", "name": "Tiếp Nhận 5 Chứng Từ", "detail": "Sales Contract, Commercial Invoice, Packing List, Bill of Lading, C/O Form AK", "icon": "📑"},
+    {"step": "2. Lớp 1", "name": "Trình Tự Thời Gian (L1)", "detail": "8 lỗi: Contract vs CI vs B/L; Hạn C/O 12 tháng; Ô Retroactive", "icon": "⏱️"},
+    {"step": "3. Lớp 2", "name": "Thực Thể & Lỗi Chính Tả (L2)", "detail": "8 lỗi: Typo tên công ty, MST, địa chỉ Levenshtein, UN-LOCODE cảng", "icon": "🏢"},
+    {"step": "4. Lớp 3", "name": "Khối Lượng & Đóng Gói (L3)", "detail": "7 lỗi: GW vs NW, lệch GW PL vs BL, số kiện, Seal No., hun trùng ISPM 15", "icon": "📦"},
+    {"step": "5. Lớp 4", "name": "Trị Giá & HS Code (L4)", "detail": "8 lỗi: Phép nhân từng dòng, Subtotal, tiền tệ Currency, HS 6-số, Incoterms", "icon": "💰"},
+    {"step": "6. Lớp 5", "name": "Pháp Lý Hải Quan (L5)", "detail": "5 lỗi: Tiêu chí C/O, nợ C/O 30 ngày TT 38/121, tra cứu mức phạt NĐ 128", "icon": "⚖️"},
+    {"step": "7. Output", "name": "Báo Cáo Co Giãn Động", "detail": "Ma trận sai lệch từ 0 đến N lỗi, Verified Checklist & Khuyến nghị 3 bên", "icon": "📊"}
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "registry_version": "1.0.0",
+  "skill": "customs-hs-classifier",
+  "name": "Customs Classification & Tariff Dedicated Assets Registry",
+  "description": "Cơ sở Dữ liệu Tài sản Chuyên biệt về Phân loại HS, Biểu thuế XNK và Quản lý Ngoại thương phục vụ Skill customs:hs-classifier",
+  "last_updated": "2026-09-16",
+  "assets": [
+    {
+      "id": "ASSET-01",
+      "filename": "Bieu_thue_XNK_2026.xlsx",
+      "title": "Biểu thuế Xuất nhập khẩu Tổng hợp Quốc gia 2026",
+      "source": "Google Spreadsheet (cập nhật mới nhất 2026)",
+      "format": "MS Excel (.xlsx)",
+      "size_bytes": 32271537,
+      "authority": "Bộ Tài chính / Tổng cục Hải quan / Các Nghị định Biểu thuế Ưu đãi đặc biệt FTA",
+      "key_sheets": [
+        {"sheet": "BT2026", "description": "Biểu thuế tổng hợp 2026 gồm mã HS 8 số, mô tả Anh-Việt, ĐVT, thuế Thông thường, MFN, VAT, và các FTA"},
+        {"sheet": "6QT", "description": "6 Quy tắc tổng quát giải thích phân loại hàng hóa HS"},
+        {"sheet": "AC", "description": "Biểu thuế ACFTA (Asean - Trung Quốc, Form E)"},
+        {"sheet": "AT", "description": "Biểu thuế ATIGA (Asean, Form D)"},
+        {"sheet": "AJ / VJ", "description": "Biểu thuế AJCEP & VJEPA (Việt Nam - Nhật Bản, Form AJ, VJ)"},
+        {"sheet": "AK / VK", "description": "Biểu thuế AKFTA & VKFTA (Việt Nam - Hàn Quốc, Form AK, VK)"},
+        {"sheet": "AANZ / AI", "description": "Biểu thuế AANZFTA (Úc-NZ) và AIFTA (Ấn Độ)"},
+        {"sheet": "CPTPP", "description": "Biểu thuế CPTPP 11 nước"},
+        {"sheet": "EV-NK", "description": "Biểu thuế EVFTA Nhập khẩu (Form EUR.1)"},
+        {"sheet": "UKV", "description": "Biểu thuế UKVFTA (Việt Nam - Vương quốc Anh)"},
+        {"sheet": "RCEPT", "description": "Biểu thuế RCEP các nhóm nước A, B, C, D, E, F"},
+        {"sheet": "DB / MT", "description": "Biểu thuế Tiêu thụ đặc biệt & Bảo vệ môi trường"},
+        {"sheet": "XK", "description": "Biểu thuế Xuất khẩu, EVFTA-XK, CPTPP-XK, UKVFTA-XK"}
+      ],
+      "search_keywords": ["mã hs", "thuế mfn", "thuế vat", "acfta", "form e", "atiga", "form d", "evfta", "form eur.1", "cptpp", "thuế nhập khẩu", "thuế xuất khẩu"]
+    },
+    {
+      "id": "ASSET-02",
+      "filename": "Phu_luc_I_Danh_muc_hang_hoa_XNK_VN.pdf",
+      "title": "Phụ lục I — Danh mục Hàng hóa Xuất khẩu, Nhập khẩu Việt Nam (Song ngữ)",
+      "source": "C:\\Minh Hoang\\Khai bao hai quan\\Quy tac tra hs va phu luc hs\\Phu luc I.pdf",
+      "format": "PDF (Vector text extractable)",
+      "size_bytes": 11699047,
+      "total_pages": 604,
+      "authority": "Bộ Tài chính (Thông tư số 31/2022/TT-BTC dựa trên Danh mục AHTN và HS thế giới)",
+      "structure": "21 Phần (Sections), 97 Chương (Chapters), cấp mã 8 chữ số chuẩn hóa quốc gia",
+      "search_keywords": ["danh mục xnk", "phụ lục 1", "chú giải chương", "chú giải phần", "mã hàng 8 số", "mô tả song ngữ", "đơn vị tính"]
+    },
+    {
+      "id": "ASSET-03",
+      "filename": "Phu_luc_II_Sau_quy_tac_tong_quat_GRI.doc",
+      "text_companion": "Phu_luc_II_Sau_quy_tac_tong_quat_GRI.txt",
+      "title": "Phụ lục II — Sáu Quy tắc Tổng quát (GRI) & Chú giải Chi tiết (Explanatory Notes)",
+      "source": "C:\\Minh Hoang\\Khai bao hai quan\\Quy tac tra hs va phu luc hs\\Phu luc II.doc",
+      "format": "MS Word DOC + UTF-8 Plain Text Companion",
+      "size_bytes": 237056,
+      "authority": "Bộ Tài chính (Thông tư số 31/2022/TT-BTC) / Công ước Quốc tế HS của WCO",
+      "rules_covered": [
+        {"rule": "GRI 1", "summary": "Phân loại theo câu chữ của Nhóm (Heading) và Chú giải Phần/Chương; Tên đề mục chỉ có tính tham khảo"},
+        {"rule": "GRI 2a", "summary": "Hàng hóa chưa hoàn thiện, chưa hoàn chỉnh (có đặc trưng cơ bản) hoặc tháo rời, chưa lắp ráp"},
+        {"rule": "GRI 2b", "summary": "Hỗn hợp và hợp chất của nguyên liệu hoặc chất"},
+        {"rule": "GRI 3a", "summary": "Ưu tiên Nhóm có mô tả cụ thể, đặc trưng nhất thay vì mô tả khái quát"},
+        {"rule": "GRI 3b", "summary": "Hàng hỗn hợp, ghép bộ bán lẻ phân loại theo thành phần/bộ phận tạo nên đặc tính cơ bản"},
+        {"rule": "GRI 3c", "summary": "Phân loại vào Nhóm có thứ tự đánh số cuối cùng trong các nhóm tương đương"},
+        {"rule": "GRI 4", "summary": "Hàng hóa không thể phân loại theo GRI 1-3 thì xếp vào nhóm hàng hóa giống chúng nhất"},
+        {"rule": "GRI 5a", "summary": "Bao bì, hộp, túi chuyên dụng được thiết kế riêng cho hàng hóa đi kèm"},
+        {"rule": "GRI 5b", "summary": "Bao bì thông thường dùng đóng gói hàng hóa (trừ bao bì tái sử dụng liên tục)"},
+        {"rule": "GRI 6", "summary": "Phân loại ở cấp phân nhóm 6 số và 8 số: so sánh giữa các phân nhóm cùng cấp độ gạch (-)"}
+      ],
+      "search_keywords": ["gri 1", "gri 2", "gri 3", "gri 4", "gri 5", "gri 6", "quy tắc phân loại", "chú giải chi tiết", "essential character", "bán lẻ", "tháo rời"]
+    },
+    {
+      "id": "ASSET-04",
+      "filename": "danh_muc_hang_can_giay_phep_ND69.pdf",
+      "title": "Nghị định 69/2018/NĐ-CP — Quy định Chi tiết Luật Quản lý Ngoại thương",
+      "source": "C:\\Minh Hoang\\Khai bao hai quan\\danh mục hàng cần có giấy phép.pdf",
+      "format": "PDF (Scanned 89 pages)",
+      "size_bytes": 3440485,
+      "total_pages": 89,
+      "authority": "Chính phủ (Ký ban hành ngày 15/05/2018)",
+      "scope_appendices": [
+        {"appendix": "Phụ lục I", "title": "Danh mục hàng hóa CẤM xuất khẩu, CẤM nhập khẩu"},
+        {"appendix": "Phụ lục II", "title": "Danh mục hàng hóa XNK theo giấy phép, theo điều kiện thuộc quản lý Bộ Công Thương"},
+        {"appendix": "Phụ lục III", "title": "Danh mục hàng hóa XNK theo giấy phép, kiểm dịch, an toàn thực phẩm thuộc Bộ NN&PTNT"},
+        {"appendix": "Phụ lục IV", "title": "Danh mục hàng hóa thuộc diện kiểm tra, cấp phép của Bộ Y Tế"},
+        {"appendix": "Phụ lục V", "title": "Danh mục hàng hóa thuộc diện quản lý của Bộ Giao thông Vận tải"},
+        {"appendix": "Phụ lục VI", "title": "Danh mục hàng hóa thuộc diện quản lý của Bộ Khoa học và Công nghệ"},
+        {"appendix": "Phụ lục VII", "title": "Danh mục hàng hóa thuộc diện quản lý của Bộ Thông tin và Truyền thông"},
+        {"appendix": "Phụ lục VIII", "title": "Danh mục hàng hóa thuộc diện quản lý của Bộ Văn hóa, Thể thao và Du lịch"},
+        {"appendix": "Phụ lục IX", "title": "Danh mục hàng hóa thuộc diện quản lý của Bộ Tài nguyên và Môi trường"}
+      ],
+      "search_keywords": ["nghị định 69", "hàng cấm nhập khẩu", "hàng cấm xuất khẩu", "giấy phép nhập khẩu", "kiểm dịch thực vật", "kiểm tra chuyên ngành", "bộ nnptnt", "bộ công thương", "bộ y tế"]
+    }
+  ]
+}

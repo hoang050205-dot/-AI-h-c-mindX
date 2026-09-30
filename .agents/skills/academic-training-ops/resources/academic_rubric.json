@@ -1,0 +1,25 @@
+{
+  "rubric_name": "AI4A Academic Evaluation Standard Rubric",
+  "version": "1.0.0",
+  "grading_scale": "0.0 - 10.0 (Scale 10)",
+  "weights": {
+    "attendance_pct": 0.10,
+    "midterm_pct": 0.30,
+    "final_pct": 0.60
+  },
+  "pass_threshold": 5.0,
+  "rankings": [
+    { "rank": "Xuất sắc", "min_score": 9.0, "max_score": 10.0, "desc": "Nắm vững toàn diện kiến thức và thực hành xuất sắc" },
+    { "rank": "Giỏi", "min_score": 8.0, "max_score": 8.99, "desc": "Khả năng ứng dụng tốt, hoàn thành đầy đủ bài tập" },
+    { "rank": "Khá", "min_score": 6.5, "max_score": 7.99, "desc": "Đạt yêu cầu chuẩn đầu ra, cần bổ trợ thêm nâng cao" },
+    { "rank": "Trung bình", "min_score": 5.0, "max_score": 6.49, "desc": "Đạt ngưỡng tối thiểu, cần phụ đạo thêm" },
+    { "rank": "Yếu / Không Đạt", "min_score": 0.0, "max_score": 4.99, "desc": "Cần học lại hoặc thi lại bài đánh giá cuối kỳ" }
+  ],
+  "pedagogical_indicators": {
+    "ideal_pass_rate_min": 80.0,
+    "ideal_pass_rate_max": 95.0,
+    "inflation_alert_pct": 60.0,
+    "std_dev_high_threshold": 1.8,
+    "std_dev_low_threshold": 0.5
+  }
+}

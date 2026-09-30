@@ -1,0 +1,164 @@
+{
+  "shipment_info": {
+    "shipment_id": "SHP-2026-KR-VN-001",
+    "commodity": "Dây chuyền chiết rót và đóng nắp chai tự động (Automatic Liquid Filling and Capping Line)",
+    "intended_hs_code": "8479.89.39",
+    "country_of_origin": "Hàn Quốc (South Korea)",
+    "incoterms": "CIF Cat Lai Port, Ho Chi Minh City, Vietnam Incoterms 2020",
+    "customs_declaration_type": "A11 (Nhập khẩu tiêu dùng)"
+  },
+  "sales_contract": {
+    "contract_no": "HSC-VH-2026/08",
+    "contract_date": "15/08/2026",
+    "seller": {
+      "name": "HANSUNG TECH CO., LTD.",
+      "address": "124 Noksan Industrial Road, Gangseo-gu, Busan, South Korea",
+      "tax_id": "606-81-12345"
+    },
+    "buyer": {
+      "name": "CONG TY TNHH DAU TU & THUONG MAI VIET HAN",
+      "address": "So 45 Duong Tam Trinh, Phuong Mai Dong, Quan Hoang Mai, Ha Noi, Vietnam",
+      "tax_id": "0109876543"
+    },
+    "items": [
+      {
+        "item_no": 1,
+        "description": "Automatic Liquid Filling Machine, Model AFC-2026-KR",
+        "hs_code": "8479.89",
+        "quantity": 1,
+        "uom": "SET",
+        "unit_price": 90000.0,
+        "total_amount": 90000.0
+      },
+      {
+        "item_no": 2,
+        "description": "Automatic Bottle Feeding & Capping Conveyor, Model ACC-2026-KR",
+        "hs_code": "8479.89",
+        "quantity": 1,
+        "uom": "SET",
+        "unit_price": 25000.0,
+        "total_amount": 25000.0
+      }
+    ],
+    "total_amount": 115000.0,
+    "currency": "USD",
+    "delivery_term": "CIF Cat Lai Port, Ho Chi Minh City, Vietnam Incoterms 2020",
+    "payment_terms": "100% T/T within 30 days after B/L date",
+    "pol": "Busan Port, Korea",
+    "pod": "Cat Lai Port, Ho Chi Minh City, Vietnam"
+  },
+  "commercial_invoice": {
+    "invoice_no": "INV-20260828",
+    "invoice_date": "08/09/2026",
+    "seller": {
+      "name": "HANSUNG TECH CO., LTD.",
+      "address": "124 Noksan Industrial Road, Gangseo-gu, Busan, South Korea",
+      "tax_id": "606-81-12345"
+    },
+    "buyer": {
+      "name": "CONG TY TNHH DAU TU & THUONG MAI VIET HAN",
+      "address": "So 45 Duong Tam Trinh, Phuong Mai Dong, Quan Hoang Mai, Ha Noi, Vietnam",
+      "tax_id": "0109876543"
+    },
+    "contract_no": "HSC-VH-2026/08",
+    "items": [
+      {
+        "item_no": 1,
+        "description": "Automatic Liquid Filling Machine, Model AFC-2026-KR",
+        "hs_code": "8479.89",
+        "quantity": 1,
+        "uom": "SET",
+        "unit_price": 90000.0,
+        "total_amount": 90000.0
+      },
+      {
+        "item_no": 2,
+        "description": "Automatic Bottle Feeding & Capping Conveyor, Model ACC-2026-KR",
+        "hs_code": "8479.89",
+        "quantity": 1,
+        "uom": "SET",
+        "unit_price": 25000.0,
+        "total_amount": 23000.0
+      }
+    ],
+    "total_amount": 113000.0,
+    "currency": "USD",
+    "incoterms": "CIF Cat Lai Port, Vietnam Incoterms 2020",
+    "pol": "Busan Port, Korea",
+    "pod": "Cat Lai Port, Ho Chi Minh City, Vietnam"
+  },
+  "packing_list": {
+    "pl_no": "PL-20260828",
+    "pl_date": "04/09/2026",
+    "seller": {
+      "name": "HANSUNG TECH CO., LTD.",
+      "address": "124 Noksan Industrial Road, Gangseo-gu, Busan, South Korea"
+    },
+    "buyer": {
+      "name": "CONG TY TNHH DAU TU & THUONG MAI VIET HAN",
+      "address": "So 45 Duong Tam Trinh, Phuong Mai Dong, Quan Hoang Mai, Ha Noi, Vietnam"
+    },
+    "invoice_no": "INV-20260828",
+    "total_packages": 8,
+    "package_type": "Wooden Cases",
+    "gross_weight_kg": 18450.0,
+    "net_weight_kg": 16800.0,
+    "measurement_cbm": 48.5,
+    "container_no": "KMTU7894561",
+    "seal_no": "KMTC88921"
+  },
+  "bill_of_lading": {
+    "bl_no": "KMTCBUS20260901",
+    "bl_type": "Ocean Bill of Lading (Clean On Board)",
+    "shipped_on_board_date": "05/09/2026",
+    "issue_date": "05/09/2026",
+    "shipper": {
+      "name": "HANSUNG TECH CO., LTD.",
+      "address": "124 Noksan Industrial Road, Gangseo-gu, Busan, South Korea"
+    },
+    "consignee": {
+      "name": "CONG TY TNHH DAU TU & THUONG MAI VIET HAN",
+      "address": "So 45 Duong Tam Trinh, Phuong Mai Dong, Quan Haong Mai, Ha Noi, Vietnam"
+    },
+    "notify_party": {
+      "name": "SAME AS CONSIGNEE",
+      "address": "SAME AS CONSIGNEE"
+    },
+    "vessel_voyage": "KMTC INCHEON V.2608S",
+    "pol": "Busan Port, Korea",
+    "pod": "Cat Lai Port, Ho Chi Minh City, Vietnam",
+    "goods_description": "1 UNIT OF AUTOMATIC LIQUID FILLING AND CAPPING LINE (TOTAL 8 WOODEN CASES)",
+    "total_packages": 8,
+    "gross_weight_kg": 18050.0,
+    "measurement_cbm": 48.5,
+    "container_no": "KMTU7894561",
+    "seal_no": "KMTC88921",
+    "freight_term": "Freight Prepaid"
+  },
+  "certificate_of_origin": {
+    "co_form": "Form AK (ASEAN - Korea Free Trade Area)",
+    "co_no": "KCCI-2026-AK-0912",
+    "issue_date": "12/09/2026",
+    "issuing_authority": "Korea Chamber of Commerce and Industry (KCCI)",
+    "box1_exporter": "HANSUNG TECH CO., LTD. (124 Noksan Industrial Road, Gangseo-gu, Busan, Korea)",
+    "box2_consignee": "CONG TY TNHH DAU TU & THUONG MAI VIET HAN (So 45 Duong Tam Trinh, Quan Hoang Mai, Ha Noi)",
+    "box3_transport_details": "FROM BUSAN, KOREA TO CAT LAI, VIETNAM BY KMTC INCHEON V.2608S",
+    "box7_goods_description": "Automatic Liquid Filling Machine, Model AFC-2026-KR (8 Wooden Cases)",
+    "box8_origin_criterion": "CTH",
+    "box9_gross_weight_or_other_quantity": "18,450.00 KGS",
+    "box10_invoice_no": "INV-20260828",
+    "box10_invoice_date": "08/09/2026",
+    "box8_hs_code": "8479.90",
+    "box13_issued_retroactively": false,
+    "box13_third_party_invoicing": false
+  },
+  "insurance_certificate": {
+    "policy_no": "DB-INS-2026-0903",
+    "issue_date": "03/09/2026",
+    "effective_date": "03/09/2026",
+    "insured_party": "HANSUNG TECH CO., LTD.",
+    "insured_amount": 126500.0,
+    "currency": "USD",
+    "coverage": "Institute Cargo Clauses (A) 110% of CIF value"
+  }
+}

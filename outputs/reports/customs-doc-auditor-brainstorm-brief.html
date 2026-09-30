@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstorm Decision Brief — Đóng Gói Chuyên Gia Kiểm Tra & Thẩm Định Bộ Chứng Từ XNK (customs:doc-auditor v2.0) với Hệ Thống 36 Bẫy Lỗi & Sai Lệch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(51, 65, 85, 0.8);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-primary: #38bdf8;
+      --accent-success: #34d399;
+      --accent-warning: #fbbf24;
+      --accent-danger: #f87171;
+      --accent-purple: #a78bfa;
+      --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(167, 139, 250, 0.1) 0%, transparent 40%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      color: var(--accent-primary);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #f8fafc, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .meta-bar strong {
+      color: var(--text);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+    }
+
+    .section-title span {
+      color: var(--accent-primary);
+    }
+
+    /* The 4-Field Contract Grid */
+    .contract-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+
+    .contract-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contract-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .contract-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .card-outcome::before { background: var(--accent-primary); }
+    .card-constraints::before { background: var(--accent-warning); }
+    .card-nongoals::before { background: var(--accent-danger); }
+    .card-acceptance::before { background: var(--accent-success); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-outcome .card-icon { background: rgba(56, 189, 248, 0.15); }
+    .card-constraints .card-icon { background: rgba(251, 191, 36, 0.15); }
+    .card-nongoals .card-icon { background: rgba(248, 113, 113, 0.15); }
+    .card-acceptance .card-icon { background: rgba(52, 211, 153, 0.15); }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      min-height: 72px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    /* Workflow Pipeline (Flowchart) */
+    .pipeline-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 56px;
+      backdrop-filter: blur(8px);
+    }
+
+    .pipeline-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .step-item {
+      flex: 1;
+      min-width: 170px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .step-item:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .step-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .step-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .step-detail {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .step-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Approaches Comparison Matrix */
+    .approaches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 56px;
+    }
+
+    .approach-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .approach-card.is-recommended {
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 24px -6px rgba(56, 189, 248, 0.25);
+    }
+
+    .approach-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .approach-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .tag-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .badge-recommended {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .badge-viable {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-success);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+    }
+
+    .badge-overkill {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--accent-danger);
+      border: 1px solid rgba(248, 113, 113, 0.4);
+    }
+
+    .approach-concept {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .list-block {
+      margin-bottom: 16px;
+    }
+
+    .list-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .list-pros { color: var(--accent-success); }
+    .list-cons { color: var(--accent-danger); }
+
+    .list-items {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .list-items li {
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .list-items li::before {
+      position: absolute;
+      left: 0;
+    }
+
+    .list-pros-items li::before { content: '✓'; color: var(--accent-success); }
+    .list-cons-items li::before { content: '✕'; color: var(--accent-danger); }
+
+    .triad-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+
+    .triad-item {
+      margin-bottom: 8px;
+    }
+
+    .triad-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .triad-label {
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .triad-text {
+      color: var(--text-muted);
+    }
+
+    /* Recommendation Banner */
+    .recommendation-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .banner-icon {
+      font-size: 42px;
+    }
+
+    .banner-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
+    }
+
+    .banner-content p {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .banner-next {
+      font-size: 13px;
+      color: var(--accent-warning);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-steps {
+        flex-direction: column;
+      }
+      .step-arrow {
+        transform: rotate(90deg);
+        margin: 4px 0;
+      }
+      .recommendation-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-pill">⚡ AI4A Brainstorm Contract v2.0.0</div>
+      <h1>Đóng Gói Chuyên Gia Kiểm Tra & Thẩm Định Bộ Chứng Từ XNK (customs:doc-auditor v2.0) với Hệ Thống 36 Bẫy Lỗi & Sai Lệch</h1>
+      <div class="meta-bar">
+        <div>Học viên: <strong>Minh Hoàng (Documentation Audit Specialist)</strong></div>
+        <div>Mentor: <strong>MT Đức Thuận</strong></div>
+        <div>Ngày lập: <strong>2026-09-16</strong></div>
+      </div>
+    </header>
+
+    <!-- 1. The 4-Field Contract -->
+    <section>
+      <h2 class="section-title"><span>01.</span> Bản Hợp Đồng Thực Thi (Core Contract)</h2>
+      <div class="contract-grid">
+        <div class="contract-card card-outcome">
+          <div class="card-header">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Outcome</div>
+          </div>
+          <div class="card-body">Đóng gói hoàn chỉnh Skill customs:doc-auditor v2.0 theo chuẩn Antigravity; Xây dựng công cụ CLI audit_docs.py kiểm toán 5 lớp độc lập tích hợp Danh mục 36 Bẫy lỗi chứng từ thực tế (Logic thời gian, Thực thể & Typo Levenshtein, Khối lượng/Số kiện, Trị giá/HS Code, và Bẫy Pháp lý C/O); Bộ dữ liệu mẫu nâng cao; Sổ tay tra cứu 36 bẫy lỗi; Xuất Báo cáo Thẩm định 4 phần với Ma trận sai lệch co giãn động từ 0 đến N lỗi.</div>
+          <div class="card-tag">Artifact: .agents/skills/customs-doc-auditor/ (SKILL.md, scripts/audit_docs.py, resources/, examples/)</div>
+        </div>
+
+        <div class="contract-card card-constraints">
+          <div class="card-header">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Constraints</div>
+          </div>
+          <div class="card-body">Mọi kết luận sai lệch và đề xuất xử lý phải căn cứ pháp luật và thông lệ quốc tế hiện hành: Luật Hải quan 54/2014, Thông tư 38/2015, TT 39/2018, TT 121/2025/TT-BTC, Nghị định 128/2020/NĐ-CP, Nghị định 69/2018, UCP 600 và Incoterms 2020. Hoàn toàn chạy offline trên Windows, bảo mật dữ liệu doanh nghiệp.</div>
+          <div class="card-tag">Rule: 100% kiểm tra chính xác số học, ngày tháng và đối chiếu chéo thực thể theo danh mục 36 bẫy lỗi</div>
+        </div>
+
+        <div class="contract-card card-nongoals">
+          <div class="card-header">
+            <div class="card-icon">🚫</div>
+            <div class="card-title">Non-goals</div>
+          </div>
+          <div class="card-body">Không cố định số lượng lỗi (ma trận co giãn động); Không tự động gửi tờ khai lên hệ thống VNACCS mà dừng lại ở vai trò Thẩm định & Cảnh báo tiền kiểm tra; Không xử lý ảnh scan chất lượng quá kém vượt ngoài khả năng nhận diện văn bản.</div>
+          <div class="card-tag">Boundary: Tập trung thẩm định tính logic, số học, câu chữ, pháp lý và đưa ra khuyến nghị khắc phục tối ưu</div>
+        </div>
+
+        <div class="contract-card card-acceptance">
+          <div class="card-header">
+            <div class="card-icon">✅</div>
+            <div class="card-title">Acceptance Criteria</div>
+          </div>
+          <div class="card-body">Hệ thống bao quát trọn vẹn danh mục 36 bẫy lỗi chứng từ XNK; Ma trận sai lệch tự động hiển thị đầy đủ mã lỗi (L1-01 -> L5-05), rủi ro hải quan và đề xuất khắc phục cụ thể; Thời gian xử lý < 1 giây; Báo cáo chuẩn 4 phần có verified checklist và khuyến nghị 3 nhóm đối tác.</div>
+          <div class="card-tag">Metric: Đạt 100% độ chính xác kiểm toán, thời gian phản hồi < 500ms</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Workflow OIPO Flowchart -->
+    <section>
+      <h2 class="section-title"><span>02.</span> Quy Trình Đề Xuất (OIPO Pipeline)</h2>
+      <div class="pipeline-container">
+        <div class="pipeline-steps">
+          
+          <div class="step-item">
+            <div class="step-icon">📑</div>
+            <div class="step-badge">1. Input</div>
+            <div class="step-name">Tiếp Nhận 5 Chứng Từ</div>
+            <div class="step-detail">Sales Contract, Commercial Invoice, Packing List, Bill of Lading, C/O Form AK</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">⏱️</div>
+            <div class="step-badge">2. Lớp 1</div>
+            <div class="step-name">Trình Tự Thời Gian (L1)</div>
+            <div class="step-detail">8 lỗi: Contract vs CI vs B/L; Hạn C/O 12 tháng; Ô Retroactive</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">🏢</div>
+            <div class="step-badge">3. Lớp 2</div>
+            <div class="step-name">Thực Thể & Lỗi Chính Tả (L2)</div>
+            <div class="step-detail">8 lỗi: Typo tên công ty, MST, địa chỉ Levenshtein, UN-LOCODE cảng</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">📦</div>
+            <div class="step-badge">4. Lớp 3</div>
+            <div class="step-name">Khối Lượng & Đóng Gói (L3)</div>
+            <div class="step-detail">7 lỗi: GW vs NW, lệch GW PL vs BL, số kiện, Seal No., hun trùng ISPM 15</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">💰</div>
+            <div class="step-badge">5. Lớp 4</div>
+            <div class="step-name">Trị Giá & HS Code (L4)</div>
+            <div class="step-detail">8 lỗi: Phép nhân từng dòng, Subtotal, tiền tệ Currency, HS 6-số, Incoterms</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">⚖️</div>
+            <div class="step-badge">6. Lớp 5</div>
+            <div class="step-name">Pháp Lý Hải Quan (L5)</div>
+            <div class="step-detail">5 lỗi: Tiêu chí C/O, nợ C/O 30 ngày TT 38/121, tra cứu mức phạt NĐ 128</div>
+          </div>
+        <div class="step-arrow">➔</div>
+          <div class="step-item">
+            <div class="step-icon">📊</div>
+            <div class="step-badge">7. Output</div>
+            <div class="step-name">Báo Cáo Co Giãn Động</div>
+            <div class="step-detail">Ma trận sai lệch từ 0 đến N lỗi, Verified Checklist & Khuyến nghị 3 bên</div>
+          </div>
+        
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Approach Exploration -->
+    <section>
+      <h2 class="section-title"><span>03.</span> So Sánh Các Phương Án Kỹ Thuật (Trade-off Matrix)</h2>
+      <div class="approaches-grid">
+        
+          <div class="approach-card is-recommended">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Approach 1: Modular Python Audit Engine v2.0 (36-Error Catalog) + LLM Specialist Agent</div>
+                <div class="tag-badge badge-recommended">Khuyên dùng (Recommended)</div>
+              </div>
+              <div class="approach-concept">Xây dựng engine Python audit_docs.py kiến trúc mô-đun hóa, hỗ trợ kiểm tra linh hoạt 36 bẫy lỗi thực tế: tính toán số học từng dòng, cộng dồn Subtotal, kiểm tra định dạng ngày tháng đa chuẩn, tính khoảng cách Levenshtein bắt lỗi chính tả thực thể, rà soát Incoterms và hạn C/O, kết hợp cùng Agent chuyên gia tư vấn pháp lý hải quan.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Không bị giới hạn vào một ca kiểm thử cố định nào, co giãn linh hoạt từ 0 đến hàng chục lỗi</li><li>Độ chính xác số học và thời gian 100% tuyệt đối</li><li>Có mã định danh bẫy lỗi chuẩn hóa (L1-01 đến L5-05) dễ dàng đối chiếu</li><li>Tốc độ kiểm toán siêu nhanh (dưới 500ms), bảo mật offline 100%</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Cần dữ liệu chứng từ đã được số hóa hoặc trích xuất dạng văn bản có cấu trúc</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">Dữ liệu chứng từ giữ được các trường thông tin cơ bản để bóc tách.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Chứng từ viết tay hoàn toàn hoặc bản scan bị mất góc làm mất số liệu.</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="approach-card">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Approach 2: Pure LLM Zero-Shot Prompting</div>
+                <div class="tag-badge badge-viable">Dễ ảo giác số học (Viable but Risky)</div>
+              </div>
+              <div class="approach-concept">Đưa toàn văn nội dung chứng từ vào prompt dài và dựa hoàn toàn vào khả năng đọc hiểu của LLM để tìm kiếm các điểm mâu thuẫn.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Không cần viết script code Python phụ trợ</li><li>Triển khai cực kỳ nhanh chỉ với một file SKILL.md</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Dễ bị ảo giác số học khi nhân bảng đơn giá x số lượng nhiều dòng</li><li>Có thể bỏ sót sai lệch trọng lượng nhỏ (làm tròn số 12.345,67 kg vs 12.345 kg)</li><li>Dễ nhầm lẫn giữa các định dạng ngày tháng DD/MM/YYYY và MM/DD/YYYY</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">LLM duy trì độ chính xác tính toán 100% qua hàng chục con số trong prompt.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Gặp hóa đơn có 20 dòng sản phẩm với các số thập phân phức tạp.</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="approach-card">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Approach 3: Heavy Cloud Vision SaaS Integration</div>
+                <div class="tag-badge badge-overkill">Phức tạp & Rủi ro bảo mật (Overkill / Fragile)</div>
+              </div>
+              <div class="approach-concept">Kết nối API bên ngoài tới các nền tảng OCR thương mại để tự động quét toàn bộ file PDF ảnh của doanh nghiệp.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Xử lý được các file scan PDF trực tiếp không cần trích xuất text</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Vi phạm nghiêm trọng Quy tắc 5 của Workspace (Bảo mật thông tin thương mại, giá mua bán và khách hàng)</li><li>Phụ thuộc kết nối Internet và mất chi phí bản quyền API hàng tháng</li><li>Khó tùy biến theo các quy tắc kiểm tra nghiệp vụ đặc thù của Hải quan Việt Nam</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">Hạ tầng mạng luôn ổn định và doanh nghiệp cho phép gửi dữ liệu mật lên đám mây.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Nhà cung cấp SaaS thay đổi API hoặc chặn IP mạng Việt Nam.</span>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- 4. Recommendation & Next Action -->
+    <section>
+      <div class="recommendation-banner">
+        <div class="banner-icon">🏆</div>
+        <div class="banner-content">
+          <h3>Quyết Định Chọn: Approach 1: Modular Python Audit Engine v2.0 (36-Error Catalog) + LLM Specialist Agent</h3>
+          <p>Phương án 1 đáp ứng hoàn hảo yêu cầu thực tế của người dùng: Loại bỏ hoàn toàn tư duy 'cố định 6 lỗi', mở rộng thành hệ thống kiểm soát 36 bẫy lỗi nghiệp vụ kinh điển, có khả năng co giãn ma trận sai lệch tự động từ 0 đến N lỗi và đưa ra lộ trình khắc phục sắc sảo phân quyền 3 bên (Shipper, Hãng tàu, Người truyền tờ khai).</p>
+          <div class="banner-next">👉 Bước tiếp theo: Hoàn tất kiểm thử nghiệm thu và đưa Skill customs:doc-auditor vào vận hành chính thức.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Đóng gói theo chuẩn Antigravity Customization System & AI4A Course Framework • Mentor: MT Đức Thuận
+    </footer>
+  </div>
+</body>
+</html>

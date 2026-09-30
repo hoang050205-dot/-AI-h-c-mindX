@@ -1,0 +1,77 @@
+{
+  "project_name": "Hệ Thống Chuyên Gia Pháp Chế Hải Quan & CSDL Pháp Lý Cục Bộ (Tự Động Tra Cứu TVPL & Nạp CSDL Có Phê Duyệt)",
+  "date": "2026-09-16",
+  "author": "Minh Hoàng (Chuyên gia Pháp chế & Thủ tục Hải quan)",
+  "mentor": "MT Đức Thuận",
+  "version": "1.2.0",
+  "contract": {
+    "outcome": {
+      "title": "Outcome (Kết quả đầu ra)",
+      "desc": "Nâng cấp Skill customs:legal-advisor: Tự động tra cứu trực tuyến (Thư Viện Pháp Luật & Cổng TTĐT Chính phủ) khi CSDL cục bộ chưa có; Tích hợp trạm kiểm soát phê duyệt của người dùng (Human Checkpoint) trước khi tải; Tự động hóa chuẩn hóa tên file, nạp tệp vào knowledge-base/legal-assets/ và cập nhật legal_assets_registry.json.",
+      "artifact": "customs:legal-advisor (scripts/ingest_legal_asset.py) & knowledge-base/legal-assets/"
+    },
+    "constraints": {
+      "title": "Constraints (Ràng buộc & Ranh giới)",
+      "desc": "BẮT BUỘC phải thông qua sự đồng ý của người dùng (Human Approval) trước khi tải và nạp; Xử lý rào cản Cloudflare và yêu cầu đăng nhập của Thư Viện Pháp Luật bằng Chiến lược Nguồn Kép (Dual-Source: Cổng TTĐT Chính phủ vanban.chinhphu.vn tải PDF có chữ ký số miễn phí + TVPL qua Browser Subagent); Bảo mật thông tin doanh nghiệp.",
+      "rule": "100% tuân thủ Human-in-the-loop & Phân tầng pháp lý"
+    },
+    "non_goals": {
+      "title": "Non-goals (Những thứ KHÔNG làm)",
+      "desc": "Không tự ý tải ngầm hàng loạt văn bản không liên quan gây rác bộ nhớ; Không bypass trái phép cơ chế bảo mật của Thư Viện Pháp Luật; Không nộp tờ khai thật lên VNACCS.",
+      "boundary": "Chỉ tải và nạp văn bản cụ thể khi được người dùng phê duyệt"
+    },
+    "acceptance_criteria": {
+      "title": "Acceptance Criteria (Tiêu chí nghiệm thu)",
+      "desc": "Hiển thị đầy đủ Phiếu thẩm định Human Checkpoint trước khi tải; Khi người dùng cho phép, file được tải an toàn, tự động đổi tên chuẩn hóa (Thong_Tu_...pdf), tự động tăng ID (DOC-08, DOC-09...) và cập nhật đồng thời JSON registry + README catalog.",
+      "metric": "100% pass kiểm thử Dry-run và Confirmed Ingestion"
+    }
+  },
+  "approaches": [
+    {
+      "id": "app_1",
+      "name": "Approach 1: Semi-Automated Search & Approval (Chiến lược Nguồn Kép)",
+      "badge": "Khuyên dùng (Recommended)",
+      "badge_type": "recommended",
+      "concept": "Agent dùng search_web quét TVPL/Chính Phủ -> Hiện phiếu thẩm định xin phép người dùng -> Khi được duyệt, ưu tiên tải file PDF có dấu đỏ từ Cổng TTĐT Chính phủ hoặc qua Browser Subagent -> Gọi ingest_legal_asset.py nạp vào CSDL.",
+      "pros": ["Hoàn toàn tuân thủ yêu cầu 'phải có sự cho phép của tôi'", "Khắc phục triệt để lỗi Cloudflare 403 của TVPL nhờ nguồn Cổng TTĐT Chính phủ", "Dữ liệu được thẩm định chuẩn xác trước khi ghi đè"],
+      "cons": ["Cần 1 lượt tương tác của người dùng (bấm Đồng ý hoặc gõ xác nhận)"],
+      "key_assumption": "Người dùng sẵn sàng xác nhận khi Agent phát hiện văn bản mới có giá trị nghiệp vụ.",
+      "first_failure_point": "Văn bản nội bộ quá mới chưa kịp xuất bản trên cả TVPL lẫn Cổng TTĐT Chính phủ."
+    },
+    {
+      "id": "app_2",
+      "name": "Approach 2: Browser Subagent với TVPL Session Cookie",
+      "badge": "Khả thi cao (Dành cho TVPL Pro)",
+      "badge_type": "viable",
+      "concept": "Người dùng cấu hình Session Cookie hoặc đăng nhập tài khoản Thư Viện Pháp Luật trong trình duyệt; Browser Subagent tự động vào tải file Word/PDF biên tập khi nhận lệnh phê duyệt.",
+      "pros": ["Tải được file Word (.doc) có hiệu đính và liên kết nội dung của TVPL", "Tự động hoàn toàn từ giao diện web"],
+      "cons": ["Cần duy trì cookie đăng nhập không bị hết hạn", "Tốn thời gian khởi động trình duyệt hơn tải trực tiếp"],
+      "key_assumption": "Người dùng có tài khoản Thư Viện Pháp Luật trả phí (Basic/Pro).",
+      "first_failure_point": "Session cookie TVPL hết hạn khiến trang web chuyển hướng về form đăng nhập."
+    },
+    {
+      "id": "app_3",
+      "name": "Approach 3: Background Crawler / Scraping Bot Không Kiểm Soát",
+      "badge": "Nguy hiểm (Unsafe / Anti-Pattern)",
+      "badge_type": "overkill",
+      "concept": "Chạy bot crawl ngầm định kỳ toàn bộ văn bản mới trên TVPL mà không hỏi ý kiến người dùng.",
+      "pros": ["Không cần người dùng can thiệp"],
+      "cons": ["Vi phạm yêu cầu 'phải thông qua sự cho phép của tôi'", "Bị Cloudflare chặn IP 403/429 ngay lập tức", "Làm tràn bộ nhớ workspace bằng hàng trăm văn bản không liên quan"],
+      "key_assumption": "Website đích không có hệ thống chống bot WAF/Cloudflare.",
+      "first_failure_point": "Bị Cloudflare chặn IP máy người dùng vĩnh viễn sau 3 request crawl."
+    }
+  ],
+  "recommendation": {
+    "chosen": "Approach 1: Semi-Automated Search & Approval (Chiến lược Nguồn Kép)",
+    "rationale": "Approach 1 là phương án tối ưu nhất, vừa đáp ứng 100% yêu cầu cốt lõi của người dùng ('Phải thông qua sự cho phép của tôi'), vừa giải quyết được điểm nghẽn kỹ thuật Cloudflare của Thư Viện Pháp Luật bằng cách kết hợp Cổng TTĐT Chính phủ (vanban.chinhphu.vn) để tải PDF có chữ ký số nguyên bản hoàn toàn miễn phí và hợp pháp.",
+    "next_step": "Hướng dẫn người dùng quy trình phê duyệt và các lệnh thực thi thực tế."
+  },
+  "workflow_nodes": [
+    {"step": "1. Input", "name": "Yêu cầu nghiệp vụ", "detail": "Từ khóa hoặc văn bản mới", "icon": "📥"},
+    {"step": "2. Check DB", "name": "So khớp CSDL", "detail": "Kiểm tra trong legal-assets", "icon": "🔍"},
+    {"step": "3. Web Fetch", "name": "Quét TVPL & Chính Phủ", "detail": "Lấy trích yếu, số hiệu, ngày HL", "icon": "🌐"},
+    {"step": "4. Checkpoint", "name": "Phê duyệt Người Dùng", "detail": "Phiếu thẩm định Human Approval", "icon": "🛡️"},
+    {"step": "5. Ingest", "name": "Tải & Nạp CSDL", "detail": "ingest_legal_asset.py tự động", "icon": "⚡"},
+    {"step": "6. Deliverable", "name": "Báo cáo & Tra Cứu", "detail": "Giai đoạn 1 Brief hoặc Giai đoạn 2", "icon": "📊"}
+  ]
+}

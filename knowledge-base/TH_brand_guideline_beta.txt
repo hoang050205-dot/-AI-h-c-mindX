@@ -1,0 +1,19 @@
+BRAND GUIDELINE - CÔNG TY CỔ PHẦN BETA SOLUTIONS
+
+1. Màu sắc chủ đạo (Primary Colors):
+- Tím Hoàng Gia (Đại diện cho sự đổi mới): Hex #7C3AED
+- Xanh Ngọc (Đại diện cho sự tăng trưởng): Hex #06B6D4
+
+2. Màu sắc phụ trợ (Secondary Colors):
+- Hồng San Hô (Dùng cho cảnh báo/vượt ngân sách): Hex #F43F5E
+- Xanh Bạc Hà (Dùng cho tiết kiệm/hiệu quả): Hex #14B8A6
+
+3. Font chữ mặc định:
+- Dùng font "Roboto", "Outfit" hoặc "Segoe UI" cho toàn bộ báo cáo và biểu đồ.
+- Nền trang/Nền biểu đồ: Nên dùng màu tối sang trọng như Xám Đậm (#1E1E2E) hoặc Đen Mờ.
+
+4. Quy định hiển thị (Bắt buộc):
+- Mọi biểu đồ ngân sách BẮT BUỘC phải dùng Tím Hoàng Gia (#7C3AED) để thể hiện Ngân sách được duyệt.
+- BẮT BUỘC dùng Xanh Ngọc (#06B6D4) để thể hiện Chi tiêu thực tế.
+- Các khoản vượt ngân sách phải đánh dấu bằng Hồng San Hô (#F43F5E).
+- Tuyệt đối không tự ý phối các màu sắc sặc sỡ khác ngoài bảng màu này.

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstorm Decision Brief — Tự Động Hóa Dữ Liệu Đào Tạo & Báo Cáo Giảng Viên</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: rgba(30, 41, 59, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(51, 65, 85, 0.8);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-primary: #38bdf8;
+      --accent-success: #34d399;
+      --accent-warning: #fbbf24;
+      --accent-danger: #f87171;
+      --accent-purple: #a78bfa;
+      --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 48px 24px;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(167, 139, 250, 0.12) 0%, transparent 45%);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      color: var(--accent-primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .meta-bar {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .meta-bar span strong { color: #e2e8f0; }
+
+    section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--gradient-blue);
+      border-radius: 2px;
+    }
+
+    /* 4-Field Contract Grid */
+    .contract-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .contract-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .contract-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .contract-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .contract-card.outcome::before { background: var(--accent-primary); }
+    .contract-card.constraints::before { background: var(--accent-warning); }
+    .contract-card.non-goals::before { background: var(--accent-danger); }
+    .contract-card.acceptance::before { background: var(--accent-success); }
+    
+    .card-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .outcome .card-label { color: var(--accent-primary); }
+    .constraints .card-label { color: var(--accent-warning); }
+    .non-goals .card-label { color: var(--accent-danger); }
+    .acceptance .card-label { color: var(--accent-success); }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .card-badge-info {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    /* Approaches Comparison */
+    .approaches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .approach-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .approach-card.recommended {
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.1);
+    }
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+    .app-title { font-size: 18px; font-weight: 700; }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .badge.recommended {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
+    }
+    .badge.viable {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-success);
+      border: 1px solid var(--accent-success);
+    }
+    .badge.overkill {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--accent-danger);
+      border: 1px solid var(--accent-danger);
+    }
+
+    .app-concept {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .app-list { list-style: none; margin-bottom: 20px; font-size: 13px; }
+    .app-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+    .pros li::before { content: '✓'; position: absolute; left: 0; color: var(--accent-success); font-weight: bold; }
+    .cons li::before { content: '✕'; position: absolute; left: 0; color: var(--accent-danger); font-weight: bold; }
+
+    .triad-box {
+      margin-top: auto;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 12px;
+    }
+    .triad-item { margin-bottom: 8px; }
+    .triad-item:last-child { margin-bottom: 0; }
+    .triad-item strong { color: var(--text-muted); display: block; font-size: 11px; text-transform: uppercase; }
+
+    /* Workflow Pipeline Flow */
+    .flow-pipeline {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 12px 0 20px 0;
+    }
+    .flow-node {
+      flex: 1;
+      min-width: 190px;
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+    .flow-icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-step { font-size: 11px; font-weight: 700; color: var(--accent-primary); text-transform: uppercase; margin-bottom: 4px; }
+    .flow-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .flow-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+    /* Recommendation Banner */
+    .rec-box {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .rec-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 12px;
+    }
+    .rec-body { font-size: 15px; color: #e2e8f0; line-height: 1.6; margin-bottom: 16px; }
+    .rec-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-success);
+      background: rgba(52, 211, 153, 0.1);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-pill">🎓 AI4A Workflow Brainstorming — Academic Automation</div>
+      <h1>Tự Động Hóa Dữ Liệu Đào Tạo & Báo Cáo Hiệu Suất Giảng Viên</h1>
+      <div class="meta-bar">
+        <span>Vai trò: <strong>Nhân viên Đào tạo (Academic Officer)</strong></span>
+        <span>Học viên: <strong>Minh Hoàng</strong></span>
+        <span>Mentor: <strong>MT Đức Thuận</strong></span>
+        <span>Skill mục tiêu: <strong>academic:training-ops</strong></span>
+      </div>
+    </header>
+
+    <!-- SECTION 1: THE 4-FIELD CONTRACT -->
+    <section>
+      <div class="section-title">1. Bản Hợp Đồng Thực Thi (The 4-Field Contract)</div>
+      <div class="contract-grid">
+        <div class="contract-card outcome">
+          <div class="card-label">🎯 Outcome</div>
+          <div class="card-title">Kết Quả Đầu Ra</div>
+          <div class="card-desc">File Master Excel chuẩn hóa (Sheet Học viên + Sheet KPI Giảng viên) và Báo cáo Phân tích Sư phạm chuyên sâu gửi Ban Giám Đốc.</div>
+          <div class="card-badge-info">outputs/reports/Academic_Student_Grades_Master.xlsx</div>
+        </div>
+
+        <div class="contract-card constraints">
+          <div class="card-label">🛡️ Constraints</div>
+          <div class="card-title">Ràng Buộc Nghiệp Vụ</div>
+          <div class="card-desc">Bảo mật tuyệt đối PII (ẩn SĐT, email cá nhân); thang điểm chuẩn hóa 0-10 dạng float; có cơ chế dự phòng Mock Data khi mạng gián đoạn.</div>
+          <div class="card-badge-info">Masking PII + Zero-Hallucination</div>
+        </div>
+
+        <div class="contract-card non-goals">
+          <div class="card-label">🚫 Non-goals</div>
+          <div class="card-title">Những Thứ Không Làm</div>
+          <div class="card-desc">Không tự động gửi cảnh báo học vụ tới học viên khi chưa qua duyệt; không ghi đè DB LMS/ERP trung tâm; không chấm bài luận bằng AI.</div>
+          <div class="card-badge-info">Chỉ tổng hợp, chuẩn hóa & phân tích</div>
+        </div>
+
+        <div class="contract-card acceptance">
+          <div class="card-label">✅ Acceptance Criteria</div>
+          <div class="card-title">Tiêu Chí Nghiệm Thu</div>
+          <div class="card-desc">Lọc sạch 100% bản ghi lỗi; tỷ lệ trùng lặp 0%; 100% giảng viên có đủ chỉ số KPI (Pass Rate %, Điểm TB, Độ lệch chuẩn Gauss).</div>
+          <div class="card-badge-info">0% công thức lỗi (#DIV/0!, #REF!)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: APPROACH COMPARISON -->
+    <section>
+      <div class="section-title">2. So Sánh 3 Phương Án Kỹ Thuật (Trade-off Matrix)</div>
+      <div class="approaches-grid">
+        <!-- Approach 1 -->
+        <div class="approach-card">
+          <div class="app-header">
+            <div class="app-title">Approach 1: Lean Script</div>
+            <span class="badge viable">Nhanh & Gọn</span>
+          </div>
+          <div class="app-concept">1 kịch bản script Python/PowerShell thuần thu thập Regex/DOM từ URL cố định, làm sạch số học và xuất thẳng Excel.</div>
+          <ul class="app-list pros">
+            <li>Triển khai siêu tốc trong 1-2 giờ</li>
+            <li>0 chi phí token AI, chạy hoàn toàn offline</li>
+            <li>Dễ dàng lập lịch Windows Scheduler</li>
+          </ul>
+          <ul class="app-list cons">
+            <li>Kém linh hoạt khi giao diện web/nguồn đổi</li>
+            <li>Thiếu chiều sâu nhận định sư phạm định tính</li>
+          </ul>
+          <div class="triad-box">
+            <div class="triad-item">
+              <strong>Giả định cốt lõi:</strong>
+              Cấu trúc DOM web nguồn giữ nguyên và không cần đăng nhập.
+            </div>
+            <div class="triad-item">
+              <strong>Điểm gãy đầu tiên:</strong>
+              Trang web nguồn đổi thẻ HTML class khiến script cào bị crash.
+            </div>
+          </div>
+        </div>
+
+        <!-- Approach 2 -->
+        <div class="approach-card recommended">
+          <div class="app-header">
+            <div class="app-title">Approach 2: Agentic Pipeline</div>
+            <span class="badge recommended">Khuyên Dùng ⭐</span>
+          </div>
+          <div class="app-concept">Pipeline 3 tác tử: Harvester (Thu thập) -> Cleaner Engine (Số học) -> Human Checkpoint -> Academic Analyst (Sư phạm & Viết báo cáo).</div>
+          <ul class="app-list pros">
+            <li>Kết hợp tính chính xác toán học tuyệt đối với suy luận AI</li>
+            <li>Có trạm kiểm duyệt dữ liệu an toàn trước khi xuất</li>
+            <li>Dễ mở rộng thêm nhiều nguồn dữ liệu mới</li>
+          </ul>
+          <ul class="app-list cons">
+            <li>Cần định nghĩa schema bàn giao dữ liệu chặt chẽ</li>
+          </ul>
+          <div class="triad-box">
+            <div class="triad-item">
+              <strong>Giả định cốt lõi:</strong>
+              Dữ liệu trung gian sau bước làm sạch đồng nhất theo schema.
+            </div>
+            <div class="triad-item">
+              <strong>Điểm gãy đầu tiên:</strong>
+              Dữ liệu thu thập bị thiếu trường Tên Giảng Viên phụ trách.
+            </div>
+          </div>
+        </div>
+
+        <!-- Approach 3 -->
+        <div class="approach-card">
+          <div class="app-header">
+            <div class="app-title">Approach 3: Scalable Platform</div>
+            <span class="badge overkill">Quá Tải (Overkill)</span>
+          </div>
+          <div class="app-concept">Crawl ngầm định kỳ bằng Playwright headless, lưu SQLite/Postgres theo dõi đa kỳ học và dựng Web App Streamlit.</div>
+          <ul class="app-list pros">
+            <li>Theo dõi biến động điểm số dài hạn nhiều năm</li>
+            <li>Giao diện Web tương tác lọc đa chiều</li>
+          </ul>
+          <ul class="app-list cons">
+            <li>Mất nhiều ngày cấu hình môi trường headless</li>
+            <li>Cồng kềnh, vi phạm nguyên tắc YAGNI/KISS</li>
+          </ul>
+          <div class="triad-box">
+            <div class="triad-item">
+              <strong>Giả định cốt lõi:</strong>
+              Có máy chủ chuyên dụng và hàng chục nghìn học viên.
+            </div>
+            <div class="triad-item">
+              <strong>Điểm gãy đầu tiên:</strong>
+              Playwright bị cơ chế Cloudflare chặn IP hoặc thiếu thư viện OS.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: WORKFLOW PIPELINE -->
+    <section>
+      <div class="section-title">3. Thiết Kế Quy Trình Luân Chuyển (Workflow OIPO Pipeline)</div>
+      <div class="flow-pipeline">
+        <div class="flow-node">
+          <div class="flow-icon">🌐</div>
+          <div class="flow-step">Trạm 1: Thu Thập</div>
+          <div class="flow-name">Harvester Scout</div>
+          <div class="flow-desc">Tìm kiếm link bảng điểm, quét web/form hoặc nạp Mock Data</div>
+        </div>
+        <div class="flow-node">
+          <div class="flow-icon">🧹</div>
+          <div class="flow-step">Trạm 2: Chuẩn Hóa</div>
+          <div class="flow-name">Cleaner Engine</div>
+          <div class="flow-desc">Lọc bản ghi rác, ép kiểu float thang 10, khử trùng & ẩn PII</div>
+        </div>
+        <div class="flow-node">
+          <div class="flow-icon">👁️</div>
+          <div class="flow-step">Trạm 3: Kiểm Duyệt</div>
+          <div class="flow-name">Human Checkpoint</div>
+          <div class="flow-desc">Nhân viên đào tạo xác nhận chất lượng dữ liệu trước khi tổng hợp</div>
+        </div>
+        <div class="flow-node">
+          <div class="flow-icon">📊</div>
+          <div class="flow-step">Trạm 4: Bảng Tính</div>
+          <div class="flow-name">Master Excel</div>
+          <div class="flow-desc">Sinh file Excel 2 sheet: Chi tiết học viên & KPI Giảng viên</div>
+        </div>
+        <div class="flow-node">
+          <div class="flow-icon">📝</div>
+          <div class="flow-step">Trạm 5: Báo Cáo</div>
+          <div class="flow-name">Academic Lead</div>
+          <div class="flow-desc">Phân tích sư phạm, đánh giá chất lượng dạy và gửi BGĐ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: RECOMMENDATION & ACTION -->
+    <section>
+      <div class="rec-box">
+        <div class="rec-header">
+          <span>💡 Quyết Định Kiến Trúc: Lựa chọn Approach 2 (Workflow / Agentic)</span>
+        </div>
+        <div class="rec-body">
+          Phương án 2 là sự kết hợp tối ưu giữa tính chính xác toán học (Deterministic Code) của script làm sạch số học và trí tuệ suy luận chuyên môn (Agentic Intelligence) của LLM trong phân tích sư phạm. Giải pháp này loại bỏ hoàn toàn rủi ro ảo giác (hallucination) điểm số, đồng thời cung cấp các góc nhìn tư vấn quản trị đào tạo sâu sắc cho Ban Giám Đốc.
+        </div>
+        <div class="rec-action">
+          🚀 Bước tiếp theo: Đóng gói Custom Skill <strong>academic:training-ops</strong> và cập nhật chu kỳ PDCA #05.
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Hệ thống chuẩn hóa Đào tạo & Quản trị Workspace Agentic AI — Phát triển theo chuẩn MT Đức Thuận
+    </footer>
+  </div>
+</body>
+</html>

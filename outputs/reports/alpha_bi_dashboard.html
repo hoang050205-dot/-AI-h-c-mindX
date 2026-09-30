@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CÔNG TY TNHH ALPHA — Realtime Executive BI Dashboard</title>
+  
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js 4.4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       ALPHA BI DESIGN SYSTEM: GLASSMORPHISM & DEEP DARK MODE
+       Brand Guidelines Compliance:
+       - Doanh thu: #1E3A8A (Xanh Navy)
+       - Chi phí: #EF4444 (Đỏ san hô)
+       - Lợi nhuận: #10B981 (Xanh lá mạ)
+       - Vàng Gold: #F59E0B (Thịnh vượng / Đơn hàng)
+       ========================================================================== */
+    :root {
+      /* Brand Colors */
+      --brand-navy: #1E3A8A;
+      --brand-navy-light: #2563EB;
+      --brand-navy-glow: rgba(30, 58, 138, 0.45);
+      
+      --brand-red: #EF4444;
+      --brand-red-light: #F87171;
+      --brand-red-glow: rgba(239, 68, 68, 0.40);
+      
+      --brand-emerald: #10B981;
+      --brand-emerald-light: #34D399;
+      --brand-emerald-glow: rgba(16, 185, 129, 0.40);
+      
+      --brand-gold: #F59E0B;
+      --brand-gold-light: #FBBF24;
+      --brand-gold-glow: rgba(245, 158, 11, 0.40);
+
+      /* Dark Surfaces */
+      --bg-cosmic: #070a12;
+      --bg-surface: rgba(15, 23, 42, 0.72);
+      --bg-surface-elevated: rgba(30, 41, 59, 0.80);
+      --bg-surface-hover: rgba(51, 65, 85, 0.65);
+      
+      /* Glassmorphism Specs */
+      --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+      --glass-border-hover: 1px solid rgba(255, 255, 255, 0.18);
+      --glass-specular: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+      --glass-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.50);
+      --backdrop-blur: saturate(180%) blur(18px);
+
+      /* Typography */
+      --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --text-main: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-cosmic);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Background Orbs */
+    .ambient-glow-wrapper {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.16;
+      animation: orbFloat 22s ease-in-out infinite alternate;
+    }
+
+    .ambient-orb-1 {
+      width: 600px;
+      height: 600px;
+      top: -120px;
+      left: -80px;
+      background: radial-gradient(circle, var(--brand-navy-light), transparent 70%);
+    }
+
+    .ambient-orb-2 {
+      width: 550px;
+      height: 550px;
+      top: 35%;
+      right: -100px;
+      background: radial-gradient(circle, var(--brand-gold), transparent 70%);
+      animation-delay: -7s;
+    }
+
+    .ambient-orb-3 {
+      width: 500px;
+      height: 500px;
+      bottom: -100px;
+      left: 25%;
+      background: radial-gradient(circle, var(--brand-emerald), transparent 70%);
+      animation-delay: -14s;
+    }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, 40px) scale(1.06); }
+      100% { transform: translate(-20px, 20px) scale(0.96); }
+    }
+
+    /* Glass Container Layout */
+    .dashboard-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .glass-panel {
+      background: var(--bg-surface);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      border: var(--glass-border);
+      box-shadow: var(--glass-shadow), var(--glass-specular);
+      border-radius: 18px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-panel:hover {
+      border: var(--glass-border-hover);
+    }
+
+    /* Top Header */
+    .bi-header {
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand-navy), #2563eb);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #fff;
+      box-shadow: 0 4px 16px var(--brand-navy-glow);
+    }
+
+    .header-title-group h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .header-title-group p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .live-pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--brand-emerald-light);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--brand-emerald);
+      box-shadow: 0 0 8px var(--brand-emerald);
+      animation: pulseGlow 1.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .sync-info {
+      text-align: right;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .sync-info strong {
+      color: var(--text-secondary);
+    }
+
+    .btn-glass {
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-glass:hover {
+      background: var(--bg-surface-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* 4-Card Hero KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .kpi-card {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      opacity: 0.9;
+    }
+
+    .card-revenue::before { background: linear-gradient(90deg, #1E3A8A, #3B82F6); }
+    .card-cost::before { background: linear-gradient(90deg, #DC2626, #EF4444); }
+    .card-profit::before { background: linear-gradient(90deg, #059669, #10B981); }
+    .card-orders::before { background: linear-gradient(90deg, #D97706, #F59E0B); }
+
+    .kpi-tier-1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .kpi-label-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .kpi-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-navy { background: rgba(30, 58, 138, 0.35); color: #60A5FA; }
+    .icon-red { background: rgba(239, 68, 68, 0.25); color: #F87171; }
+    .icon-emerald { background: rgba(16, 185, 129, 0.25); color: #34D399; }
+    .icon-gold { background: rgba(245, 158, 11, 0.25); color: #FBBF24; }
+
+    .kpi-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .kpi-delta {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .delta-pos {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .delta-neg {
+      background: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .delta-gold {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .kpi-tier-2 {
+      margin: 6px 0 10px;
+    }
+
+    .kpi-hero {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .kpi-tier-3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
+      margin-top: 4px;
+    }
+
+    .status-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .pill-green { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+    .pill-navy { background: rgba(30, 58, 138, 0.4); color: #93C5FD; }
+    .pill-red { background: rgba(239, 68, 68, 0.2); color: #FCA5A5; }
+    .pill-gold { background: rgba(245, 158, 11, 0.2); color: #FCD34D; }
+
+    /* Visual Charts Grid */
+    .charts-grid-two {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .charts-grid-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .chart-panel {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .chart-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .chart-header p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-canvas-container {
+      position: relative;
+      height: 290px;
+      width: 100%;
+    }
+
+    /* Top Products Table */
+    .table-panel {
+      padding: 24px 28px;
+    }
+
+    .table-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .table-search {
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 0.85rem;
+      width: 280px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .table-search:focus {
+      border-color: var(--brand-navy-light);
+      box-shadow: 0 0 12px var(--brand-navy-glow);
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .alpha-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    .alpha-table th {
+      background: rgba(30, 41, 59, 0.4);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .alpha-table td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+    }
+
+    .alpha-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .rank-1 { background: rgba(245, 158, 11, 0.25); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .rank-2 { background: rgba(148, 163, 184, 0.25); color: #E2E8F0; border: 1px solid rgba(148, 163, 184, 0.4); }
+    .rank-3 { background: rgba(217, 119, 6, 0.25); color: #F59E0B; border: 1px solid rgba(217, 119, 6, 0.4); }
+    .rank-normal { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+
+    .cat-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: rgba(30, 58, 138, 0.25);
+      color: #93C5FD;
+      border: 1px solid rgba(30, 58, 138, 0.4);
+    }
+
+    /* Footer */
+    .bi-footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .charts-grid-two, .charts-grid-bottom { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-layout { padding: 14px; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .bi-header { flex-direction: column; align-items: flex-start; }
+      .header-right { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Canvas -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <main class="dashboard-layout">
+    
+    <!-- 1. Header Bar -->
+    <header class="glass-panel bi-header">
+      <div class="header-left">
+        <div class="brand-badge">α</div>
+        <div class="header-title-group">
+          <h1>
+            <span>CÔNG TY TNHH ALPHA</span>
+            <span class="live-pulse-badge">
+              <span class="pulse-dot"></span>
+              <span>Polling 2s Active</span>
+            </span>
+          </h1>
+          <p>Realtime Executive BI Dashboard • Giám sát Doanh thu, Chi phí & Lợi nhuận</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="sync-info">
+          <div>Nguồn: <strong id="lblFileSource">sales_data.xlsx</strong> (<span id="lblTotalRows">500</span> dòng)</div>
+          <div>Cập nhật: <strong id="lblLastSync">Đang đồng bộ...</strong></div>
+        </div>
+        <button class="btn-glass" id="btnManualSync" title="Cập nhật ngay">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          <span>Làm Mới</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. Four Hero KPI Cards -->
+    <section class="kpi-grid" aria-label="4 Chỉ số Sinh tồn Doanh nghiệp">
+      
+      <!-- KPI 1: Doanh Thu Thuần (#1E3A8A) -->
+      <article class="glass-panel kpi-card card-revenue">
+        <div class="kpi-tier-1">
+          <div class="kpi-label-group">
+            <div class="kpi-icon icon-navy">💰</div>
+            <span class="kpi-title">Tổng Doanh Thu</span>
+          </div>
+          <span class="kpi-delta delta-pos" id="badgeRevenueDelta">+18.4% ↑</span>
+        </div>
+        <div class="kpi-tier-2">
+          <div class="kpi-hero" id="kpiRevenue" data-val="296232775547">0 ₫</div>
+        </div>
+        <div class="kpi-tier-3">
+          <span id="kpiRevenueSub">Doanh thu gộp: 320.5 Tỷ</span>
+          <span class="status-pill pill-navy">Brand Navy #1E3A8A</span>
+        </div>
+      </article>
+
+      <!-- KPI 2: Tổng Chi Phí (#EF4444) -->
+      <article class="glass-panel kpi-card card-cost">
+        <div class="kpi-tier-1">
+          <div class="kpi-label-group">
+            <div class="kpi-icon icon-red">📉</div>
+            <span class="kpi-title">Tổng Chi Phí</span>
+          </div>
+          <span class="kpi-delta delta-neg" id="badgeCostRatio">CP/DT: 55.3%</span>
+        </div>
+        <div class="kpi-tier-2">
+          <div class="kpi-hero" id="kpiCost" data-val="163820523881">0 ₫</div>
+        </div>
+        <div class="kpi-tier-3">
+          <span>Hạn mức ngân sách an toàn</span>
+          <span class="status-pill pill-red">Brand Coral #EF4444</span>
+        </div>
+      </article>
+
+      <!-- KPI 3: Lợi Nhuận Ròng (#10B981) -->
+      <article class="glass-panel kpi-card card-profit">
+        <div class="kpi-tier-1">
+          <div class="kpi-label-group">
+            <div class="kpi-icon icon-emerald">📈</div>
+            <span class="kpi-title">Lợi Nhuận Ròng</span>
+          </div>
+          <span class="kpi-delta delta-pos" id="badgeMargin">Biên LN: 44.7%</span>
+        </div>
+        <div class="kpi-tier-2">
+          <div class="kpi-hero" id="kpiProfit" data-val="132412251668">0 ₫</div>
+        </div>
+        <div class="kpi-tier-3">
+          <span>Vượt +24.5% kế hoạch</span>
+          <span class="status-pill pill-green">Brand Green #10B981</span>
+        </div>
+      </article>
+
+      <!-- KPI 4: Tổng Đơn Hàng (#F59E0B) -->
+      <article class="glass-panel kpi-card card-orders">
+        <div class="kpi-tier-1">
+          <div class="kpi-label-group">
+            <div class="kpi-icon icon-gold">📦</div>
+            <span class="kpi-title">Tổng Đơn Hàng</span>
+          </div>
+          <span class="kpi-delta delta-gold" id="badgeAov">AOV: 592.5M</span>
+        </div>
+        <div class="kpi-tier-2">
+          <div class="kpi-hero" id="kpiOrders" data-val="500">0 đơn</div>
+        </div>
+        <div class="kpi-tier-3">
+          <span>Tỷ lệ hoàn tất 100%</span>
+          <span class="status-pill pill-gold">Brand Gold #F59E0B</span>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- 3. Primary Charts: Line & Donut -->
+    <section class="charts-grid-two">
+      
+      <!-- Biểu đồ Đường (Line Chart) -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div>
+            <h2>Xu Hướng Doanh Thu, Chi Phí & Lợi Nhuận Theo Tháng</h2>
+            <p>Biểu đồ đường trực quan hóa chu kỳ 6 tháng đầu năm 2026 (Tỷ VNĐ)</p>
+          </div>
+          <span class="status-pill pill-navy">Biểu Đồ Đường</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chartLineTrend"></canvas>
+        </div>
+      </article>
+
+      <!-- Biểu đồ Tròn (Donut Chart) -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div>
+            <h2>Cơ Cấu Doanh Thu Theo Danh Mục</h2>
+            <p>Tỷ trọng đóng góp 4 ngành hàng chủ lực</p>
+          </div>
+          <span class="status-pill pill-gold">Biểu Đồ Tròn</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chartDonutCat"></canvas>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- 4. Secondary Chart: Bar Chart -->
+    <section class="charts-grid-bottom">
+      
+      <!-- Biểu đồ Cột (Bar Chart) -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div>
+            <h2>So Sánh Doanh Thu & Chi Phí Theo Danh Mục</h2>
+            <p>Đánh giá hiệu suất tài chính giữa các nhóm sản phẩm (Tỷ VNĐ)</p>
+          </div>
+          <span class="status-pill pill-navy">Biểu Đồ Cột</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chartBarCompare"></canvas>
+        </div>
+      </article>
+
+      <!-- Biểu đồ Cột Khu Vực -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div>
+            <h2>Doanh Số Phân Bổ Theo Khu Vực Địa Lý</h2>
+            <p>Tương quan doanh thu Miền Trung, Miền Nam & Miền Bắc</p>
+          </div>
+          <span class="status-pill pill-green">Địa Bàn Kinh Doanh</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chartRegionBar"></canvas>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- 5. Top 10 Products Table -->
+    <section class="glass-panel table-panel">
+      <div class="table-top-bar">
+        <div>
+          <h2>Bảng Xếp Hạng Top 10 Sản Phẩm Doanh Thu Cao Nhất</h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+            Được trích xuất trực tiếp từ file dữ liệu bán hàng nội bộ của Công ty Alpha
+          </p>
+        </div>
+        <input type="text" class="table-search" id="inputProductSearch" placeholder="🔍 Tìm kiếm mã hoặc tên sản phẩm...">
+      </div>
+
+      <div class="table-responsive">
+        <table class="alpha-table" id="tableTopProducts">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Hạng</th>
+              <th>Mã SP</th>
+              <th>Tên Sản Phẩm</th>
+              <th>Danh Mục</th>
+              <th style="text-align: right;">Số Lượng</th>
+              <th style="text-align: right;">Doanh Thu Thuần</th>
+              <th style="text-align: right;">Tổng Chi Phí</th>
+              <th style="text-align: right;">Lợi Nhuận</th>
+              <th style="text-align: right;">Biên LN</th>
+              <th style="text-align: center;">Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyTopProducts">
+            <!-- Render động bằng Javascript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bi-footer">
+      <p>© 2026 CÔNG TY TNHH ALPHA • Executive Business Intelligence System • Powered by Antigravity AI Engine</p>
+      <p style="margin-top: 4px; opacity: 0.7;">Quy chuẩn Brand: Doanh thu #1E3A8A | Chi phí #EF4444 | Lợi nhuận #10B981 | Vàng Gold #F59E0B</p>
+    </footer>
+
+  </main>
+
+  <!-- Script Logic: Counter Engine, Chart.js & Polling Mechanism -->
+  <script>
+    // =========================================================================
+    // 1. ULTRA-SMOOTH COUNTER ANIMATION ENGINE (60 FPS - easeOutExpo)
+    // =========================================================================
+    class NumberCounter {
+      static formatVND(value) {
+        return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " ₫";
+      }
+
+      static formatOrders(value) {
+        return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đơn";
+      }
+
+      static animate(element, target, isCurrency = true, duration = 1600) {
+        if (!element) return;
+        const start = parseFloat(element.getAttribute('data-val') || 0);
+        element.setAttribute('data-val', target);
+
+        if (element._animId) {
+          cancelAnimationFrame(element._animId);
+        }
+
+        const startTime = performance.now();
+        const step = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // easeOutExpo formula
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const current = start + (target - start) * ease;
+
+          element.textContent = isCurrency ? NumberCounter.formatVND(current) : NumberCounter.formatOrders(current);
+
+          if (progress < 1) {
+            element._animId = requestAnimationFrame(step);
+          } else {
+            element.textContent = isCurrency ? NumberCounter.formatVND(target) : NumberCounter.formatOrders(target);
+            element._animId = null;
+          }
+        };
+        element._animId = requestAnimationFrame(step);
+      }
+    }
+
+    // =========================================================================
+    // 2. CHART.JS CONFIGURATION & BRAND GUIDELINE PALETTES
+    // =========================================================================
+    let lineChartInstance = null;
+    let donutChartInstance = null;
+    let barChartInstance = null;
+    let regionChartInstance = null;
+
+    // Cấu hình Brand Guideline
+    const BRAND = {
+      navy: '#1E3A8A',       // Xanh Navy Doanh Thu
+      navyLight: '#3B82F6',
+      red: '#EF4444',        // Đỏ San Hô Chi Phí
+      emerald: '#10B981',    // Xanh Lá Mạ Lợi Nhuận
+      gold: '#F59E0B'        // Vàng Gold Đơn Hàng
+    };
+
+    function initCharts() {
+      // Thiết lập phong cách Dark Theme toàn cục cho Chart.js
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = "'Inter', sans-serif";
+      Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+      Chart.defaults.plugins.tooltip.borderColor = 'rgba(255, 255, 255, 0.15)';
+      Chart.defaults.plugins.tooltip.borderWidth = 1;
+      Chart.defaults.plugins.tooltip.padding = 12;
+      Chart.defaults.plugins.tooltip.cornerRadius = 8;
+      Chart.defaults.plugins.tooltip.usePointStyle = true;
+
+      // 2.1 Biểu đồ Đường (Line Trend Chart)
+      const ctxLine = document.getElementById('chartLineTrend').getContext('2d');
+      lineChartInstance = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+          datasets: [
+            {
+              label: 'Doanh Thu (DT - #1E3A8A)',
+              data: [54.1, 34.6, 45.0, 44.8, 63.2, 54.4],
+              borderColor: BRAND.navyLight,
+              backgroundColor: 'rgba(30, 58, 138, 0.35)',
+              borderWidth: 3,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#60A5FA',
+              pointRadius: 4,
+              pointHoverRadius: 7
+            },
+            {
+              label: 'Chi Phí (CP - #EF4444)',
+              data: [30.2, 18.5, 25.4, 25.1, 35.4, 29.4],
+              borderColor: BRAND.red,
+              backgroundColor: 'rgba(239, 68, 68, 0.15)',
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#F87171',
+              pointRadius: 4,
+              pointHoverRadius: 7
+            },
+            {
+              label: 'Lợi Nhuận (LN - #10B981)',
+              data: [24.0, 16.1, 19.7, 19.8, 27.9, 25.0],
+              borderColor: BRAND.emerald,
+              backgroundColor: 'rgba(16, 185, 129, 0.20)',
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#34D399',
+              pointRadius: 4,
+              pointHoverRadius: 7
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94a3b8' }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: (val) => val + ' Tỷ'
+              }
+            }
+          },
+          plugins: {
+            legend: { position: 'top', align: 'end', labels: { boxWidth: 12, padding: 14 } }
+          }
+        }
+      });
+
+      // 2.2 Biểu đồ Tròn (Donut Category Chart)
+      const ctxDonut = document.getElementById('chartDonutCat').getContext('2d');
+      donutChartInstance = new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: {
+          labels: ['Thực Phẩm', 'Thời Trang', 'Điện Tử', 'Gia Dụng'],
+          datasets: [{
+            data: [85.6, 72.6, 72.3, 65.8],
+            backgroundColor: [
+              BRAND.navy,     // Thực phẩm: Navy #1E3A8A
+              BRAND.gold,     // Thời trang: Vàng Gold #F59E0B
+              BRAND.emerald,  // Điện tử: Xanh lá mạ #10B981
+              BRAND.red       // Gia dụng: Đỏ san hô #EF4444
+            ],
+            borderColor: '#0f172a',
+            borderWidth: 2,
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 12, padding: 12, color: '#cbd5e1' }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.label}: ${ctx.raw} Tỷ VNĐ`
+              }
+            }
+          }
+        }
+      });
+
+      // 2.3 Biểu đồ Cột So Sánh (Grouped Bar Chart)
+      const ctxBar = document.getElementById('chartBarCompare').getContext('2d');
+      barChartInstance = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['Thực Phẩm', 'Thời Trang', 'Điện Tử', 'Gia Dụng'],
+          datasets: [
+            {
+              label: 'Doanh Thu (Navy #1E3A8A)',
+              data: [85.6, 72.6, 72.3, 65.8],
+              backgroundColor: '#2563EB',
+              borderRadius: 6,
+              barPercentage: 0.65
+            },
+            {
+              label: 'Chi Phí (Red #EF4444)',
+              data: [47.7, 40.2, 39.2, 36.8],
+              backgroundColor: BRAND.red,
+              borderRadius: 6,
+              barPercentage: 0.65
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8' }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: (val) => val + ' Tỷ'
+              }
+            }
+          },
+          plugins: {
+            legend: { position: 'top', align: 'end', labels: { boxWidth: 12 } }
+          }
+        }
+      });
+
+      // 2.4 Biểu đồ Cột Khu Vực (Region Bar Chart)
+      const ctxRegion = document.getElementById('chartRegionBar').getContext('2d');
+      regionChartInstance = new Chart(ctxRegion, {
+        type: 'bar',
+        data: {
+          labels: ['Miền Trung', 'Miền Nam', 'Miền Bắc'],
+          datasets: [{
+            label: 'Doanh Thu Khu Vực',
+            data: [106.0, 99.7, 90.6],
+            backgroundColor: [
+              '#3B82F6',
+              '#10B981',
+              '#F59E0B'
+            ],
+            borderRadius: 8,
+            barPercentage: 0.55
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: (val) => val + ' Tỷ'
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+
+    // =========================================================================
+    // 3. DATA RENDERING & TOP PRODUCTS TABLE
+    // =========================================================================
+    let cachedProducts = [];
+
+    function renderTopProductsTable(products) {
+      cachedProducts = products;
+      const tbody = document.getElementById('tbodyTopProducts');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      products.forEach((p) => {
+        const tr = document.createElement('tr');
+        const rankClass = p.rank === 1 ? 'rank-1' : p.rank === 2 ? 'rank-2' : p.rank === 3 ? 'rank-3' : 'rank-normal';
+        
+        tr.innerHTML = `
+          <td><span class="rank-badge ${rankClass}">${p.rank}</span></td>
+          <td><strong style="color: #fff;">${p.ma_sp}</strong></td>
+          <td style="color: #f1f5f9; font-weight: 500;">${p.ten_sp}</td>
+          <td><span class="cat-badge">${p.danh_muc}</span></td>
+          <td style="text-align: right; font-weight: 600;">${p.so_luong.toLocaleString('vi-VN')}</td>
+          <td style="text-align: right; font-weight: 700; color: #93C5FD;">${p.doanh_thu.toLocaleString('vi-VN')} ₫</td>
+          <td style="text-align: right; color: #FCA5A5;">${p.chi_phi.toLocaleString('vi-VN')} ₫</td>
+          <td style="text-align: right; font-weight: 700; color: #6EE7B7;">${p.loi_nhuan.toLocaleString('vi-VN')} ₫</td>
+          <td style="text-align: right; font-weight: 600; color: ${p.margin >= 40 ? '#34D399' : '#FBBF24'};">${p.margin}%</td>
+          <td style="text-align: center;"><span class="status-pill ${p.rank <= 3 ? 'pill-gold' : 'pill-green'}">${p.status}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Filter tìm kiếm sản phẩm trong bảng
+    document.getElementById('inputProductSearch')?.addEventListener('input', (e) => {
+      const keyword = e.target.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('#tbodyTopProducts tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(keyword) ? '' : 'none';
+      });
+    });
+
+    // =========================================================================
+    // 4. REALTIME POLLING CLIENT (POLLING MỖI 2 GIÂY)
+    // =========================================================================
+    let lastDataTimestamp = '';
+
+    async function pollDashboardData() {
+      try {
+        const response = await fetch('/api/data', { cache: 'no-store' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+
+        if (data && data.status === 'success') {
+          // Cập nhật nhãn thông tin
+          document.getElementById('lblLastSync').textContent = data.timestamp;
+          document.getElementById('lblFileSource').textContent = data.file_source || 'sales_data.xlsx';
+          document.getElementById('lblTotalRows').textContent = data.total_rows || 500;
+
+          // Kiểm tra nếu dữ liệu có sự thay đổi
+          const kpi = data.kpi;
+          if (kpi) {
+            NumberCounter.animate(document.getElementById('kpiRevenue'), kpi.doanh_thu, true);
+            NumberCounter.animate(document.getElementById('kpiCost'), kpi.chi_phi, true);
+            NumberCounter.animate(document.getElementById('kpiProfit'), kpi.loi_nhuan, true);
+            NumberCounter.animate(document.getElementById('kpiOrders'), kpi.so_don_hang, false);
+
+            document.getElementById('badgeCostRatio').textContent = `CP/DT: ${kpi.ty_le_chi_phi}%`;
+            document.getElementById('badgeMargin').textContent = `Biên LN: ${kpi.bien_loi_nhuan}%`;
+            document.getElementById('badgeAov').textContent = `AOV: ${(kpi.aov / 1e6).toFixed(1)}M`;
+            document.getElementById('kpiRevenueSub').textContent = `Doanh thu gộp: ${(kpi.doanh_thu_gop / 1e9).toFixed(1)} Tỷ`;
+          }
+
+          // Cập nhật biểu đồ nếu có dữ liệu mới
+          if (data.charts) {
+            // Line chart
+            if (lineChartInstance && data.charts.monthly_trend) {
+              const mt = data.charts.monthly_trend;
+              lineChartInstance.data.labels = mt.labels;
+              lineChartInstance.data.datasets[0].data = mt.doanh_thu.map(v => +(v / 1e9).toFixed(1));
+              lineChartInstance.data.datasets[1].data = mt.chi_phi.map(v => +(v / 1e9).toFixed(1));
+              lineChartInstance.data.datasets[2].data = mt.loi_nhuan.map(v => +(v / 1e9).toFixed(1));
+              lineChartInstance.update();
+            }
+
+            // Donut chart
+            if (donutChartInstance && data.charts.category_breakdown) {
+              const cb = data.charts.category_breakdown;
+              donutChartInstance.data.labels = cb.labels;
+              donutChartInstance.data.datasets[0].data = cb.doanh_thu.map(v => +(v / 1e9).toFixed(1));
+              donutChartInstance.update();
+            }
+
+            // Bar chart so sánh
+            if (barChartInstance && data.charts.category_breakdown) {
+              const cb = data.charts.category_breakdown;
+              barChartInstance.data.labels = cb.labels;
+              barChartInstance.data.datasets[0].data = cb.doanh_thu.map(v => +(v / 1e9).toFixed(1));
+              barChartInstance.data.datasets[1].data = cb.chi_phi.map(v => +(v / 1e9).toFixed(1));
+              barChartInstance.update();
+            }
+
+            // Region chart
+            if (regionChartInstance && data.charts.region_breakdown) {
+              const rb = data.charts.region_breakdown;
+              regionChartInstance.data.labels = rb.labels;
+              regionChartInstance.data.datasets[0].data = rb.doanh_thu.map(v => +(v / 1e9).toFixed(1));
+              regionChartInstance.update();
+            }
+          }
+
+          // Cập nhật Bảng Top Products
+          if (data.top_products && data.top_products.length > 0) {
+            renderTopProductsTable(data.top_products);
+          }
+        }
+      } catch (err) {
+        console.warn('[POLLING ERROR]', err.message);
+        document.getElementById('lblLastSync').textContent = 'Mất kết nối máy chủ...';
+      }
+    }
+
+    // =========================================================================
+    // 5. KHỞI CHẠY HỆ THỐNG
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      initCharts();
+      
+      // Chạy khởi tạo ngay lần đầu
+      pollDashboardData();
+
+      // Cài đặt POLLING mỗi 2 GIÂY (2000ms) theo đúng đặc tả kỹ thuật
+      setInterval(pollDashboardData, 2000);
+
+      // Nút làm mới thủ công
+      document.getElementById('btnManualSync')?.addEventListener('click', () => {
+        pollDashboardData();
+      });
+    });
+  </script>
+</body>
+</html>

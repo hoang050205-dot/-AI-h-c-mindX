@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI4A Executive Business Intelligence — Modern Glassmorphism BI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+/**
+ * AI4A Modern BI Design System
+ * Architecture: Glassmorphism, Deep Dark Mode, High-Contrast Palette & Responsive KPI Layout
+ * Version: 1.0.0
+ * Brand: AI4A - Agentic AI with Google Antigravity
+ */
+
+:root {
+  /* ==========================================================================
+     1. COLOR PALETTE & SURFACES (DEEP OLED / SLATE DARK MODE)
+     ========================================================================== */
+  --bg-cosmic: #070a12;
+  --bg-canvas: #0b0f19;
+  --bg-surface: rgba(15, 23, 42, 0.65);
+  --bg-surface-elevated: rgba(30, 41, 59, 0.70);
+  --bg-surface-hover: rgba(51, 65, 85, 0.55);
+  --bg-surface-active: rgba(71, 85, 105, 0.60);
+
+  /* Glassmorphism Borders & Specular Highlights */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.04);
+  --glass-border-hover: 1px solid rgba(255, 255, 255, 0.20);
+  --glass-border-active: 1px solid rgba(6, 182, 212, 0.50);
+  --glass-specular-top: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+
+  /* Glass Shadows & Ambient Glows */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --glass-shadow-lg: 0 16px 48px 0 rgba(0, 0, 0, 0.55);
+  --glass-shadow-cyan: 0 8px 32px 0 rgba(6, 182, 212, 0.20);
+  --glass-shadow-emerald: 0 8px 32px 0 rgba(16, 185, 129, 0.20);
+  --glass-shadow-rose: 0 8px 32px 0 rgba(244, 63, 94, 0.20);
+
+  /* ==========================================================================
+     2. HIGH-CONTRAST ACCENT PALETTE (WCAG AA/AAA COMPLIANT ON DARK)
+     ========================================================================== */
+  /* Cyan (Primary Brand / Revenue / Key Metrics) */
+  --neon-cyan: #06b6d4;
+  --neon-cyan-light: #22d3ee;
+  --neon-cyan-glow: rgba(6, 182, 212, 0.25);
+  --neon-cyan-bg: rgba(6, 182, 212, 0.12);
+
+  /* Emerald (Growth / Profit / Positive Delta) */
+  --neon-emerald: #10b981;
+  --neon-emerald-light: #34d399;
+  --neon-emerald-glow: rgba(16, 185, 129, 0.25);
+  --neon-emerald-bg: rgba(16, 185, 129, 0.12);
+
+  /* Amber (Warning / Cost / Pending Status) */
+  --neon-amber: #f59e0b;
+  --neon-amber-light: #fbbf24;
+  --neon-amber-glow: rgba(245, 158, 11, 0.25);
+  --neon-amber-bg: rgba(245, 158, 11, 0.12);
+
+  /* Rose / Ruby (Alert / Loss / Negative Delta) */
+  --neon-rose: #f43f5e;
+  --neon-rose-light: #fb7185;
+  --neon-rose-glow: rgba(244, 63, 94, 0.25);
+  --neon-rose-bg: rgba(244, 63, 94, 0.12);
+
+  /* Electric Violet (Customer / LTV / Retention) */
+  --neon-violet: #8b5cf6;
+  --neon-violet-light: #a78bfa;
+  --neon-violet-glow: rgba(139, 92, 246, 0.25);
+  --neon-violet-bg: rgba(139, 92, 246, 0.12);
+
+  /* ==========================================================================
+     3. TYPOGRAPHY & TEXT TOKENS (HIGH LEGIBILITY)
+     ========================================================================== */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  --text-primary: #f8fafc;     /* Slate 50 - 100% white punch */
+  --text-secondary: #cbd5e1;   /* Slate 300 - High legibility */
+  --text-muted: #94a3b8;       /* Slate 400 - Contextual info */
+  --text-disabled: #64748b;    /* Slate 500 */
+
+  /* ==========================================================================
+     4. RADIUS & BLUR FILTERS
+     ========================================================================== */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  --blur-glass: blur(16px);
+  --blur-glass-heavy: blur(24px);
+  --blur-backdrop: saturate(180%) blur(18px);
+
+  /* ==========================================================================
+     5. TRANSITIONS & TIMINGS
+     ========================================================================== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   GLOBAL RESET & AMBIENT CANVAS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-cosmic);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ambient Gradient Glow Orbs (Background depth) */
+.ambient-glow-wrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  animation: orbFloat 20s ease-in-out infinite alternate;
+}
+
+.ambient-orb-1 {
+  width: 550px;
+  height: 550px;
+  top: -100px;
+  left: -100px;
+  background: radial-gradient(circle, var(--neon-cyan), transparent 70%);
+}
+
+.ambient-orb-2 {
+  width: 600px;
+  height: 600px;
+  bottom: -150px;
+  right: -100px;
+  background: radial-gradient(circle, var(--neon-violet), transparent 70%);
+  animation-delay: -7s;
+}
+
+.ambient-orb-3 {
+  width: 450px;
+  height: 450px;
+  top: 35%;
+  left: 55%;
+  background: radial-gradient(circle, var(--neon-emerald), transparent 70%);
+  opacity: 0.10;
+  animation-delay: -12s;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.08); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+/* ==========================================================================
+   DASHBOARD SHELL & LAYOUT
+   ========================================================================== */
+.bi-dashboard-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 24px 28px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   GLASSMORPHISM CORE COMPONENTS
+   ========================================================================== */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: var(--blur-backdrop);
+  -webkit-backdrop-filter: var(--blur-backdrop);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-specular-top);
+  border-radius: var(--radius-lg);
+  position: relative;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  contain: paint;
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-panel-elevated {
+  background: var(--bg-surface-elevated);
+  box-shadow: var(--glass-shadow-lg), var(--glass-specular-top);
+}
+
+/* ==========================================================================
+   TOP HEADER & FILTER BAR
+   ========================================================================== */
+.bi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bi-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bi-brand-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(139, 92, 246, 0.25));
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon-cyan-light);
+  font-size: 1.35rem;
+  box-shadow: var(--glass-shadow-cyan);
+}
+
+.bi-title-group h1 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bi-live-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--neon-emerald-bg);
+  color: var(--neon-emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bi-live-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-emerald);
+  box-shadow: 0 0 8px var(--neon-emerald);
+  animation: pulseLive 2s infinite;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.bi-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.bi-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Time Filter Segmented Control */
+.filter-tabs {
+  display: flex;
+  background: rgba(11, 15, 25, 0.7);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  border: var(--glass-border);
+}
+
+.filter-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.filter-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.filter-tab-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-glass {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: var(--glass-border);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-normal);
+  font-family: inherit;
+}
+
+.btn-glass:hover {
+  background: var(--bg-surface-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-glass-primary {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+  border: 1px solid rgba(6, 182, 212, 0.5);
+  color: #ffffff;
+  box-shadow: var(--glass-shadow-cyan);
+}
+
+.btn-glass-primary:hover {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.45), rgba(139, 92, 246, 0.45));
+  border-color: var(--neon-cyan-light);
+}
+
+/* ==========================================================================
+   KPI GRID & HERO METRIC CARDS
+   ========================================================================== */
+.bi-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.kpi-card {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  cursor: default;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px 0 rgba(0, 0, 0, 0.55), var(--glass-specular-top);
+}
+
+.kpi-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpi-label-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kpi-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.kpi-icon-cyan {
+  background: var(--neon-cyan-bg);
+  color: var(--neon-cyan-light);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.kpi-icon-emerald {
+  background: var(--neon-emerald-bg);
+  color: var(--neon-emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.kpi-icon-violet {
+  background: var(--neon-violet-bg);
+  color: var(--neon-violet-light);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.kpi-icon-amber {
+  background: var(--neon-amber-bg);
+  color: var(--neon-amber-light);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.kpi-icon-rose {
+  background: var(--neon-rose-bg);
+  color: var(--neon-rose-light);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.kpi-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.kpi-hero-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Delta Badge Styles */
+.kpi-delta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.01em;
+}
+
+.delta-positive {
+  background: var(--neon-emerald-bg);
+  color: var(--neon-emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.delta-negative {
+  background: var(--neon-rose-bg);
+  color: var(--neon-rose-light);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.delta-neutral {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.kpi-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: var(--glass-border-subtle);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.kpi-benchmark {
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   CHARTS & VISUAL ANALYTICS LAYOUT
+   ========================================================================== */
+.bi-charts-grid-primary {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.bi-charts-grid-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-panel {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chart-title-group h2 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.chart-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.chart-container-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+/* ==========================================================================
+   DATA TABLE & LIST VIEW
+   ========================================================================== */
+.bi-table-panel {
+  padding: 24px;
+}
+
+.table-header-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-search-input {
+  background: rgba(11, 15, 25, 0.6);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+  width: 240px;
+}
+
+.table-search-input:focus {
+  border-color: var(--neon-cyan-light);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+}
+
+.bi-responsive-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.bi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  text-align: left;
+}
+
+.bi-table th {
+  background: rgba(11, 15, 25, 0.4);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 12px 16px;
+  border-bottom: var(--glass-border);
+}
+
+.bi-table td {
+  padding: 14px 16px;
+  border-bottom: var(--glass-border-subtle);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+.bi-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.status-pill-success {
+  background: var(--neon-emerald-bg);
+  color: var(--neon-emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pill-warning {
+  background: var(--neon-amber-bg);
+  color: var(--neon-amber-light);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-pill-danger {
+  background: var(--neon-rose-bg);
+  color: var(--neon-rose-light);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+/* Custom Glass Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .bi-charts-grid-primary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .bi-dashboard-container {
+    padding: 16px 14px 40px;
+    gap: 16px;
+  }
+
+  .bi-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bi-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .bi-charts-grid-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-hero-number {
+    font-size: 1.85rem;
+  }
+
+  .chart-container-wrapper {
+    height: 260px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <main class="bi-dashboard-container">
+    
+    <header class="glass-panel bi-header">
+      <div class="bi-header-left">
+        <div class="bi-brand-icon" aria-hidden="true">📊</div>
+        <div class="bi-title-group">
+          <h1>
+            <span>AI4A Executive Business Intelligence</span>
+            <span class="bi-live-badge">Live Sync</span>
+          </h1>
+          <p class="bi-subtitle">Báo cáo hiệu suất kinh doanh đa kênh & Tài chính thời gian thực</p>
+        </div>
+      </div>
+
+      <div class="bi-header-right">
+        <nav class="filter-tabs" aria-label="Bộ lọc thời gian">
+          <button class="filter-tab-btn" data-range="today">Hôm nay</button>
+          <button class="filter-tab-btn" data-range="7d">7 Ngày</button>
+          <button class="filter-tab-btn active" data-range="30d">30 Ngày</button>
+          <button class="filter-tab-btn" data-range="quarter">Quý này</button>
+          <button class="filter-tab-btn" data-range="year">Năm 2026</button>
+        </nav>
+
+        <button class="btn-glass" id="btnRefresh" title="Làm mới hiệu ứng số nhảy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          <span>Refresh</span>
+        </button>
+
+        <button class="btn-glass btn-glass-primary" onclick="window.print()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>In Báo Cáo</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="bi-kpi-grid" aria-label="Chỉ số hiệu suất then chốt (KPI)">
+
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-cyan">💰</div>
+            <span class="kpi-title">Tổng Doanh Thu</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +18.4%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number"
+               data-counter="3852000000"
+               data-counter-prefix=""
+               data-counter-suffix=" ₫"
+               data-counter-separator="."
+               data-counter-decimals="0"
+               data-counter-duration="1800">
+            0
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Mục tiêu: 3.5 Tỷ</span>
+          <span class="status-pill status-pill-success">Đạt 110%</span>
+        </div>
+      </article>
+
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-emerald">📈</div>
+            <span class="kpi-title">Lợi Nhuận Gộp</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +12.6%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number"
+               data-counter="1425600000"
+               data-counter-prefix=""
+               data-counter-suffix=" ₫"
+               data-counter-separator="."
+               data-counter-decimals="0"
+               data-counter-duration="1800">
+            0
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Biên LN: 37.0%</span>
+          <span class="status-pill status-pill-success">Ổn định</span>
+        </div>
+      </article>
+
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-violet">👥</div>
+            <span class="kpi-title">Khách Hàng Hoạt Động</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +8.2%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number"
+               data-counter="14850"
+               data-counter-prefix=""
+               data-counter-suffix=""
+               data-counter-separator=","
+               data-counter-decimals="0"
+               data-counter-duration="1600">
+            0
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">KH Mới: 1,820</span>
+          <span class="status-pill status-pill-success">Tăng trưởng</span>
+        </div>
+      </article>
+
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-amber">⚡</div>
+            <span class="kpi-title">Tỷ Lệ Chuyển Đổi</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +2.4%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number"
+               data-counter="4.85"
+               data-counter-prefix=""
+               data-counter-suffix="%"
+               data-counter-separator="."
+               data-counter-decimals="2"
+               data-counter-duration="1500">
+            0
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Benchmark: 3.8%</span>
+          <span class="status-pill status-pill-success">Vượt kỳ vọng</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="bi-charts-grid-primary">
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div class="chart-title-group">
+            <h2>Biểu Đồ Xu Hướng Doanh Thu & Lợi Nhuận</h2>
+            <p class="chart-subtitle">Phân tích chu kỳ 12 tháng qua</p>
+          </div>
+          <div class="kpi-label-group">
+            <span class="kpi-delta-badge delta-positive">Tăng trưởng ổn định</span>
+          </div>
+        </div>
+        <div class="chart-container-wrapper">
+          <canvas id="revenueTrendChart"></canvas>
+        </div>
+      </article>
+
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div class="chart-title-group">
+            <h2>Cơ Cấu Kênh Bán Hàng</h2>
+            <p class="chart-subtitle">Tỷ trọng đóng góp doanh thu</p>
+          </div>
+        </div>
+        <div class="chart-container-wrapper">
+          <canvas id="channelDonutChart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <section class="glass-panel bi-table-panel">
+      <div class="table-header-group">
+        <div>
+          <h2>Bảng Phân Tích Danh Mục Sản Phẩm Chủ Lực</h2>
+          <p class="chart-subtitle">Cập nhật tự động lúc 20:40 • 20/09/2026</p>
+        </div>
+        <input type="text" class="table-search-input" id="tableSearch" placeholder="Tìm kiếm nhanh danh mục...">
+      </div>
+
+      <div class="bi-responsive-table">
+        <table class="bi-table">
+          <thead>
+            <tr>
+              <th>Mã Nhóm</th>
+              <th>Tên Danh Mục Hàng Hóa</th>
+              <th>Số Đơn Hàng</th>
+              <th>Doanh Thu Thuần</th>
+              <th>Biên Lợi Nhuận</th>
+              <th>Tăng Trưởng</th>
+              <th>Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>CAT-01</strong></td>
+              <td>Thiết Bị Điện Tử & Phụ Kiện</td>
+              <td>4,250 đơn</td>
+              <td>1,420,000,000 ₫</td>
+              <td>42.5%</td>
+              <td><span class="kpi-delta-badge delta-positive">+19.2%</span></td>
+              <td><span class="status-pill status-pill-success">Bán chạy</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>CAT-02</strong></td>
+              <td>Thời Trang Công Sở & Thể Thao</td>
+              <td>3,120 đơn</td>
+              <td>890,000,000 ₫</td>
+              <td>38.0%</td>
+              <td><span class="kpi-delta-badge delta-positive">+14.5%</span></td>
+              <td><span class="status-pill status-pill-success">Tăng trưởng</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>CAT-03</strong></td>
+              <td>Gia Dụng & Đời Sống</td>
+              <td>2,450 đơn</td>
+              <td>650,000,000 ₫</td>
+              <td>31.2%</td>
+              <td><span class="kpi-delta-badge delta-positive">+6.8%</span></td>
+              <td><span class="status-pill status-pill-success">Ổn định</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>CAT-04</strong></td>
+              <td>Mỹ Phẩm & Sức Khỏe</td>
+              <td>1,840 đơn</td>
+              <td>542,000,000 ₫</td>
+              <td>45.0%</td>
+              <td><span class="kpi-delta-badge delta-negative">-2.1%</span></td>
+              <td><span class="status-pill status-pill-warning">Cần tối ưu</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>CAT-05</strong></td>
+              <td>Văn Phòng Phẩm & Sách</td>
+              <td>1,190 đơn</td>
+              <td>350,000,000 ₫</td>
+              <td>28.4%</td>
+              <td><span class="kpi-delta-badge delta-positive">+4.1%</span></td>
+              <td><span class="status-pill status-pill-success">Bình thường</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+/**
+ * AI4A BI Counter Animation Engine
+ * Ultra-smooth 60fps numerical count-up effect with easing, locale formatting, and IntersectionObserver triggering.
+ * Version: 1.0.0
+ * Zero Dependencies (Pure Vanilla ES6+)
+ */
+
+class CounterEngine {
+  /**
+   * Easing functions for natural decelerating motion
+   */
+  static easings = {
+    // Standard easeOutCubic: fast start, soft landing
+    easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
+    // High-impact easeOutExpo: dramatic deceleration
+    easeOutExpo: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+    // Smooth easeOutQuart
+    easeOutQuart: (t) => 1 - Math.pow(1 - t, 4),
+  };
+
+  /**
+   * Format a numerical value with commas/dots, decimals, prefix and suffix
+   */
+  static formatNumber(value, options = {}) {
+    const {
+      decimals = 0,
+      separator = ',',
+      decimalPoint = '.',
+      prefix = '',
+      suffix = '',
+    } = options;
+
+    const fixed = value.toFixed(decimals);
+    const parts = fixed.split('.');
+    
+    // Format integer part with thousands separator
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+
+    // Combine with decimal part if applicable
+    const formattedNum = parts.length > 1 ? parts.join(decimalPoint) : parts[0];
+    return `${prefix}${formattedNum}${suffix}`;
+  }
+
+  /**
+   * Animate a single DOM element from start to target value
+   */
+  static animate(element, customOptions = {}) {
+    if (!element) return;
+
+    // Parse options from attributes or custom arguments
+    const targetValue = parseFloat(customOptions.target ?? element.getAttribute('data-counter') ?? 0);
+    const startValue = parseFloat(customOptions.start ?? element.getAttribute('data-counter-start') ?? 0);
+    const duration = parseInt(customOptions.duration ?? element.getAttribute('data-counter-duration') ?? 1600, 10);
+    const decimals = parseInt(customOptions.decimals ?? element.getAttribute('data-counter-decimals') ?? 0, 10);
+    const prefix = customOptions.prefix ?? element.getAttribute('data-counter-prefix') ?? '';
+    const suffix = customOptions.suffix ?? element.getAttribute('data-counter-suffix') ?? '';
+    const separator = customOptions.separator ?? element.getAttribute('data-counter-separator') ?? ',';
+    const decimalPoint = customOptions.decimalPoint ?? element.getAttribute('data-counter-decimal-point') ?? '.';
+    const easingName = customOptions.easing ?? element.getAttribute('data-counter-easing') ?? 'easeOutExpo';
+
+    const easingFunc = CounterEngine.easings[easingName] || CounterEngine.easings.easeOutExpo;
+    const formatOpts = { decimals, separator, decimalPoint, prefix, suffix };
+
+    let startTime = null;
+    let animFrameId = null;
+
+    // Cancel any running animation on this element
+    if (element._counterAnimId) {
+      cancelAnimationFrame(element._counterAnimId);
+    }
+
+    element.dispatchEvent(new CustomEvent('counter:start', { detail: { targetValue } }));
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easingFunc(progress);
+
+      const currentValue = startValue + (targetValue - startValue) * easedProgress;
+      element.textContent = CounterEngine.formatNumber(currentValue, formatOpts);
+
+      if (progress < 1) {
+        element._counterAnimId = requestAnimationFrame(step);
+      } else {
+        // Guarantee final exact number
+        element.textContent = CounterEngine.formatNumber(targetValue, formatOpts);
+        element.setAttribute('data-counter-done', 'true');
+        element._counterAnimId = null;
+        element.dispatchEvent(new CustomEvent('counter:complete', { detail: { targetValue } }));
+      }
+    };
+
+    element._counterAnimId = requestAnimationFrame(step);
+  }
+
+  /**
+   * Initialize all counter elements on the page with IntersectionObserver
+   */
+  static init(selector = '[data-counter]') {
+    const elements = document.querySelectorAll(selector);
+    if (!elements || elements.length === 0) return;
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targetEl = entry.target;
+            CounterEngine.animate(targetEl);
+            obs.unobserve(targetEl); // Animate once on initial scroll view
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -20px 0px',
+      });
+
+      elements.forEach((el) => {
+        // Set placeholder before animation begins
+        if (!el.getAttribute('data-counter-done')) {
+          const prefix = el.getAttribute('data-counter-prefix') ?? '';
+          const suffix = el.getAttribute('data-counter-suffix') ?? '';
+          const decimals = parseInt(el.getAttribute('data-counter-decimals') ?? 0, 10);
+          el.textContent = `${prefix}${(0).toFixed(decimals)}${suffix}`;
+        }
+        observer.observe(el);
+      });
+    } else {
+      // Fallback for environments without IntersectionObserver
+      elements.forEach((el) => CounterEngine.animate(el));
+    }
+  }
+
+  /**
+   * Re-animate all elements (e.g., when switching filters or date ranges)
+   */
+  static animateAll(selector = '[data-counter]') {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach((el) => {
+      CounterEngine.animate(el);
+    });
+  }
+
+  /**
+   * Smoothly update an element to a new target value
+   */
+  static updateValue(element, newValue, options = {}) {
+    if (!element) return;
+    const currentNum = parseFloat(element.getAttribute('data-counter') || 0);
+    element.setAttribute('data-counter', newValue);
+    CounterEngine.animate(element, {
+      start: currentNum,
+      target: newValue,
+      duration: options.duration || 1200,
+      ...options
+    });
+  }
+}
+
+// Auto-initialize when DOM is ready
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => CounterEngine.init());
+  } else {
+    CounterEngine.init();
+  }
+}
+
+// Export for module systems or window global
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = CounterEngine;
+} else if (typeof window !== 'undefined') {
+  window.CounterEngine = CounterEngine;
+}
+
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+      Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.92)';
+      Chart.defaults.plugins.tooltip.borderColor = 'rgba(255, 255, 255, 0.15)';
+      Chart.defaults.plugins.tooltip.borderWidth = 1;
+      Chart.defaults.plugins.tooltip.padding = 12;
+      Chart.defaults.plugins.tooltip.cornerRadius = 8;
+      Chart.defaults.plugins.legend.labels.usePointStyle = true;
+
+      const ctxTrend = document.getElementById('revenueTrendChart').getContext('2d');
+      const gradientCyan = ctxTrend.createLinearGradient(0, 0, 0, 300);
+      gradientCyan.addColorStop(0, 'rgba(6, 182, 212, 0.45)');
+      gradientCyan.addColorStop(1, 'rgba(6, 182, 212, 0.00)');
+
+      const gradientViolet = ctxTrend.createLinearGradient(0, 0, 0, 300);
+      gradientViolet.addColorStop(0, 'rgba(139, 92, 246, 0.35)');
+      gradientViolet.addColorStop(1, 'rgba(139, 92, 246, 0.00)');
+
+      new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
+          datasets: [
+            {
+              label: 'Doanh Thu (Triệu VNĐ)',
+              data: [210, 245, 280, 260, 310, 340, 320, 365, 390, 420, 450, 485],
+              borderColor: '#06b6d4',
+              backgroundColor: gradientCyan,
+              borderWidth: 3,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#22d3ee',
+              pointBorderColor: '#070a12',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+            },
+            {
+              label: 'Lợi Nhuận (Triệu VNĐ)',
+              data: [75, 88, 105, 95, 115, 130, 120, 140, 155, 170, 180, 195],
+              borderColor: '#8b5cf6',
+              backgroundColor: gradientViolet,
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#a78bfa',
+              pointBorderColor: '#070a12',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', callback: (v) => v + 'M' } }
+          },
+          plugins: { legend: { position: 'top', align: 'end' } }
+        }
+      });
+
+      const ctxDonut = document.getElementById('channelDonutChart').getContext('2d');
+      new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: {
+          labels: ["Th\u01b0\u01a1ng M\u1ea1i \u0110i\u1ec7n T\u1eed", "\u0110\u1ea1i L\u00fd Ph\u00e2n Ph\u1ed1i", "B\u00e1n L\u1ebb Tr\u1ef1c Ti\u1ebfp", "\u0110\u1ed1i T\u00e1c B2B"],
+          datasets: [{
+            data: [42, 28, 18, 12],
+            backgroundColor: ['#06b6d4', '#8b5cf6', '#10b981', '#f59e0b'],
+            borderWidth: 0,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } } }
+        }
+      });
+
+      const filterBtns = document.querySelectorAll('.filter-tab-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          CounterEngine.animateAll();
+        });
+      });
+
+      document.getElementById('btnRefresh')?.addEventListener('click', () => {
+        CounterEngine.animateAll();
+      });
+
+      const searchInput = document.getElementById('tableSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const val = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll('.bi-table tbody tr');
+          rows.forEach(r => {
+            r.style.display = r.textContent.toLowerCase().includes(val) ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

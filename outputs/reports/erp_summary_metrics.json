@@ -1,0 +1,233 @@
+﻿{
+    "ProcessedAt":  "2026-09-09 21:52:44",
+    "SourceFile":  "C:\\Minh Hoang\\Antigravity học\\my-workspace\\sample-data\\THỰC HÀNH_ERP_OP_BigData_200rows B3.xlsx",
+    "Month":  "2026-03",
+    "TotalRawRowsInXml":  1000,
+    "GhostRowsRemoved":  799,
+    "ValidHeadcount":  200,
+    "Financials":  {
+                       "Total_Base_VND":  3771713639,
+                       "Total_Bonus_VND":  499094030,
+                       "Total_Penalty_VND":  200612662,
+                       "Total_Net_VND":  4070195007,
+                       "Bonus_Over_Base_Pct":  13.23,
+                       "Penalty_Over_Base_Pct":  5.32
+                   },
+    "DepartmentBreakdown":  [
+                                {
+                                    "Department":  "Operations",
+                                    "Headcount":  48,
+                                    "Total_Base":  936887127,
+                                    "Total_Bonus":  119944562,
+                                    "Total_Penalty":  53974493,
+                                    "Total_Net":  1002857196,
+                                    "Avg_Net":  20892858
+                                },
+                                {
+                                    "Department":  "Sales",
+                                    "Headcount":  44,
+                                    "Total_Base":  817369912,
+                                    "Total_Bonus":  113017676,
+                                    "Total_Penalty":  43105806,
+                                    "Total_Net":  887281782,
+                                    "Avg_Net":  20165495
+                                },
+                                {
+                                    "Department":  "Finance",
+                                    "Headcount":  50,
+                                    "Total_Base":  908342279,
+                                    "Total_Bonus":  108759459,
+                                    "Total_Penalty":  42738444,
+                                    "Total_Net":  974363294,
+                                    "Avg_Net":  19487266
+                                },
+                                {
+                                    "Department":  "HR",
+                                    "Headcount":  58,
+                                    "Total_Base":  1109114321,
+                                    "Total_Bonus":  157372333,
+                                    "Total_Penalty":  60793919,
+                                    "Total_Net":  1205692735,
+                                    "Avg_Net":  20787806
+                                }
+                            ],
+    "ManagerBreakdown":  [
+                             {
+                                 "Manager":  "Manager_B",
+                                 "Headcount":  37,
+                                 "Total_Base":  710681754,
+                                 "Total_Bonus":  86680561,
+                                 "Total_Penalty":  37669431,
+                                 "Total_Net":  759692884,
+                                 "Avg_Net":  20532240
+                             },
+                             {
+                                 "Manager":  "Manager_A",
+                                 "Headcount":  62,
+                                 "Total_Base":  1159186631,
+                                 "Total_Bonus":  159356385,
+                                 "Total_Penalty":  59168516,
+                                 "Total_Net":  1259374500,
+                                 "Avg_Net":  20312492
+                             },
+                             {
+                                 "Manager":  "Manager_C",
+                                 "Headcount":  51,
+                                 "Total_Base":  1010803313,
+                                 "Total_Bonus":  129704785,
+                                 "Total_Penalty":  54318283,
+                                 "Total_Net":  1086189815,
+                                 "Avg_Net":  21297840
+                             },
+                             {
+                                 "Manager":  "Manager_D",
+                                 "Headcount":  50,
+                                 "Total_Base":  891041941,
+                                 "Total_Bonus":  123352299,
+                                 "Total_Penalty":  49456432,
+                                 "Total_Net":  964937808,
+                                 "Avg_Net":  19298756
+                             }
+                         ],
+    "TopBonuses":  [
+                       {
+                           "Employee_ID":  "E026",
+                           "Employee_Name":  "Employee_26",
+                           "Manager":  "Manager_A",
+                           "Department":  "HR",
+                           "Base_Salary":  18321739,
+                           "Bonus":  4991591,
+                           "Penalty":  1570678,
+                           "Net_Salary":  21742652,
+                           "Bonus_Rate_Pct":  27.24,
+                           "Penalty_Rate_Pct":  8.57,
+                           "Month":  "2026-03"
+                       },
+                       {
+                           "Employee_ID":  "E056",
+                           "Employee_Name":  "Employee_56",
+                           "Manager":  "Manager_A",
+                           "Department":  "HR",
+                           "Base_Salary":  24854094,
+                           "Bonus":  4950792,
+                           "Penalty":  696243,
+                           "Net_Salary":  29108643,
+                           "Bonus_Rate_Pct":  19.92,
+                           "Penalty_Rate_Pct":  2.8,
+                           "Month":  "2026-03"
+                       },
+                       {
+                           "Employee_ID":  "E145",
+                           "Employee_Name":  "Employee_145",
+                           "Manager":  "Manager_A",
+                           "Department":  "HR",
+                           "Base_Salary":  22618878,
+                           "Bonus":  4939810,
+                           "Penalty":  839804,
+                           "Net_Salary":  26718884,
+                           "Bonus_Rate_Pct":  21.84,
+                           "Penalty_Rate_Pct":  3.71,
+                           "Month":  "2026-03"
+                       },
+                       {
+                           "Employee_ID":  "E104",
+                           "Employee_Name":  "Employee_104",
+                           "Manager":  "Manager_A",
+                           "Department":  "Finance",
+                           "Base_Salary":  15983659,
+                           "Bonus":  4939656,
+                           "Penalty":  678997,
+                           "Net_Salary":  20244318,
+                           "Bonus_Rate_Pct":  30.9,
+                           "Penalty_Rate_Pct":  4.25,
+                           "Month":  "2026-03"
+                       },
+                       {
+                           "Employee_ID":  "E031",
+                           "Employee_Name":  "Employee_31",
+                           "Manager":  "Manager_A",
+                           "Department":  "HR",
+                           "Base_Salary":  27300479,
+                           "Bonus":  4925144,
+                           "Penalty":  1993943,
+                           "Net_Salary":  30231680,
+                           "Bonus_Rate_Pct":  18.04,
+                           "Penalty_Rate_Pct":  7.3,
+                           "Month":  "2026-03"
+                       }
+                   ],
+    "TopPenalties":  [
+                         {
+                             "Employee_ID":  "E031",
+                             "Employee_Name":  "Employee_31",
+                             "Manager":  "Manager_A",
+                             "Department":  "HR",
+                             "Base_Salary":  27300479,
+                             "Bonus":  4925144,
+                             "Penalty":  1993943,
+                             "Net_Salary":  30231680,
+                             "Bonus_Rate_Pct":  18.04,
+                             "Penalty_Rate_Pct":  7.3,
+                             "Month":  "2026-03"
+                         },
+                         {
+                             "Employee_ID":  "E095",
+                             "Employee_Name":  "Employee_95",
+                             "Manager":  "Manager_C",
+                             "Department":  "HR",
+                             "Base_Salary":  22877467,
+                             "Bonus":  3730379,
+                             "Penalty":  1993458,
+                             "Net_Salary":  24614388,
+                             "Bonus_Rate_Pct":  16.31,
+                             "Penalty_Rate_Pct":  8.71,
+                             "Month":  "2026-03"
+                         },
+                         {
+                             "Employee_ID":  "E136",
+                             "Employee_Name":  "Employee_136",
+                             "Manager":  "Manager_A",
+                             "Department":  "Sales",
+                             "Base_Salary":  14859301,
+                             "Bonus":  2528488,
+                             "Penalty":  1982488,
+                             "Net_Salary":  15405301,
+                             "Bonus_Rate_Pct":  17.02,
+                             "Penalty_Rate_Pct":  13.34,
+                             "Month":  "2026-03"
+                         },
+                         {
+                             "Employee_ID":  "E013",
+                             "Employee_Name":  "Employee_13",
+                             "Manager":  "Manager_C",
+                             "Department":  "HR",
+                             "Base_Salary":  9723916,
+                             "Bonus":  2117942,
+                             "Penalty":  1973553,
+                             "Net_Salary":  9868305,
+                             "Bonus_Rate_Pct":  21.78,
+                             "Penalty_Rate_Pct":  20.3,
+                             "Month":  "2026-03"
+                         },
+                         {
+                             "Employee_ID":  "E186",
+                             "Employee_Name":  "Employee_186",
+                             "Manager":  "Manager_C",
+                             "Department":  "HR",
+                             "Base_Salary":  8945817,
+                             "Bonus":  2673322,
+                             "Penalty":  1952083,
+                             "Net_Salary":  9667056,
+                             "Bonus_Rate_Pct":  29.88,
+                             "Penalty_Rate_Pct":  21.82,
+                             "Month":  "2026-03"
+                         }
+                     ],
+    "MasterFile":  "outputs\\reports\\ERP_Operations_Master_2026-03.xlsx",
+    "ManagerFiles":  [
+                         "outputs\\reports\\managers\\Manager_A_2026-03.xlsx",
+                         "outputs\\reports\\managers\\Manager_B_2026-03.xlsx",
+                         "outputs\\reports\\managers\\Manager_C_2026-03.xlsx",
+                         "outputs\\reports\\managers\\Manager_D_2026-03.xlsx"
+                     ]
+}

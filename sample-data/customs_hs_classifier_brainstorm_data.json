@@ -1,0 +1,97 @@
+{
+  "project_name": "Đóng Gói Chuyên Gia Phân Loại Hàng Hóa & Thủ Tục Hải Quan (HS Classifier & Clearance Specialist) với Thư Viện Assets Riêng Biệt",
+  "date": "2026-09-16",
+  "author": "Minh Hoàng (Chuyên gia Phân loại Hàng hóa & Thủ tục Hải quan)",
+  "mentor": "MT Đức Thuận",
+  "version": "1.0.0",
+  "contract": {
+    "outcome": {
+      "title": "Outcome (Kết quả đầu ra)",
+      "desc": "Đóng gói hoàn chỉnh Skill customs:hs-classifier chuẩn Antigravity Customization System; Thiết lập thư mục Assets riêng biệt tích hợp đầy đủ 4 nguồn tài sản (Biểu thuế XNK 2026, Phụ lục I Danh mục XNK VN 604 trang, Phụ lục II 6 Quy tắc GRI và Chú giải chi tiết, Nghị định 69/2018/NĐ-CP 89 trang); Xây dựng bộ công cụ CLI tra cứu siêu tốc (SQLite index 19.895 dòng), tra cứu 6 quy tắc GRI và kiểm tra chính sách chuyên ngành; Tự động xuất Báo cáo Thông quan 4 phần tiêu chuẩn.",
+      "artifact": ".agents/skills/customs-hs-classifier/ (assets/, scripts/, resources/, examples/, SKILL.md)"
+    },
+    "constraints": {
+      "title": "Constraints (Ràng buộc & Ranh giới)",
+      "desc": "Mọi bước phân tích bắt buộc dẫn chiếu căn cứ pháp lý rõ ràng (Nghị định 69/2018, Thông tư 31/2022, Thông tư 38/2015, TT 39/2018, TT 121/2025, Nghị định 26/2023...); Lưu trữ 4 nguồn tài sản trong mục Assets RIÊNG BIỆT của skill (không gộp chung); Bảo mật tuyệt đối dữ liệu doanh nghiệp và thông tin thương mại.",
+      "rule": "100% tuân thủ căn cứ pháp luật và nguyên tắc 6 Quy tắc GRI"
+    },
+    "non_goals": {
+      "title": "Non-goals (Những thứ KHÔNG làm)",
+      "desc": "Không truyền tờ khai thật lên cổng VNACCS chính thức của Tổng cục Hải quan; Không tự ý suy diễn hoặc áp mã HS tùy tiện không có căn cứ biểu thuế; Không gộp các file assets vào thư viện chung của workspace theo đúng yêu cầu người dùng.",
+      "boundary": "Tập trung vào phân tích nghiệp vụ, tra cứu biểu thuế và hướng dẫn quy trình thông quan thực tế"
+    },
+    "acceptance_criteria": {
+      "title": "Acceptance Criteria (Tiêu chí nghiệm thu)",
+      "desc": "Đủ 4 nguồn tài sản trong assets/ (Biểu thuế 2026 32MB, Phụ lục I PDF 604 trang, Phụ lục II DOC/TXT, NĐ 69/2018 PDF 89 trang); SQLite index tra cứu 19.895 mã hàng dưới 10ms; Bộ công cụ CLI hoạt động trơn tru; Báo cáo phân tích chuẩn hóa 100% theo mẫu 4 phần có checklist chứng từ và quy trình 3 bước.",
+      "metric": "Đạt 100% các tiêu chuẩn kiểm thử thực tế với mặt hàng Đậu tương (A11)"
+    }
+  },
+  "approaches": [
+    {
+      "id": "app_1",
+      "name": "Approach 1: Dedicated Assets + SQLite Pre-Indexed Engine + Modular CLI Tools",
+      "badge": "Khuyên dùng (Recommended)",
+      "badge_type": "recommended",
+      "concept": "Tạo mục assets/ riêng biệt chứa 4 tài sản gốc; Index Biểu thuế 2026 sang SQLite cục bộ; Trích xuất Phụ lục II sang UTF-8 text; Viết bộ CLI tools (query_hs_tariff, query_gri_rules, query_conditional_goods, generate_clearance_report) giúp Agent phản hồi dưới 1 giây mà không tốn RAM.",
+      "pros": [
+        "Tra cứu siêu tốc (dưới 10ms thay vì 10s đọc file Excel 32MB)",
+        "Đáp ứng 100% yêu cầu 'tạo mục Assets riêng nằm trong skill không gộp chung'",
+        "Lập luận phân loại chặt chẽ nhờ toàn văn 6 Quy tắc GRI và Chú giải chi tiết",
+        "Có script tự động sinh Báo cáo tiêu chuẩn 4 phần gửi khách hàng"
+      ],
+      "cons": [
+        "Cần bước tiền xử lý index 1 lần ban đầu (đã thực hiện thành công)"
+      ],
+      "key_assumption": "File Excel Biểu thuế 2026 và các văn bản đính kèm là căn cứ chuẩn xác của Bộ Tài chính và Chính phủ.",
+      "first_failure_point": "Mặt hàng công nghệ quá mới xuất hiện chưa có tên trong danh mục AHTN hiện hành (cần áp dụng GRI 4)."
+    },
+    {
+      "id": "app_2",
+      "name": "Approach 2: Monolithic Dynamic Loading (Đọc file thô mỗi lần truy vấn)",
+      "badge": "Chậm & Tốn tài nguyên (Viable but Slow)",
+      "badge_type": "viable",
+      "concept": "Mỗi khi người dùng hỏi, Agent mở file Excel 32MB bằng openpyxl và quét file PDF 604 trang bằng pypdf để tìm kiếm từ khóa.",
+      "pros": [
+        "Không cần tạo cơ sở dữ liệu SQLite phụ trợ",
+        "Trực tiếp sử dụng file nguyên bản"
+      ],
+      "cons": [
+        "Mỗi câu hỏi mất từ 10 đến 25 giây để đọc file Excel 32MB",
+        "Tốn hàng trăm megabyte RAM, dễ bị timeout khi xử lý nhiều mặt hàng liên tiếp",
+        "Không tận dụng được tìm kiếm chỉ mục (Index Search)"
+      ],
+      "key_assumption": "Tài nguyên máy chủ hoặc máy người dùng đủ mạnh để load file 32MB liên tục.",
+      "first_failure_point": "Bộ nhớ bị phân mảnh hoặc CPU bị nghẽn khi người dùng tra cứu 10 mã HS liên tiếp."
+    },
+    {
+      "id": "app_3",
+      "name": "Approach 3: External API / Cloud Dependent (Phụ thuộc Web Scraping)",
+      "badge": "Bất ổn & Phụ thuộc mạng (Overkill / Fragile)",
+      "badge_type": "overkill",
+      "concept": "Bỏ qua các file người dùng đưa, chỉ gọi search_web tra cứu biểu thuế trên các website thương mại bên ngoài (caselaw, customsthaiphong, thuvienphapluat...).",
+      "pros": [
+        "Không cần lưu trữ file nặng trong workspace"
+      ],
+      "cons": [
+        "Bỏ phí 4 nguồn tài sản chính thống người dùng đã cất công cung cấp",
+        "Phụ thuộc mạng Internet, nguy cơ bị chặn IP bởi Cloudflare",
+        "Dữ liệu trên web thương mại có thể bị lỗi thời hoặc không đầy đủ biểu thuế FTA"
+      ],
+      "key_assumption": "Mọi mã HS và thuế suất đều tra cứu được ổn định trên internet công cộng.",
+      "first_failure_point": "Website tra cứu bên ngoài thay đổi cấu trúc HTML hoặc chặn bot khiến tra cứu thất bại."
+    }
+  ],
+  "recommendation": {
+    "chosen": "Approach 1: Dedicated Assets + SQLite Pre-Indexed Engine + Modular CLI Tools",
+    "rationale": "Approach 1 là phương án hoàn hảo nhất: Vừa bảo toàn nguyên vẹn 4 nguồn tài sản quý giá do người dùng cung cấp trong thư mục 'assets/' riêng biệt của Skill, vừa giải quyết triệt để bài toán hiệu năng (đạt tốc độ phản hồi 5ms cho 19.895 dòng thuế), đồng thời cung cấp đầy đủ bộ công cụ phân loại 4 bước chuẩn hóa từ tính pháp lý, mã HS, thuế phí đến checklist hồ sơ hải quan.",
+    "next_step": "Vận hành kiểm thử thực tế với mặt hàng Đậu tương hạt (mã 1201.90.00) và cập nhật nhật ký PDCA Log #13."
+  },
+  "workflow_nodes": [
+    {"step": "1. Input", "name": "Mô Tả & Thông Tin Lô Hàng", "detail": "Tên hàng, chất liệu, tính năng, xuất xứ, loại hình A11/A12", "icon": "📥"},
+    {"step": "2. Step 1 Policy", "name": "Rà Soát Tính Hợp Pháp", "detail": "NĐ 69/2018 (Phụ lục I-IX), QĐ 18/2019, Kiểm tra chuyên ngành", "icon": "🛡️"},
+    {"step": "3. Step 2 HS", "name": "Xác Định Mã HS 8 Số", "detail": "6 Quy tắc GRI (Phụ lục II) & Danh mục XNK VN 604 trang", "icon": "🔍"},
+    {"step": "4. Step 3 Tariff", "name": "Tính Thuế & Phí", "detail": "Biểu thuế 2026: MFN, Form E/D/EUR.1/CPTPP, VAT, TTĐB, BVMT", "icon": "💰"},
+    {"step": "5. Step 4 Clearance", "name": "Lập Bộ Chứng Từ & Lộ Trình", "detail": "Điều 16 TT 38/39/121, Cổng NSW & 3 bước thực tế tại cảng", "icon": "📋"},
+    {"step": "6. Output", "name": "Báo Cáo Phân Tích Tiêu Chuẩn", "detail": "Bản báo cáo chuẩn hóa 4 phần có sơ đồ Mermaid & Checklist", "icon": "📊"}
+  ]
+}

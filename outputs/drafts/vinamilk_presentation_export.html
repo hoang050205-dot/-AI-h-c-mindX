@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vinamilk Supply Chain Operations Internship 2026 - Pham Minh Hoang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+    :root {
+      --vm-blue: #0047BA;
+      --vm-blue-dark: #002D72;
+      --vm-blue-light: #EBF3FE;
+      --vm-blue-soft: #D6E6FE;
+      --vm-accent: #00A3FF;
+      --vm-green: #10B981;
+      --text-dark: #0F172A;
+      --text-muted: #475569;
+      --bg-white: #FFFFFF;
+      --font-display: 'Fredoka', cursive, sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-dark);
+      background: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    .slide-page {
+      width: 1920px;
+      height: 1080px;
+      min-width: 1920px;
+      min-height: 1080px;
+      max-width: 1920px;
+      max-height: 1080px;
+      background: #FFF;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 60px 80px;
+      page-break-after: always;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+        gap: 0;
+      }
+      .slide-page {
+        box-shadow: none;
+        page-break-inside: avoid;
+        page-break-after: always;
+      }
+    }
+    .slide-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      padding-bottom: 18px;
+      border-bottom: 3px solid var(--vm-blue-soft);
+    }
+    .slide-topbar .brand {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--vm-blue);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-topbar .brand::before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: var(--vm-blue);
+      border-radius: 50%;
+    }
+    .slide-topbar .nav-links {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--vm-blue-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* SLIDE 1 */
+    .slide-1 {
+      background: linear-gradient(135deg, #003B99 0%, #0056E0 55%, #0077FE 100%);
+      color: #FFF;
+      justify-content: space-between;
+    }
+    .slide-1 .slide-topbar {
+      border-bottom-color: rgba(255, 255, 255, 0.25);
+    }
+    .slide-1 .slide-topbar .brand {
+      color: #FFF;
+    }
+    .slide-1 .slide-topbar .brand::before {
+      background: #FFF;
+    }
+    .slide-1 .slide-topbar .nav-links {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+      flex: 1;
+    }
+    .hero-kicker {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      width: fit-content;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: #FFF;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 82px;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 24px;
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    .hero-subtitle {
+      font-size: 25px;
+      line-height: 1.5;
+      color: #E0E7FF;
+      font-weight: 500;
+      margin-bottom: 36px;
+      max-width: 900px;
+    }
+    .hero-meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: #FFF;
+      color: var(--vm-blue);
+      padding: 20px 32px;
+      border-radius: 22px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+    }
+    .hero-meta-badge .candidate-name {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--vm-blue-dark);
+    }
+    .hero-meta-badge .candidate-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .hero-visual-card {
+      background: #FFF;
+      border-radius: 36px;
+      padding: 40px;
+      color: var(--text-dark);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .stat-pill-row {
+      display: flex;
+      gap: 18px;
+    }
+    .stat-pill {
+      flex: 1;
+      background: var(--vm-blue-light);
+      padding: 22px 18px;
+      border-radius: 24px;
+      text-align: center;
+    }
+    .stat-pill .val {
+      font-family: var(--font-display);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--vm-blue);
+    }
+    .stat-pill .lbl {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .highlight-banner {
+      background: linear-gradient(135deg, #0047BA 0%, #002D72 100%);
+      color: #FFF;
+      padding: 24px 28px;
+      border-radius: 24px;
+      font-size: 20px;
+      line-height: 1.5;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .highlight-banner .check-circle {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      background: var(--vm-green);
+      color: #FFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 28px;
+    }
+
+    /* SLIDE 2 */
+    .content-grid-2 {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 50px;
+      flex: 1;
+      align-items: center;
+    }
+    .profile-card {
+      background: var(--vm-blue);
+      color: #FFF;
+      border-radius: 36px;
+      padding: 50px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      box-shadow: 0 20px 45px rgba(0, 71, 186, 0.25);
+    }
+    .profile-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .profile-card h2 {
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1.15;
+    }
+    .profile-summary {
+      font-size: 21px;
+      line-height: 1.6;
+      color: #E0E7FF;
+    }
+    .profile-quote-box {
+      background: rgba(0, 0, 0, 0.2);
+      border-left: 6px solid #60A5FA;
+      padding: 18px 22px;
+      border-radius: 0 16px 16px 0;
+      font-size: 19px;
+      font-style: italic;
+      line-height: 1.5;
+      color: #F1F5F9;
+    }
+    .pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tag-chip {
+      background: #FFF;
+      border: 1.5px solid #BFDBFE;
+      color: var(--vm-blue);
+      font-size: 17px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 12px;
+    }
+    .info-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .info-card {
+      background: var(--vm-blue-light);
+      border-radius: 26px;
+      padding: 28px 34px;
+      border: 2px solid var(--vm-blue-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-card .card-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--vm-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .info-card .card-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--vm-blue-dark);
+      font-weight: 700;
+    }
+    .info-card .card-body {
+      font-size: 19px;
+      color: var(--text-dark);
+      line-height: 1.55;
+    }
+
+    /* SLIDE 3 */
+    .strengths-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 28px;
+    }
+    .section-headline h2 {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--vm-blue);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .section-headline p {
+      font-size: 21px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .strengths-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      flex: 1;
+    }
+    .strength-card {
+      background: #FFF;
+      border: 2.5px solid var(--vm-blue-soft);
+      border-radius: 30px;
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 10px 25px rgba(0, 71, 186, 0.05);
+    }
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .num-circle {
+      width: 60px;
+      height: 60px;
+      background: var(--vm-blue);
+      color: #FFF;
+      border-radius: 18px;
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .strength-tag {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--vm-blue);
+      background: var(--vm-blue-light);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+    .strength-card h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--vm-blue-dark);
+      line-height: 1.3;
+    }
+    .strength-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+    .strength-points li {
+      position: relative;
+      padding-left: 24px;
+    }
+    .strength-points li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--vm-blue);
+      font-size: 26px;
+      line-height: 1;
+    }
+    .metric-highlight {
+      margin-top: auto;
+      background: var(--vm-blue-light);
+      padding: 12px 18px;
+      border-radius: 18px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--vm-blue-dark);
+    }
+
+    /* SLIDE 4 */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      flex: 1;
+    }
+    .why-box {
+      border-radius: 34px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .why-box.left {
+      background: var(--vm-blue-light);
+      border: 2.5px solid #BFDBFE;
+    }
+    .why-box.right {
+      background: var(--vm-blue);
+      color: #FFF;
+      box-shadow: 0 20px 45px rgba(0, 71, 186, 0.2);
+    }
+    .why-header-tag {
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--vm-blue);
+    }
+    .why-box.right .why-header-tag {
+      background: rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      width: fit-content;
+    }
+    .why-box h3 {
+      font-family: var(--font-display);
+      font-size: 34px;
+      line-height: 1.25;
+      color: var(--vm-blue-dark);
+    }
+    .why-box.right h3 {
+      color: #FFF;
+    }
+    .why-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      font-size: 18.5px;
+      line-height: 1.55;
+    }
+    .why-box.left .why-list {
+      color: var(--text-dark);
+    }
+    .why-box.right .why-list {
+      color: #E0E7FF;
+    }
+    .why-list li strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 20px;
+    }
+    .why-box.left .why-list li strong {
+      color: var(--vm-blue-dark);
+    }
+    .why-box.right .why-list li strong {
+      color: #FFF;
+    }
+
+    /* SLIDE 5 */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      flex: 1;
+    }
+    .goal-column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .goal-banner {
+      padding: 16px 24px;
+      border-radius: 20px;
+      font-family: var(--font-display);
+      font-size: 23px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .goal-banner.learn {
+      background: var(--vm-blue-soft);
+      color: var(--vm-blue-dark);
+    }
+    .goal-banner.contribute {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    .goal-card {
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 22px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    .goal-card h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--vm-blue-dark);
+    }
+    .goal-card p {
+      color: var(--text-dark);
+    }
+    .contact-footer-bar {
+      margin-top: 14px;
+      background: var(--vm-blue-dark);
+      color: #FFF;
+      border-radius: 24px;
+      padding: 18px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 19px;
+    }
+    .contact-items {
+      display: flex;
+      gap: 28px;
+      color: #CBD5E1;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-page slide-1">
+    <div class="slide-topbar">
+      <div class="brand">VINAMILK SUPPLY CHAIN OPERATIONS 2026</div>
+      <div class="nav-links">SELF-INTRODUCTION | CANDIDATE DOSSIER</div>
+    </div>
+    <div class="hero-container">
+      <div>
+        <div class="hero-kicker">Supply Chain Operations Intern Candidate</div>
+        <h1 class="hero-title">PRECISION &amp;<br>OPERATIONAL AGILITY</h1>
+        <p class="hero-subtitle">
+          Leveraging dual-degree academic rigor, real-world 3F agribusiness logistics experience, and AI-driven workflow optimization to empower Vinamilk's farm-to-table excellence.
+        </p>
+        <div class="hero-meta-badge">
+          <div>
+            <div class="candidate-name">Pham Minh Hoang</div>
+            <div class="candidate-sub">NEU Senior • Logistics &amp; SCM • International Business</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual-card">
+        <div class="stat-pill-row">
+          <div class="stat-pill">
+            <div class="val">3.52</div>
+            <div class="lbl">NEU GPA / 4.0</div>
+          </div>
+          <div class="stat-pill">
+            <div class="val">6.5</div>
+            <div class="lbl">IELTS Band</div>
+          </div>
+          <div class="stat-pill">
+            <div class="val">0</div>
+            <div class="lbl">Demurrage Days</div>
+          </div>
+        </div>
+        <div class="highlight-banner">
+          <div class="check-circle">✓</div>
+          <div>
+            <strong>100% Operational Grit:</strong> Proven track record clearing core agricultural feed imports, auditing carrier freight costs, and managing ground air cargo at Noi Bai Airport under tight schedules.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-page">
+    <div class="slide-topbar">
+      <div class="brand">VINAMILK SUPPLY CHAIN OPERATIONS 2026</div>
+      <div class="nav-links">01 / ABOUT ME • ACADEMIC RIGOR</div>
+    </div>
+    <div class="content-grid-2">
+      <div class="profile-card">
+        <span class="profile-badge">Candidate Profile</span>
+        <h2>Analytical Mind, Hands-On Instinct</h2>
+        <p class="profile-summary">
+          Final-year student at <strong>National Economics University (NEU)</strong> simultaneously completing two competitive bachelor degrees in <strong>Logistics &amp; Supply Chain Management</strong> and <strong>International Business Management</strong>.
+        </p>
+        <div class="profile-quote-box">
+          "Supply chain operations is the art of synchronizing physical velocity, data integrity, and strict quality compliance. I don't just observe—I execute."
+        </div>
+        <div class="pills-container">
+          <span class="tag-chip">Dual-Degree Senior</span>
+          <span class="tag-chip">IELTS 6.5</span>
+          <span class="tag-chip">ICDL Certified</span>
+          <span class="tag-chip">Antigravity AI Practitioner</span>
+        </div>
+      </div>
+      <div class="info-stack">
+        <div class="info-card">
+          <span class="card-label">Theoretical Grounding • National Economics University</span>
+          <div class="card-title">Rigorous Supply Chain &amp; Operations Foundation</div>
+          <div class="card-body">
+            Deep grounding in queueing theory, capacity bottleneck identification, aggregate planning, and Lean waste reduction to compress order-to-delivery lead times.
+            <div class="pills-container" style="margin-top:14px;">
+              <span class="tag-chip">Global Logistics: 8.9/10</span>
+              <span class="tag-chip">Logistics Ops Management: 8.8/10</span>
+              <span class="tag-chip">Foreign Trade Ops: 8.4/10</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="card-label">Operational Exposure • C.P. Vietnam Corporation</span>
+          <div class="card-title">3F Model (Feed-Farm-Food) Logistics Immersion</div>
+          <div class="card-body">
+            Immersed in high-velocity agricultural import flows. Managed ECUS5-VNACCS customs declarations, HS tariff research, animal quarantine protocols, and live animal air-ground handling.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-page">
+    <div class="slide-topbar">
+      <div class="brand">VINAMILK SUPPLY CHAIN OPERATIONS 2026</div>
+      <div class="nav-links">02 / KEY STRENGTHS • DIFFERENTIATORS</div>
+    </div>
+    <div class="strengths-container">
+      <div class="section-headline">
+        <h2>3 Pillars of Operational Excellence</h2>
+        <p>Combining field-tested execution, rigorous financial auditing, and modern AI automation</p>
+      </div>
+      <div class="strengths-grid">
+        <div class="strength-card">
+          <div class="card-top-row">
+            <div class="num-circle">01</div>
+            <span class="strength-tag">Execution</span>
+          </div>
+          <h3>End-to-End Operational Execution &amp; Compliance</h3>
+          <ul class="strength-points">
+            <li>Reconciled commercial docs (B/L, Inv, PL, C/O) with 100% data integrity before declarations.</li>
+            <li>Successfully declared &amp; cleared 10 raw material feed shipments via ECUS5-VNACCS.</li>
+            <li>Directly executed ground operations and air cargo pickup for live chicks at Noi Bai Airport.</li>
+          </ul>
+          <div class="metric-highlight">
+            🎯 0 demurrage or detention incurred across all shipments
+          </div>
+        </div>
+        <div class="strength-card">
+          <div class="card-top-row">
+            <div class="num-circle">02</div>
+            <span class="strength-tag">Analytics</span>
+          </div>
+          <h3>Cost Auditing &amp; Analytical Problem Solving</h3>
+          <ul class="strength-points">
+            <li>Formulated and maintained detailed Shipment Cost Sheets auditing trucking, freight &amp; port surcharges.</li>
+            <li>Eliminated billing discrepancies to preserve operational cost accuracy.</li>
+            <li>Applied safety stock modeling &amp; queueing theory to resolve operational congestion bottlenecks.</li>
+          </ul>
+          <div class="metric-highlight">
+            📊 100% cost auditing accuracy on all vendor billing
+          </div>
+        </div>
+        <div class="strength-card">
+          <div class="card-top-row">
+            <div class="num-circle">03</div>
+            <span class="strength-tag">Innovation</span>
+          </div>
+          <h3>AI Automation &amp; Digital Agility</h3>
+          <ul class="strength-points">
+            <li>Pioneered developing custom AI agents on Google Antigravity to automate logistics tracking &amp; reporting.</li>
+            <li>Replaced manual spreadsheet workflows with scripted pipelines, boosting daily synthesis speed.</li>
+            <li>ICDL International Computer Certificate holder; advanced Excel modeling (VLOOKUP, Pivot, Models).</li>
+          </ul>
+          <div class="metric-highlight">
+            🚀 Ready to support Vinamilk’s smart digital supply chain
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide-page">
+    <div class="slide-topbar">
+      <div class="brand">VINAMILK SUPPLY CHAIN OPERATIONS 2026</div>
+      <div class="nav-links">03 / MOTIVATION • WHY VINAMILK</div>
+    </div>
+    <div class="strengths-container">
+      <div class="section-headline">
+        <h2>Passion Meets Benchmark Scale</h2>
+        <p>Connecting personal operational drive with Vinamilk's world-class dairy ecosystem</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-box left">
+          <span class="why-header-tag">Field Passion</span>
+          <h3>Why Supply Chain Operations?</h3>
+          <ul class="why-list">
+            <li>
+              <strong>The Backbone of Daily Nutrition:</strong>
+              Captivated by the synchronized orchestration of raw materials, cold storage, and express distribution where every hour saved directly protects nutritional freshness.
+            </li>
+            <li>
+              <strong>Where Analysis Meets Floor Reality:</strong>
+              Supply chain operations is the ultimate arena where analytical models are tested against dynamic lead times, sudden volume surges, and tight transport schedules.
+            </li>
+            <li>
+              <strong>Scalable Societal Impact:</strong>
+              Optimizing distribution networks directly ensures essential dairy products reach millions of Vietnamese children and families reliably every morning.
+            </li>
+          </ul>
+        </div>
+        <div class="why-box right">
+          <span class="why-header-tag">Target Destination</span>
+          <h3>Why Vinamilk 2026?</h3>
+          <ul class="why-list">
+            <li>
+              <strong>Vietnam’s Apex FMCG Supply Chain:</strong>
+              Vinamilk sets the gold standard with automated Mega Factories, high-bay AS/RS smart warehousing, and high-standard dairy farms nationwide.
+            </li>
+            <li>
+              <strong>Bridge from 3F Agri to FMCG Dairy:</strong>
+              Having managed feed import operations at C.P. Vietnam, I am hungry to elevate my expertise into Vinamilk’s integrated "Farm-to-Table" cold chain.
+            </li>
+            <li>
+              <strong>An Action-Oriented Culture:</strong>
+              Vinamilk’s promise—"direct participation in operational activities rather than observing from the sidelines"—matches my proactive, high-ownership mindset.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide-page">
+    <div class="slide-topbar">
+      <div class="brand">VINAMILK SUPPLY CHAIN OPERATIONS 2026</div>
+      <div class="nav-links">04 / GOALS &amp; VALUE CONTRIBUTION</div>
+    </div>
+    <div class="strengths-container">
+      <div class="section-headline">
+        <h2>Learning Objectives &amp; Value Delivery</h2>
+        <p>A dual commitment: rapid personal mastery and measurable operational contribution</p>
+      </div>
+      <div class="goals-grid">
+        <div class="goal-column">
+          <div class="goal-banner learn">
+            <span>🎯</span> LEARNING OBJECTIVES (GROWTH ROADMAP)
+          </div>
+          <div class="goal-card">
+            <h4>Smart Warehousing &amp; DC Operations</h4>
+            <p>Gain hands-on exposure to automated AS/RS storage, inventory turnover control, and cold-chain distribution center flows.</p>
+          </div>
+          <div class="goal-card">
+            <h4>End-to-End Systemic Thinking</h4>
+            <p>Observe how dairy farming, mega-factory processing, and nationwide primary/secondary transport synchronize under seasonal peak loads.</p>
+          </div>
+          <div class="goal-card">
+            <h4>Continuous Improvement (Kaizen/PDCA)</h4>
+            <p>Learn structured root-cause problem solving to pinpoint bottleneck delays and compress order-to-delivery lead times.</p>
+          </div>
+        </div>
+        <div class="goal-column">
+          <div class="goal-banner contribute">
+            <span>⚡</span> VALUE DELIVERY (DAY 1 IMPACT)
+          </div>
+          <div class="goal-card">
+            <h4>Day-One Document &amp; Cost Precision</h4>
+            <p>Bring proven customs clearance and cost-auditing vigilance from C.P. Vietnam to maintain 100% compliance in operational paperwork.</p>
+          </div>
+          <div class="goal-card">
+            <h4>Workflow Automation &amp; Productivity</h4>
+            <p>Leverage AI agent scripting and advanced Excel data modeling to eliminate repetitive tracking tasks and build daily operational summaries.</p>
+          </div>
+          <div class="goal-card">
+            <h4>High Grit &amp; Long-Term Commitment</h4>
+            <p>Eager to tackle challenging floor assignments, with the explicit goal of advancing into a full-time Supply Chain Specialist role at Vinamilk.</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-footer-bar">
+        <div style="font-weight: 700; font-family: var(--font-display);">
+          Pham Minh Hoang • Ready for Day 1 Impact
+        </div>
+        <div class="contact-items">
+          <span>📞 0349451048</span>
+          <span>✉️ hoang050205@gmail.com</span>
+          <span>🔗 linkedin.com/in/phạm-minh-hoàng-517b66342</span>
+          <span>📍 Hanoi, Vietnam</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

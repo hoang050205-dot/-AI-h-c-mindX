@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI4A Executive BI Dashboard — Modern Glassmorphism & Dark Mode</title>
+  
+  <!-- Modern Typography (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN for High-Performance Canvas Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- External or Inlined Design System CSS -->
+  <link rel="stylesheet" href="bi-design-system.css">
+</head>
+<body>
+  <!-- Ambient Gradient Glow Orbs (Background visual depth) -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <main class="bi-dashboard-container">
+    
+    <!-- Top Header & Filter Controls -->
+    <header class="glass-panel bi-header">
+      <div class="bi-header-left">
+        <div class="bi-brand-icon" aria-hidden="true">📊</div>
+        <div class="bi-title-group">
+          <h1>
+            <span>Executive Business Intelligence</span>
+            <span class="bi-live-badge">Live Sync</span>
+          </h1>
+          <p class="bi-subtitle">Báo cáo hiệu suất kinh doanh đa kênh & Tài chính thời gian thực</p>
+        </div>
+      </div>
+
+      <div class="bi-header-right">
+        <!-- Date Range Filter Tabs -->
+        <nav class="filter-tabs" aria-label="Bộ lọc thời gian">
+          <button class="filter-tab-btn" data-range="today">Hôm nay</button>
+          <button class="filter-tab-btn" data-range="7d">7 Ngày</button>
+          <button class="filter-tab-btn active" data-range="30d">30 Ngày</button>
+          <button class="filter-tab-btn" data-range="quarter">Quý này</button>
+          <button class="filter-tab-btn" data-range="year">Năm 2026</button>
+        </nav>
+
+        <button class="btn-glass" id="btnRefresh" title="Làm mới dữ liệu">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          <span>Refresh</span>
+        </button>
+
+        <button class="btn-glass btn-glass-primary" id="btnExport">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Xuất Báo Cáo</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 4-Card Hero KPI Grid with Count-up Numbers -->
+    <section class="bi-kpi-grid" aria-label="Chỉ số hiệu suất then chốt (KPI)">
+      
+      <!-- KPI 1: Doanh Thu Thuần -->
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-cyan">💰</div>
+            <span class="kpi-title">Tổng Doanh Thu</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +18.4%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number" 
+               data-counter="3852000000" 
+               data-counter-suffix=" ₫" 
+               data-counter-separator="." 
+               data-counter-duration="1800">
+            0 ₫
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Mục tiêu: 3.5 Tỷ</span>
+          <span class="status-pill status-pill-success">Đạt 110%</span>
+        </div>
+      </article>
+
+      <!-- KPI 2: Lợi Nhuận Gộp -->
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-emerald">📈</div>
+            <span class="kpi-title">Lợi Nhuận Gộp</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +12.6%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number" 
+               data-counter="1425600000" 
+               data-counter-suffix=" ₫" 
+               data-counter-separator="." 
+               data-counter-duration="1800">
+            0 ₫
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Biên lợi nhuận: 37.0%</span>
+          <span class="status-pill status-pill-success">Ổn định</span>
+        </div>
+      </article>
+
+      <!-- KPI 3: Khách Hàng Hoạt Động -->
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-violet">👥</div>
+            <span class="kpi-title">Khách Hàng Hoạt Động</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +8.2%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number" 
+               data-counter="14850" 
+               data-counter-separator="," 
+               data-counter-duration="1600">
+            0
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">KH Mới: 1,820</span>
+          <span class="status-pill status-pill-success">Tăng trưởng</span>
+        </div>
+      </article>
+
+      <!-- KPI 4: Tỷ Lệ Chuyển Đổi -->
+      <article class="glass-panel kpi-card">
+        <div class="kpi-top-row">
+          <div class="kpi-label-group">
+            <div class="kpi-icon-wrapper kpi-icon-amber">⚡</div>
+            <span class="kpi-title">Tỷ Lệ Chuyển Đổi</span>
+          </div>
+          <span class="kpi-delta-badge delta-positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            +2.4%
+          </span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-hero-number" 
+               data-counter="4.85" 
+               data-counter-decimals="2" 
+               data-counter-suffix="%" 
+               data-counter-duration="1500">
+            0.00%
+          </div>
+        </div>
+        <div class="kpi-footer-row">
+          <span class="kpi-benchmark">Benchmark: 3.8%</span>
+          <span class="status-pill status-pill-success">Vượt kỳ vọng</span>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Primary Charts Row (2fr Revenue Trend + 1fr Channel Breakdown) -->
+    <section class="bi-charts-grid-primary">
+      
+      <!-- Trend Area Chart -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div class="chart-title-group">
+            <h2>Biểu Đồ Xu Hướng Doanh Thu & Lợi Nhuận</h2>
+            <p class="chart-subtitle">So sánh biến động chu kỳ 12 tháng qua</p>
+          </div>
+          <div class="kpi-label-group">
+            <span class="kpi-delta-badge delta-positive">Trung bình: 321M/tháng</span>
+          </div>
+        </div>
+        <div class="chart-container-wrapper">
+          <canvas id="revenueTrendChart"></canvas>
+        </div>
+      </article>
+
+      <!-- Donut Chart: Kênh Doanh Thu -->
+      <article class="glass-panel chart-panel">
+        <div class="chart-header">
+          <div class="chart-title-group">
+            <h2>Cơ Cấu Kênh Bán Hàng</h2>
+            <p class="chart-subtitle">Đóng góp doanh số theo kênh</p>
+          </div>
+        </div>
+        <div class="chart-container-wrapper">
+          <canvas id="channelDonutChart"></canvas>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Data Table & Operations Overview -->
+    <section class="glass-panel bi-table-panel">
+      <div class="table-header-group">
+        <div>
+          <h2>Chi Tiết Hiệu Suất Nhóm Sản Phẩm Chủ Lực</h2>
+          <p class="chart-subtitle">Cập nhật lúc 20:30 hôm nay • 5 danh mục hàng đầu</p>
+        </div>
+        <input type="text" class="table-search-input" id="tableSearch" placeholder="Tìm kiếm sản phẩm...">
+      </div>
+
+      <div class="bi-responsive-table">
+        <table class="bi-table">
+          <thead>
+            <tr>
+              <th>Mã Danh Mục</th>
+              <th>Tên Nhóm Sản Phẩm</th>
+              <th>Số Đơn Hàng</th>
+              <th>Doanh Thu Thuần</th>
+              <th>Biên Lợi Nhuận</th>
+              <th>Tăng Trưởng</th>
+              <th>Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CAT-01</strong></td>
+              <td>Thiết Bị Điện Tử & Phụ Kiện</td>
+              <td>4,250 đơn</td>
+              <td>1,420,000,000 ₫</td>
+              <td>42.5%</td>
+              <td><span class="kpi-delta-badge delta-positive">+19.2%</span></td>
+              <td><span class="status-pill status-pill-success">Bán chạy</span></td>
+            </tr>
+            <tr>
+              <td><strong>CAT-02</strong></td>
+              <td>Thời Trang Công Sở & Thể Thao</td>
+              <td>3,120 đơn</td>
+              <td>890,000,000 ₫</td>
+              <td>38.0%</td>
+              <td><span class="kpi-delta-badge delta-positive">+14.5%</span></td>
+              <td><span class="status-pill status-pill-success">Tăng trưởng</span></td>
+            </tr>
+            <tr>
+              <td><strong>CAT-03</strong></td>
+              <td>Gia Dụng & Đời Sống</td>
+              <td>2,450 đơn</td>
+              <td>650,000,000 ₫</td>
+              <td>31.2%</td>
+              <td><span class="kpi-delta-badge delta-positive">+6.8%</span></td>
+              <td><span class="status-pill status-pill-success">Ổn định</span></td>
+            </tr>
+            <tr>
+              <td><strong>CAT-04</strong></td>
+              <td>Mỹ Phẩm & Chăm Sóc Sức Khỏe</td>
+              <td>1,840 đơn</td>
+              <td>542,000,000 ₫</td>
+              <td>45.0%</td>
+              <td><span class="kpi-delta-badge delta-negative">-2.1%</span></td>
+              <td><span class="status-pill status-pill-warning">Cần tối ưu</span></td>
+            </tr>
+            <tr>
+              <td><strong>CAT-05</strong></td>
+              <td>Văn Phòng Phẩm & Sách Kỹ Năng</td>
+              <td>1,190 đơn</td>
+              <td>350,000,000 ₫</td>
+              <td>28.4%</td>
+              <td><span class="kpi-delta-badge delta-positive">+4.1%</span></td>
+              <td><span class="status-pill status-pill-success">Bình thường</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- External or Inlined Counter Engine JS -->
+  <script src="bi-counter-engine.js"></script>
+
+  <!-- Chart.js Configuration & Interaction Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Chart.js Global Dark Theme Styling
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+      Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.90)';
+      Chart.defaults.plugins.tooltip.borderColor = 'rgba(255, 255, 255, 0.15)';
+      Chart.defaults.plugins.tooltip.borderWidth = 1;
+      Chart.defaults.plugins.tooltip.padding = 12;
+      Chart.defaults.plugins.tooltip.cornerRadius = 8;
+      Chart.defaults.plugins.legend.labels.usePointStyle = true;
+
+      // 2. Revenue Trend Chart (Line with Neon Glow Gradient)
+      const ctxTrend = document.getElementById('revenueTrendChart').getContext('2d');
+      const gradientCyan = ctxTrend.createLinearGradient(0, 0, 0, 300);
+      gradientCyan.addColorStop(0, 'rgba(6, 182, 212, 0.45)');
+      gradientCyan.addColorStop(1, 'rgba(6, 182, 212, 0.00)');
+
+      const gradientViolet = ctxTrend.createLinearGradient(0, 0, 0, 300);
+      gradientViolet.addColorStop(0, 'rgba(139, 92, 246, 0.35)');
+      gradientViolet.addColorStop(1, 'rgba(139, 92, 246, 0.00)');
+
+      const trendChart = new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+          datasets: [
+            {
+              label: 'Doanh Thu (Triệu VNĐ)',
+              data: [210, 245, 280, 260, 310, 340, 320, 365, 390, 420, 450, 485],
+              borderColor: '#06b6d4',
+              backgroundColor: gradientCyan,
+              borderWidth: 3,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#22d3ee',
+              pointBorderColor: '#070a12',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+            },
+            {
+              label: 'Lợi Nhuận (Triệu VNĐ)',
+              data: [75, 88, 105, 95, 115, 130, 120, 140, 155, 170, 180, 195],
+              borderColor: '#8b5cf6',
+              backgroundColor: gradientViolet,
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.38,
+              pointBackgroundColor: '#a78bfa',
+              pointBorderColor: '#070a12',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94a3b8' }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: {
+                color: '#94a3b8',
+                callback: (val) => val + 'M'
+              }
+            }
+          },
+          plugins: {
+            legend: { position: 'top', align: 'end' }
+          }
+        }
+      });
+
+      // 3. Channel Breakdown Donut Chart
+      const ctxDonut = document.getElementById('channelDonutChart').getContext('2d');
+      const donutChart = new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: {
+          labels: ['Thương Mại Điện Tử', 'Đại Lý Phân Phối', 'Bán Lẻ Trực Tiếp', 'Đối Tác B2B'],
+          datasets: [{
+            data: [42, 28, 18, 12],
+            backgroundColor: [
+              '#06b6d4', // Cyan
+              '#8b5cf6', // Violet
+              '#10b981', // Emerald
+              '#f59e0b', // Amber
+            ],
+            borderWidth: 0,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 12, padding: 14 }
+            }
+          }
+        }
+      });
+
+      // 4. Interactive Filter Tabs Binding
+      const filterBtns = document.querySelectorAll('.filter-tab-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Simulate dynamic data update & re-trigger counter animation
+          const range = btn.getAttribute('data-range');
+          const multiplier = range === 'today' ? 0.05 : range === '7d' ? 0.25 : range === 'quarter' ? 2.8 : range === 'year' ? 11.5 : 1;
+          
+          const revEl = document.querySelector('[data-counter="3852000000"]');
+          if (revEl) {
+            CounterEngine.updateValue(revEl, Math.round(3852000000 * multiplier));
+          }
+        });
+      });
+
+      // 5. Refresh Button Action
+      document.getElementById('btnRefresh')?.addEventListener('click', () => {
+        CounterEngine.animateAll();
+      });
+
+      // 6. Table Search Filtering
+      const searchInput = document.getElementById('tableSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const val = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll('.bi-table tbody tr');
+          rows.forEach(r => {
+            r.style.display = r.textContent.toLowerCase().includes(val) ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

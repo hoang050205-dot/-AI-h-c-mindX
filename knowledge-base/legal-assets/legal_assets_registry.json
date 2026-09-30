@@ -1,0 +1,206 @@
+{
+  "database_name": "Local Customs & Tax Legal Assets Database",
+  "version": "1.0.0",
+  "last_updated": "2026-09-16",
+  "storage_directory": "knowledge-base/legal-assets",
+  "total_documents": 7,
+  "documents": [
+    {
+      "id": "DOC-01",
+      "doc_number": "54/2014/QH13",
+      "type": "Luật",
+      "issuing_authority": "Quốc hội khóa XIII",
+      "issue_date": "2014-06-23",
+      "effective_date": "2015-01-01",
+      "status": "Còn hiệu lực (được sửa đổi, bổ sung bởi Luật số 90/2025/QH15)",
+      "title": "Luật Hải quan số 54/2014/QH13",
+      "file_name": "Luat_54_2014_QH13_Luat_Hai_Quan.pdf",
+      "file_size_bytes": 3834753,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\54_haiquan.signed luật hải quan.pdf",
+      "hierarchy_level": 1,
+      "category": "Luật nền tảng / Thủ tục Hải quan",
+      "summary": "Đạo luật gốc cao nhất quy định quản lý nhà nước về hải quan đối với hàng hóa xuất khẩu, nhập khẩu, quá cảnh, phương tiện vận tải; quyền và nghĩa vụ của người khai hải quan; tổ chức và hoạt động của cơ quan Hải quan.",
+      "relations": {
+        "guided_by_decrees": ["08/2015/NĐ-CP", "167/2025/NĐ-CP"],
+        "guided_by_circulars": ["38/2015/TT-BTC", "39/2018/TT-BTC", "121/2025/TT-BTC"],
+        "amended_by": ["90/2025/QH15"]
+      },
+      "key_articles": [
+        "Điều 16-18: Quyền, nghĩa vụ người khai hải quan và trách nhiệm cơ quan hải quan",
+        "Điều 21: Địa điểm làm thủ tục hải quan",
+        "Điều 23: Thời hạn nộp hồ sơ hải quan",
+        "Điều 25: Khai hải quan điện tử và đăng ký tờ khai",
+        "Điều 29-32: Kiểm tra hải quan (Luồng Xanh, Vàng, Đỏ)",
+        "Điều 77-80: Kiểm tra sau thông quan (Post-Clearance Audit)"
+      ],
+      "keywords": ["luật hải quan", "thủ tục hải quan", "người khai hải quan", "kiểm tra sau thông quan", "phân luồng hải quan", "thời hạn tờ khai"]
+    },
+    {
+      "id": "DOC-02",
+      "doc_number": "48/2024/QH15",
+      "type": "Luật",
+      "issuing_authority": "Quốc hội khóa XV",
+      "issue_date": "2024-11-29",
+      "effective_date": "2025-07-01",
+      "status": "Còn hiệu lực (thay thế Luật Thuế GTGT số 13/2008/QH12)",
+      "title": "Luật Thuế giá trị gia tăng số 48/2024/QH15",
+      "file_name": "Luat_48_2024_QH15_Thue_Gia_Tri_Gia_Tang.doc",
+      "file_size_bytes": 116736,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\48_2024_QH15_556390 thue vat.doc",
+      "hierarchy_level": 1,
+      "category": "Luật nền tảng / Thuế hàng XNK",
+      "summary": "Quy định toàn diện về đối tượng chịu thuế, đối tượng không chịu thuế giá trị gia tăng, người nộp thuế, căn cứ và phương pháp tính thuế, khấu trừ và hoàn thuế GTGT, đặc biệt đối với hàng hóa nhập khẩu và dịch vụ xuất khẩu.",
+      "relations": {
+        "replaces": ["13/2008/QH12", "31/2013/QH13", "106/2016/QH13"],
+        "guided_by_decrees": ["174/2025/NĐ-CP (giảm thuế 2%)"],
+        "amended_by": ["90/2025/QH15"]
+      },
+      "key_articles": [
+        "Điều 3-5: Đối tượng chịu thuế và 26 nhóm đối tượng không chịu thuế GTGT",
+        "Điều 7: Giá tính thuế GTGT đối với hàng hóa nhập khẩu (Giá tính thuế NK + Thuế NK + Thuế TTĐB + Thuế BVMT)",
+        "Điều 8: Các mức thuế suất 0%, 5%, 10%",
+        "Điều 9: Điều kiện áp dụng thuế suất 0% cho hàng hóa, dịch vụ xuất khẩu",
+        "Điều 12-14: Khấu trừ thuế GTGT đầu vào và hoàn thuế đối với hàng xuất khẩu"
+      ],
+      "keywords": ["thuế gtgt", "thuế vat hàng nhập khẩu", "thuế suất 0%", "hoàn thuế xuất khẩu", "giá tính thuế vat nhập khẩu", "đối tượng không chịu thuế"]
+    },
+    {
+      "id": "DOC-03",
+      "doc_number": "167/2025/NĐ-CP",
+      "type": "Nghị định",
+      "issuing_authority": "Chính phủ",
+      "issue_date": "2025-06-30",
+      "effective_date": "2025-07-01",
+      "status": "Còn hiệu lực",
+      "title": "Nghị định số 167/2025/NĐ-CP sửa đổi, bổ sung một số điều của Nghị định số 08/2015/NĐ-CP",
+      "file_name": "Nghi_Dinh_167_2025_ND_CP_Sua_Doi_ND08.pdf",
+      "file_size_bytes": 3311411,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\167nd.signed.pdf",
+      "hierarchy_level": 2,
+      "category": "Nghị định thi hành / Thủ tục & Giám sát Hải quan",
+      "summary": "Sửa đổi, bổ sung quan trọng đối với Nghị định 08/2015/NĐ-CP và Nghị định 59/2018/NĐ-CP: Chuẩn hóa quy định về địa điểm làm thủ tục hải quan, thủ tục hải quan điện tử, nộp chứng từ điện tử qua Cổng Một cửa Quốc gia, phân luồng kiểm tra, quản lý rủi ro và giám sát hàng hóa tại kho bãi cảng.",
+      "relations": {
+        "amends": ["08/2015/NĐ-CP", "59/2018/NĐ-CP"],
+        "implements": ["54/2014/QH13"],
+        "guided_by_circulars": ["121/2025/TT-BTC"]
+      },
+      "key_articles": [
+        "Khoản 1 Điều 1: Sửa đổi Điều 4 NĐ 08/2015/NĐ-CP về địa điểm làm thủ tục hải quan",
+        "Quy định về tiếp nhận, kiểm tra hồ sơ hải quan điện tử",
+        "Cơ chế kiểm tra thực tế hàng hóa tại cửa khẩu và địa điểm kiểm tra tập trung",
+        "Quy định chuyển cửa khẩu và quản lý hàng quá cảnh, tạm nhập tái xuất"
+      ],
+      "keywords": ["nghị định 167/2025", "sửa đổi nghị định 08", "địa điểm làm thủ tục", "giám sát hải quan", "kiểm soát rủi ro", "thủ tục hải quan điện tử"]
+    },
+    {
+      "id": "DOC-04",
+      "doc_number": "174/2025/NĐ-CP",
+      "type": "Nghị định",
+      "issuing_authority": "Chính phủ",
+      "issue_date": "2025-06-30",
+      "effective_date": "2025-07-01",
+      "status": "Còn hiệu lực (áp dụng đến hết ngày 31/12/2026)",
+      "title": "Nghị định số 174/2025/NĐ-CP quy định chính sách giảm thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15",
+      "file_name": "Nghi_Dinh_174_2025_ND_CP_Giam_Thue_GTGT.pdf",
+      "file_size_bytes": 18538446,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\giam thue VAT het han thang 12 2026.pdf",
+      "hierarchy_level": 2,
+      "category": "Nghị định thi hành / Chính sách ưu đãi thuế",
+      "summary": "Quy định giảm 2% thuế suất thuế GTGT (từ 10% xuống 8%) đối với nhóm hàng hóa, dịch vụ đang chịu mức 10%. Áp dụng đồng bộ tại khâu nhập khẩu, sản xuất, gia công, kinh doanh thương mại. Kèm Phụ lục I, II, III danh mục hàng hóa loại trừ không được giảm thuế.",
+      "relations": {
+        "implements_resolution": ["204/2025/QH15"],
+        "applies_to_law": ["48/2024/QH15"]
+      },
+      "key_articles": [
+        "Điều 1: Quy định giảm thuế GTGT xuống 8% và các nhóm hàng loại trừ (Viễn thông, tài chính ngân hàng, bất động sản, kim loại, khoáng sản, sản phẩm chịu thuế TTĐB)",
+        "Điều 2: Trình tự, thủ tục lập hóa đơn và khai báo hải quan khi áp dụng thuế suất giảm 8%",
+        "Phụ lục I: Danh mục hàng hóa, dịch vụ không được giảm thuế GTGT",
+        "Phụ lục II: Danh mục hàng hóa, dịch vụ chịu thuế TTĐB không được giảm thuế GTGT"
+      ],
+      "keywords": ["giảm thuế vat 8%", "nghị định 174/2025", "nghị quyết 204/2025", "phụ lục loại trừ vat", "khai báo thuế 8% hải quan", "giảm thuế đến 2026"]
+    },
+    {
+      "id": "DOC-05",
+      "doc_number": "38/2015/TT-BTC",
+      "type": "Thông tư",
+      "issuing_authority": "Bộ Tài chính",
+      "issue_date": "2015-03-25",
+      "effective_date": "2015-04-01",
+      "status": "Còn hiệu lực một phần (được sửa đổi, bổ sung bởi TT 39/2018/TT-BTC và TT 121/2025/TT-BTC)",
+      "title": "Thông tư số 38/2015/TT-BTC quy định về thủ tục hải quan; kiểm tra, giám sát hải quan; thuế XK, thuế NK và quản lý thuế đối với hàng hóa XNK",
+      "file_name": "Thong_Tu_38_2015_TT_BTC_Thu_Tuc_Hai_Quan.pdf",
+      "file_size_bytes": 18530706,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\Thông tư 38_2015_TT-BTC Quy Định Về Thủ Tục Hải Quan.pdf",
+      "hierarchy_level": 3,
+      "category": "Thông tư hướng dẫn / Nghiệp vụ Hải quan cốt lõi",
+      "summary": "Thông tư 'xương sống' điều chỉnh toàn bộ quy trình nghiệp vụ hải quan tại Việt Nam: Hồ sơ hải quan, khai hải quan trên VNACCS, tiếp nhận, đăng ký, phân luồng tờ khai, kiểm tra chứng từ, kiểm tra thực tế, tham vấn giá, ấn định thuế, miễn thuế, hoàn thuế.",
+      "relations": {
+        "implements": ["54/2014/QH13", "08/2015/NĐ-CP"],
+        "amended_by": ["39/2018/TT-BTC", "121/2025/TT-BTC"]
+      },
+      "key_articles": [
+        "Điều 16: Thành phần bộ hồ sơ hải quan đối với hàng hóa nhập khẩu, xuất khẩu",
+        "Điều 18: Nguyên tắc khai hải quan và đăng ký tờ khai",
+        "Điều 20: Khai bổ sung hồ sơ hải quan trước và sau thông quan",
+        "Điều 21: Hủy tờ khai hải quan",
+        "Điều 25: Giải phóng hàng và thông quan hàng hóa",
+        "Điều 82-84: Thủ tục hoàn thuế, không thu thuế, xử lý tiền thuế nộp thừa"
+      ],
+      "keywords": ["thông tư 38/2015", "hồ sơ hải quan", "điều 16 tt38", "khai bổ sung tờ khai", "hủy tờ khai", "giải phóng hàng", "thủ tục thông quan"]
+    },
+    {
+      "id": "DOC-06",
+      "doc_number": "39/2018/TT-BTC",
+      "type": "Thông tư",
+      "issuing_authority": "Bộ Tài chính",
+      "issue_date": "2018-04-20",
+      "effective_date": "2018-06-05",
+      "status": "Còn hiệu lực một phần (sửa đổi TT 38/2015/TT-BTC, tiếp tục được sửa đổi bởi TT 121/2025/TT-BTC)",
+      "title": "Thông tư số 39/2018/TT-BTC sửa đổi, bổ sung một số điều tại Thông tư số 38/2015/TT-BTC",
+      "file_name": "Thong_Tu_39_2018_TT_BTC_Sua_Doi_TT38.pdf",
+      "file_size_bytes": 9833757,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\39-btc.pdf",
+      "hierarchy_level": 3,
+      "category": "Thông tư sửa đổi / Nghiệp vụ Hải quan cốt lõi",
+      "summary": "Văn bản sửa đổi mang tính bước ngoặt của Thông tư 38: Điện tử hóa 100% việc nộp chứng từ hồ sơ hải quan qua định dạng đính kèm điện tử (V5/VNACCS); sửa đổi căn bản Điều 16 (Hồ sơ hải quan), Điều 18 (Khai báo), Điều 20 (Khai bổ sung), quản lý loại hình gia công, SXXK (báo cáo quyết toán Mẫu 15/BCQT-NVL/GSQL).",
+      "relations": {
+        "amends": ["38/2015/TT-BTC"],
+        "amended_by": ["121/2025/TT-BTC"]
+      },
+      "key_articles": [
+        "Khoản 5 Điều 1 (Sửa đổi Điều 16): Bỏ nộp chứng từ giấy, chuyển sang nộp bản điện tử scan ký số",
+        "Khoản 7 Điều 1 (Sửa đổi Điều 18): Chi tiết các chỉ tiêu khai báo hải quan điện tử",
+        "Khoản 9 Điều 1 (Sửa đổi Điều 20): Các trường hợp và thời hạn khai bổ sung sau thông quan",
+        "Khoản 39 Điều 1 (Sửa đổi Điều 60): Báo cáo quyết toán nguyên phụ liệu gia công, SXXK"
+      ],
+      "keywords": ["thông tư 39/2018", "sửa đổi thông tư 38", "nộp chứng từ điện tử", "chữ ký số hải quan", "báo cáo quyết toán", "khai bổ sung sau thông quan"]
+    },
+    {
+      "id": "DOC-07",
+      "doc_number": "121/2025/TT-BTC",
+      "type": "Thông tư",
+      "issuing_authority": "Bộ Tài chính",
+      "issue_date": "2025-12-18",
+      "effective_date": "2026-02-01",
+      "status": "Còn hiệu lực (văn bản sửa đổi mới nhất hiện hành)",
+      "title": "Thông tư số 121/2025/TT-BTC sửa đổi, bổ sung một số điều của các Thông tư quy định về thủ tục hải quan, kiểm tra, giám sát hải quan, thuế xuất khẩu, thuế nhập khẩu và quản lý thuế đối với hàng hoá xuất khẩu, nhập khẩu",
+      "file_name": "Thong_Tu_121_2025_TT_BTC_Sua_Doi_Cac_Thong_Tu_Hai_Quan.pdf",
+      "file_size_bytes": 8278405,
+      "original_path": "C:\\Minh Hoang\\Khai bao hai quan\\121-btc quy dinh sua doi ve thu tuc hai quan.pdf",
+      "hierarchy_level": 3,
+      "category": "Thông tư sửa đổi toàn diện / Cập nhật mới nhất",
+      "summary": "Thông tư cập nhật mới nhất đồng bộ với Luật Hải quan sửa đổi 2025, Luật Thuế GTGT 48/2024/QH15 và Nghị định 167/2025/NĐ-CP: Sửa đổi toàn diện các chỉ tiêu khai báo hải quan số hóa, cơ chế tự động hóa phân luồng trên hệ thống CNTT mới, kiểm tra chứng nhận xuất xứ số, giám sát hàng trung chuyển và quản lý chuỗi cung ứng.",
+      "relations": {
+        "amends": ["38/2015/TT-BTC", "39/2018/TT-BTC", "14/2015/TT-BTC", "26/2015/TT-BTC"],
+        "implements": ["54/2014/QH13", "167/2025/NĐ-CP", "48/2024/QH15"]
+      },
+      "key_articles": [
+        "Sửa đổi các chỉ tiêu thông tin khai hải quan điện tử trên hệ thống thế hệ mới",
+        "Quy định thẩm định và chấp nhận chứng từ chứng nhận xuất xứ điện tử (e-C/O)",
+        "Quy trình phối hợp giám sát tự động giữa Cảng biển - Hãng tàu - Cơ quan Hải quan",
+        "Chuẩn hóa hồ sơ và thủ tục hoàn thuế, không thu thuế điện tử"
+      ],
+      "keywords": ["thông tư 121/2025", "sửa đổi quy định hải quan 2026", "số hóa hồ sơ hải quan", "giám sát tự động cảng biển", "e-C/O", "cập nhật tt38 tt39"]
+    }
+  ]
+}

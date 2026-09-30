@@ -1,0 +1,38 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+credential.json
+credentials.json
+token.json
+scratch_cookies.txt
+
+# Node & Frontend dependencies
+node_modules/
+**/node_modules/
+dist/
+.cache/
+.turbo/
+**/.turbo/
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+env/
+
+# Scratch & Temporary
+scratch/
+canva_response.html
+open-slide/
+
+# IDE & OS Artifacts
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
