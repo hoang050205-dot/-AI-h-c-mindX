@@ -1,0 +1,3002 @@
+[
+  {
+    "Ma_Giao_Dich": "TXN0001",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 418116895,
+    "Chi_Tieu_Thuc_Te": 331366220,
+    "Chenh_Lech": 86750675,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0002",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 383300269,
+    "Chi_Tieu_Thuc_Te": 428708863,
+    "Chenh_Lech": -45408594,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0003",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 37063198,
+    "Chi_Tieu_Thuc_Te": 23010984,
+    "Chenh_Lech": 14052214,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0004",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 321316148,
+    "Chi_Tieu_Thuc_Te": 237512512,
+    "Chenh_Lech": 83803636,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0005",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 138348156,
+    "Chi_Tieu_Thuc_Te": 126511963,
+    "Chenh_Lech": 11836193,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0006",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 394810735,
+    "Chi_Tieu_Thuc_Te": 353683331,
+    "Chenh_Lech": 41127404,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0007",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 429897789,
+    "Chi_Tieu_Thuc_Te": 359229548,
+    "Chenh_Lech": 70668241,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0008",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 212725585,
+    "Chi_Tieu_Thuc_Te": 253833965,
+    "Chenh_Lech": -41108380,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0009",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 411771770,
+    "Chi_Tieu_Thuc_Te": 379487799,
+    "Chenh_Lech": 32283971,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0010",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 316374558,
+    "Chi_Tieu_Thuc_Te": 254752639,
+    "Chenh_Lech": 61621919,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0011",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 329963575,
+    "Chi_Tieu_Thuc_Te": 242391906,
+    "Chenh_Lech": 87571669,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0012",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 435037905,
+    "Chi_Tieu_Thuc_Te": 349149056,
+    "Chenh_Lech": 85888849,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0013",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 224078714,
+    "Chi_Tieu_Thuc_Te": 178048805,
+    "Chenh_Lech": 46029909,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0014",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 218739393,
+    "Chi_Tieu_Thuc_Te": 185641823,
+    "Chenh_Lech": 33097570,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0015",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 347024718,
+    "Chi_Tieu_Thuc_Te": 362462043,
+    "Chenh_Lech": -15437325,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0016",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 107726045,
+    "Chi_Tieu_Thuc_Te": 99493852,
+    "Chenh_Lech": 8232193,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0017",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 387549477,
+    "Chi_Tieu_Thuc_Te": 320502609,
+    "Chenh_Lech": 67046868,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0018",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 452205673,
+    "Chi_Tieu_Thuc_Te": 371178164,
+    "Chenh_Lech": 81027509,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0019",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 324502471,
+    "Chi_Tieu_Thuc_Te": 393769904,
+    "Chenh_Lech": -69267433,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0020",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 232403258,
+    "Chi_Tieu_Thuc_Te": 283364227,
+    "Chenh_Lech": -50960969,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0021",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 162206459,
+    "Chi_Tieu_Thuc_Te": 113178133,
+    "Chenh_Lech": 49028326,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0022",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 421049984,
+    "Chi_Tieu_Thuc_Te": 424927935,
+    "Chenh_Lech": -3877951,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0023",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 137746935,
+    "Chi_Tieu_Thuc_Te": 178813159,
+    "Chenh_Lech": -41066224,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0024",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 68806619,
+    "Chi_Tieu_Thuc_Te": 77685941,
+    "Chenh_Lech": -8879322,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0025",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 445244369,
+    "Chi_Tieu_Thuc_Te": 479232921,
+    "Chenh_Lech": -33988552,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0026",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 224880292,
+    "Chi_Tieu_Thuc_Te": 228730669,
+    "Chenh_Lech": -3850377,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0027",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 317010891,
+    "Chi_Tieu_Thuc_Te": 381220112,
+    "Chenh_Lech": -64209221,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0028",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 385990466,
+    "Chi_Tieu_Thuc_Te": 470658213,
+    "Chenh_Lech": -84667747,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0029",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 79889117,
+    "Chi_Tieu_Thuc_Te": 64346696,
+    "Chenh_Lech": 15542421,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0030",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 407670222,
+    "Chi_Tieu_Thuc_Te": 494543547,
+    "Chenh_Lech": -86873325,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0031",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 292559523,
+    "Chi_Tieu_Thuc_Te": 362434289,
+    "Chenh_Lech": -69874766,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0032",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 102054959,
+    "Chi_Tieu_Thuc_Te": 87944809,
+    "Chenh_Lech": 14110150,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0033",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 341555926,
+    "Chi_Tieu_Thuc_Te": 282435751,
+    "Chenh_Lech": 59120175,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0034",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 491760214,
+    "Chi_Tieu_Thuc_Te": 634235424,
+    "Chenh_Lech": -142475210,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0035",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 149316949,
+    "Chi_Tieu_Thuc_Te": 181361369,
+    "Chenh_Lech": -32044420,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0036",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 458099148,
+    "Chi_Tieu_Thuc_Te": 297053825,
+    "Chenh_Lech": 161045323,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0037",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 374201025,
+    "Chi_Tieu_Thuc_Te": 349016422,
+    "Chenh_Lech": 25184603,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0038",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 303292704,
+    "Chi_Tieu_Thuc_Te": 367197425,
+    "Chenh_Lech": -63904721,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0039",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 402761564,
+    "Chi_Tieu_Thuc_Te": 329540077,
+    "Chenh_Lech": 73221487,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0040",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 255203188,
+    "Chi_Tieu_Thuc_Te": 313830980,
+    "Chenh_Lech": -58627792,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0041",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 140633465,
+    "Chi_Tieu_Thuc_Te": 90683007,
+    "Chenh_Lech": 49950458,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0042",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 335916382,
+    "Chi_Tieu_Thuc_Te": 253332068,
+    "Chenh_Lech": 82584314,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0043",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 142912186,
+    "Chi_Tieu_Thuc_Te": 92489941,
+    "Chenh_Lech": 50422245,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0044",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 296035466,
+    "Chi_Tieu_Thuc_Te": 226941748,
+    "Chenh_Lech": 69093718,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0045",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 309499014,
+    "Chi_Tieu_Thuc_Te": 214364679,
+    "Chenh_Lech": 95134335,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0046",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 150458149,
+    "Chi_Tieu_Thuc_Te": 172911559,
+    "Chenh_Lech": -22453410,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0047",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 72039333,
+    "Chi_Tieu_Thuc_Te": 76454474,
+    "Chenh_Lech": -4415141,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0048",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 270731958,
+    "Chi_Tieu_Thuc_Te": 326146924,
+    "Chenh_Lech": -55414966,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0049",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 52541181,
+    "Chi_Tieu_Thuc_Te": 46332646,
+    "Chenh_Lech": 6208535,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0050",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 122859136,
+    "Chi_Tieu_Thuc_Te": 90073713,
+    "Chenh_Lech": 32785423,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0051",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 118509390,
+    "Chi_Tieu_Thuc_Te": 94212784,
+    "Chenh_Lech": 24296606,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0052",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 453803639,
+    "Chi_Tieu_Thuc_Te": 545900534,
+    "Chenh_Lech": -92096895,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0053",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 370117623,
+    "Chi_Tieu_Thuc_Te": 480967010,
+    "Chenh_Lech": -110849387,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0054",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 109287596,
+    "Chi_Tieu_Thuc_Te": 96663768,
+    "Chenh_Lech": 12623828,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0055",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 51479642,
+    "Chi_Tieu_Thuc_Te": 36820607,
+    "Chenh_Lech": 14659035,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0056",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 440944696,
+    "Chi_Tieu_Thuc_Te": 506905855,
+    "Chenh_Lech": -65961159,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0057",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 103105914,
+    "Chi_Tieu_Thuc_Te": 75569263,
+    "Chenh_Lech": 27536651,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0058",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 421566323,
+    "Chi_Tieu_Thuc_Te": 345483452,
+    "Chenh_Lech": 76082871,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0059",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 289965740,
+    "Chi_Tieu_Thuc_Te": 360592982,
+    "Chenh_Lech": -70627242,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0060",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 292638348,
+    "Chi_Tieu_Thuc_Te": 191993589,
+    "Chenh_Lech": 100644759,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0061",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 382501977,
+    "Chi_Tieu_Thuc_Te": 460254470,
+    "Chenh_Lech": -77752493,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0062",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 330804800,
+    "Chi_Tieu_Thuc_Te": 336151732,
+    "Chenh_Lech": -5346932,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0063",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 372924530,
+    "Chi_Tieu_Thuc_Te": 376120717,
+    "Chenh_Lech": -3196187,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0064",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 129660823,
+    "Chi_Tieu_Thuc_Te": 138582548,
+    "Chenh_Lech": -8921725,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0065",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 232485908,
+    "Chi_Tieu_Thuc_Te": 160790694,
+    "Chenh_Lech": 71695214,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0066",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 189746337,
+    "Chi_Tieu_Thuc_Te": 237242280,
+    "Chenh_Lech": -47495943,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0067",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 353482333,
+    "Chi_Tieu_Thuc_Te": 459144603,
+    "Chenh_Lech": -105662270,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0068",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 291594777,
+    "Chi_Tieu_Thuc_Te": 229088605,
+    "Chenh_Lech": 62506172,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0069",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 218388346,
+    "Chi_Tieu_Thuc_Te": 174599555,
+    "Chenh_Lech": 43788791,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0070",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 348391997,
+    "Chi_Tieu_Thuc_Te": 448971831,
+    "Chenh_Lech": -100579834,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0071",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 378556326,
+    "Chi_Tieu_Thuc_Te": 443657753,
+    "Chenh_Lech": -65101427,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0072",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 491440824,
+    "Chi_Tieu_Thuc_Te": 341061789,
+    "Chenh_Lech": 150379035,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0073",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 166215835,
+    "Chi_Tieu_Thuc_Te": 132512148,
+    "Chenh_Lech": 33703687,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0074",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 129305473,
+    "Chi_Tieu_Thuc_Te": 139811282,
+    "Chenh_Lech": -10505809,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0075",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 154819694,
+    "Chi_Tieu_Thuc_Te": 191006559,
+    "Chenh_Lech": -36186865,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0076",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 465252867,
+    "Chi_Tieu_Thuc_Te": 369260107,
+    "Chenh_Lech": 95992760,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0077",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 362047638,
+    "Chi_Tieu_Thuc_Te": 465542057,
+    "Chenh_Lech": -103494419,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0078",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 316181171,
+    "Chi_Tieu_Thuc_Te": 345891834,
+    "Chenh_Lech": -29710663,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0079",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 60396236,
+    "Chi_Tieu_Thuc_Te": 76192005,
+    "Chenh_Lech": -15795769,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0080",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 468069789,
+    "Chi_Tieu_Thuc_Te": 401815066,
+    "Chenh_Lech": 66254723,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0081",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 88421792,
+    "Chi_Tieu_Thuc_Te": 55642083,
+    "Chenh_Lech": 32779709,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0082",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 132783981,
+    "Chi_Tieu_Thuc_Te": 143067659,
+    "Chenh_Lech": -10283678,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0083",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 438821719,
+    "Chi_Tieu_Thuc_Te": 435275365,
+    "Chenh_Lech": 3546354,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0084",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 147097385,
+    "Chi_Tieu_Thuc_Te": 177285296,
+    "Chenh_Lech": -30187911,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0085",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 116293522,
+    "Chi_Tieu_Thuc_Te": 129736486,
+    "Chenh_Lech": -13442964,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0086",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 163240225,
+    "Chi_Tieu_Thuc_Te": 116135379,
+    "Chenh_Lech": 47104846,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0087",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 488240978,
+    "Chi_Tieu_Thuc_Te": 306179445,
+    "Chenh_Lech": 182061533,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0088",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 458401594,
+    "Chi_Tieu_Thuc_Te": 569754827,
+    "Chenh_Lech": -111353233,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0089",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 139681170,
+    "Chi_Tieu_Thuc_Te": 86122535,
+    "Chenh_Lech": 53558635,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0090",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 169573877,
+    "Chi_Tieu_Thuc_Te": 204344501,
+    "Chenh_Lech": -34770624,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0091",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 384813509,
+    "Chi_Tieu_Thuc_Te": 495179863,
+    "Chenh_Lech": -110366354,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0092",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 81923628,
+    "Chi_Tieu_Thuc_Te": 99449294,
+    "Chenh_Lech": -17525666,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0093",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 40539176,
+    "Chi_Tieu_Thuc_Te": 27399690,
+    "Chenh_Lech": 13139486,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0094",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 254287182,
+    "Chi_Tieu_Thuc_Te": 260478107,
+    "Chenh_Lech": -6190925,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0095",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 329553349,
+    "Chi_Tieu_Thuc_Te": 241580777,
+    "Chenh_Lech": 87972572,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0096",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 20907996,
+    "Chi_Tieu_Thuc_Te": 20154142,
+    "Chenh_Lech": 753854,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0097",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 215539914,
+    "Chi_Tieu_Thuc_Te": 194397211,
+    "Chenh_Lech": 21142703,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0098",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 376153436,
+    "Chi_Tieu_Thuc_Te": 448980764,
+    "Chenh_Lech": -72827328,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0099",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 378035401,
+    "Chi_Tieu_Thuc_Te": 334892124,
+    "Chenh_Lech": 43143277,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0100",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 317647935,
+    "Chi_Tieu_Thuc_Te": 218891655,
+    "Chenh_Lech": 98756280,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0101",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 383632301,
+    "Chi_Tieu_Thuc_Te": 431085388,
+    "Chenh_Lech": -47453087,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0102",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 238009946,
+    "Chi_Tieu_Thuc_Te": 234096122,
+    "Chenh_Lech": 3913824,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0103",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 132840968,
+    "Chi_Tieu_Thuc_Te": 119679311,
+    "Chenh_Lech": 13161657,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0104",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 269638633,
+    "Chi_Tieu_Thuc_Te": 245168984,
+    "Chenh_Lech": 24469649,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0105",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 446133446,
+    "Chi_Tieu_Thuc_Te": 549112902,
+    "Chenh_Lech": -102979456,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0106",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 172356666,
+    "Chi_Tieu_Thuc_Te": 165603112,
+    "Chenh_Lech": 6753554,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0107",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 70136869,
+    "Chi_Tieu_Thuc_Te": 82263282,
+    "Chenh_Lech": -12126413,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0108",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 140603039,
+    "Chi_Tieu_Thuc_Te": 163745459,
+    "Chenh_Lech": -23142420,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0109",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 151448838,
+    "Chi_Tieu_Thuc_Te": 195180479,
+    "Chenh_Lech": -43731641,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0110",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 242501321,
+    "Chi_Tieu_Thuc_Te": 295923352,
+    "Chenh_Lech": -53422031,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0111",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 285416722,
+    "Chi_Tieu_Thuc_Te": 251097360,
+    "Chenh_Lech": 34319362,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0112",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 499243092,
+    "Chi_Tieu_Thuc_Te": 561985534,
+    "Chenh_Lech": -62742442,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0113",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 114428441,
+    "Chi_Tieu_Thuc_Te": 133066190,
+    "Chenh_Lech": -18637749,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0114",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 46960788,
+    "Chi_Tieu_Thuc_Te": 46499823,
+    "Chenh_Lech": 460965,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0115",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 450257261,
+    "Chi_Tieu_Thuc_Te": 416600650,
+    "Chenh_Lech": 33656611,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0116",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 425471762,
+    "Chi_Tieu_Thuc_Te": 520776648,
+    "Chenh_Lech": -95304886,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0117",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 465908426,
+    "Chi_Tieu_Thuc_Te": 575302937,
+    "Chenh_Lech": -109394511,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0118",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 261629363,
+    "Chi_Tieu_Thuc_Te": 204446101,
+    "Chenh_Lech": 57183262,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0119",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 431143090,
+    "Chi_Tieu_Thuc_Te": 493388246,
+    "Chenh_Lech": -62245156,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0120",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 167423381,
+    "Chi_Tieu_Thuc_Te": 152005498,
+    "Chenh_Lech": 15417883,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0121",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 165875939,
+    "Chi_Tieu_Thuc_Te": 138521881,
+    "Chenh_Lech": 27354058,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0122",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 100976594,
+    "Chi_Tieu_Thuc_Te": 76932353,
+    "Chenh_Lech": 24044241,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0123",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 54482602,
+    "Chi_Tieu_Thuc_Te": 48511718,
+    "Chenh_Lech": 5970884,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0124",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 243217093,
+    "Chi_Tieu_Thuc_Te": 156531115,
+    "Chenh_Lech": 86685978,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0125",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 479954507,
+    "Chi_Tieu_Thuc_Te": 583845301,
+    "Chenh_Lech": -103890794,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0126",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 23165432,
+    "Chi_Tieu_Thuc_Te": 29186571,
+    "Chenh_Lech": -6021139,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0127",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 308954965,
+    "Chi_Tieu_Thuc_Te": 347037053,
+    "Chenh_Lech": -38082088,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0128",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 282116207,
+    "Chi_Tieu_Thuc_Te": 212601403,
+    "Chenh_Lech": 69514804,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0129",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 228766121,
+    "Chi_Tieu_Thuc_Te": 191086208,
+    "Chenh_Lech": 37679913,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0130",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 471243041,
+    "Chi_Tieu_Thuc_Te": 436923873,
+    "Chenh_Lech": 34319168,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0131",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 231538012,
+    "Chi_Tieu_Thuc_Te": 234854780,
+    "Chenh_Lech": -3316768,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0132",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 365073591,
+    "Chi_Tieu_Thuc_Te": 328576796,
+    "Chenh_Lech": 36496795,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0133",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 159670356,
+    "Chi_Tieu_Thuc_Te": 138174367,
+    "Chenh_Lech": 21495989,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0134",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 201194227,
+    "Chi_Tieu_Thuc_Te": 227925052,
+    "Chenh_Lech": -26730825,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0135",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 155437245,
+    "Chi_Tieu_Thuc_Te": 184105723,
+    "Chenh_Lech": -28668478,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0136",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 207883528,
+    "Chi_Tieu_Thuc_Te": 157358583,
+    "Chenh_Lech": 50524945,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0137",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 424925869,
+    "Chi_Tieu_Thuc_Te": 264185335,
+    "Chenh_Lech": 160740534,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0138",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 353577041,
+    "Chi_Tieu_Thuc_Te": 249861453,
+    "Chenh_Lech": 103715588,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0139",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 322778860,
+    "Chi_Tieu_Thuc_Te": 407808467,
+    "Chenh_Lech": -85029607,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0140",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 431725283,
+    "Chi_Tieu_Thuc_Te": 370518131,
+    "Chenh_Lech": 61207152,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0141",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 437573836,
+    "Chi_Tieu_Thuc_Te": 513497631,
+    "Chenh_Lech": -75923795,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0142",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 187480771,
+    "Chi_Tieu_Thuc_Te": 188054032,
+    "Chenh_Lech": -573261,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0143",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 60800296,
+    "Chi_Tieu_Thuc_Te": 61679985,
+    "Chenh_Lech": -879689,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0144",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 394302642,
+    "Chi_Tieu_Thuc_Te": 449795462,
+    "Chenh_Lech": -55492820,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0145",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 447471230,
+    "Chi_Tieu_Thuc_Te": 576652167,
+    "Chenh_Lech": -129180937,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0146",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 375151564,
+    "Chi_Tieu_Thuc_Te": 322405109,
+    "Chenh_Lech": 52746455,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0147",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 26792569,
+    "Chi_Tieu_Thuc_Te": 32009160,
+    "Chenh_Lech": -5216591,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0148",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 214448221,
+    "Chi_Tieu_Thuc_Te": 224078999,
+    "Chenh_Lech": -9630778,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0149",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 253800381,
+    "Chi_Tieu_Thuc_Te": 183572768,
+    "Chenh_Lech": 70227613,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0150",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 350665424,
+    "Chi_Tieu_Thuc_Te": 408784519,
+    "Chenh_Lech": -58119095,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0151",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 253847273,
+    "Chi_Tieu_Thuc_Te": 299035697,
+    "Chenh_Lech": -45188424,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0152",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 477260020,
+    "Chi_Tieu_Thuc_Te": 368371532,
+    "Chenh_Lech": 108888488,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0153",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 150923185,
+    "Chi_Tieu_Thuc_Te": 169838900,
+    "Chenh_Lech": -18915715,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0154",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 200601562,
+    "Chi_Tieu_Thuc_Te": 124391022,
+    "Chenh_Lech": 76210540,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0155",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 133880976,
+    "Chi_Tieu_Thuc_Te": 113581604,
+    "Chenh_Lech": 20299372,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0156",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 492618188,
+    "Chi_Tieu_Thuc_Te": 501144672,
+    "Chenh_Lech": -8526484,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0157",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 297362143,
+    "Chi_Tieu_Thuc_Te": 375759829,
+    "Chenh_Lech": -78397686,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0158",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 282303235,
+    "Chi_Tieu_Thuc_Te": 279091569,
+    "Chenh_Lech": 3211666,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0159",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 366766476,
+    "Chi_Tieu_Thuc_Te": 402815837,
+    "Chenh_Lech": -36049361,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0160",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 177966524,
+    "Chi_Tieu_Thuc_Te": 134385633,
+    "Chenh_Lech": 43580891,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0161",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 376460822,
+    "Chi_Tieu_Thuc_Te": 379129518,
+    "Chenh_Lech": -2668696,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0162",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 248440619,
+    "Chi_Tieu_Thuc_Te": 322386987,
+    "Chenh_Lech": -73946368,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0163",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 397342375,
+    "Chi_Tieu_Thuc_Te": 364609979,
+    "Chenh_Lech": 32732396,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0164",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 84776632,
+    "Chi_Tieu_Thuc_Te": 93669618,
+    "Chenh_Lech": -8892986,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0165",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 122832777,
+    "Chi_Tieu_Thuc_Te": 92305054,
+    "Chenh_Lech": 30527723,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0166",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 73969543,
+    "Chi_Tieu_Thuc_Te": 87494123,
+    "Chenh_Lech": -13524580,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0167",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 116336946,
+    "Chi_Tieu_Thuc_Te": 94417589,
+    "Chenh_Lech": 21919357,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0168",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 167269775,
+    "Chi_Tieu_Thuc_Te": 105691245,
+    "Chenh_Lech": 61578530,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0169",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 394423108,
+    "Chi_Tieu_Thuc_Te": 497313396,
+    "Chenh_Lech": -102890288,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0170",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 488537842,
+    "Chi_Tieu_Thuc_Te": 297317184,
+    "Chenh_Lech": 191220658,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0171",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 256474887,
+    "Chi_Tieu_Thuc_Te": 215052693,
+    "Chenh_Lech": 41422194,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0172",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 81250065,
+    "Chi_Tieu_Thuc_Te": 95507903,
+    "Chenh_Lech": -14257838,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0173",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 329785872,
+    "Chi_Tieu_Thuc_Te": 343179134,
+    "Chenh_Lech": -13393262,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0174",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 455478585,
+    "Chi_Tieu_Thuc_Te": 452740119,
+    "Chenh_Lech": 2738466,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0175",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 83593198,
+    "Chi_Tieu_Thuc_Te": 82811695,
+    "Chenh_Lech": 781503,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0176",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 436447298,
+    "Chi_Tieu_Thuc_Te": 421521138,
+    "Chenh_Lech": 14926160,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0177",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 481798463,
+    "Chi_Tieu_Thuc_Te": 487564432,
+    "Chenh_Lech": -5765969,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0178",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 347293102,
+    "Chi_Tieu_Thuc_Te": 441783270,
+    "Chenh_Lech": -94490168,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0179",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 162080806,
+    "Chi_Tieu_Thuc_Te": 172178390,
+    "Chenh_Lech": -10097584,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0180",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 316348580,
+    "Chi_Tieu_Thuc_Te": 206431813,
+    "Chenh_Lech": 109916767,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0181",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 390103308,
+    "Chi_Tieu_Thuc_Te": 396215382,
+    "Chenh_Lech": -6112074,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0182",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 174675132,
+    "Chi_Tieu_Thuc_Te": 191246401,
+    "Chenh_Lech": -16571269,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0183",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 389036969,
+    "Chi_Tieu_Thuc_Te": 296989524,
+    "Chenh_Lech": 92047445,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0184",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 248244747,
+    "Chi_Tieu_Thuc_Te": 168891678,
+    "Chenh_Lech": 79353069,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0185",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 162610347,
+    "Chi_Tieu_Thuc_Te": 191659353,
+    "Chenh_Lech": -29049006,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0186",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 445539220,
+    "Chi_Tieu_Thuc_Te": 363260720,
+    "Chenh_Lech": 82278500,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0187",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 255768714,
+    "Chi_Tieu_Thuc_Te": 175725271,
+    "Chenh_Lech": 80043443,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0188",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 166161060,
+    "Chi_Tieu_Thuc_Te": 157907927,
+    "Chenh_Lech": 8253133,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0189",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 341068488,
+    "Chi_Tieu_Thuc_Te": 214157772,
+    "Chenh_Lech": 126910716,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0190",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 344116295,
+    "Chi_Tieu_Thuc_Te": 266778749,
+    "Chenh_Lech": 77337546,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0191",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 430577602,
+    "Chi_Tieu_Thuc_Te": 460975135,
+    "Chenh_Lech": -30397533,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0192",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 429691025,
+    "Chi_Tieu_Thuc_Te": 485287965,
+    "Chenh_Lech": -55596940,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0193",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 169334175,
+    "Chi_Tieu_Thuc_Te": 123113125,
+    "Chenh_Lech": 46221050,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0194",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 68985393,
+    "Chi_Tieu_Thuc_Te": 64087932,
+    "Chenh_Lech": 4897461,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0195",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 379775190,
+    "Chi_Tieu_Thuc_Te": 255672222,
+    "Chenh_Lech": 124102968,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0196",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 392413217,
+    "Chi_Tieu_Thuc_Te": 371547944,
+    "Chenh_Lech": 20865273,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0197",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 264182802,
+    "Chi_Tieu_Thuc_Te": 174794399,
+    "Chenh_Lech": 89388403,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0198",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 434758511,
+    "Chi_Tieu_Thuc_Te": 383858088,
+    "Chenh_Lech": 50900423,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0199",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 241860602,
+    "Chi_Tieu_Thuc_Te": 154293244,
+    "Chenh_Lech": 87567358,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0200",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 355763762,
+    "Chi_Tieu_Thuc_Te": 323541764,
+    "Chenh_Lech": 32221998,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0201",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 314860050,
+    "Chi_Tieu_Thuc_Te": 217791612,
+    "Chenh_Lech": 97068438,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0202",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 85190134,
+    "Chi_Tieu_Thuc_Te": 52835654,
+    "Chenh_Lech": 32354480,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0203",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 401061753,
+    "Chi_Tieu_Thuc_Te": 285100648,
+    "Chenh_Lech": 115961105,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0204",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 70041311,
+    "Chi_Tieu_Thuc_Te": 53041616,
+    "Chenh_Lech": 16999695,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0205",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 367736490,
+    "Chi_Tieu_Thuc_Te": 434848480,
+    "Chenh_Lech": -67111990,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0206",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 293198582,
+    "Chi_Tieu_Thuc_Te": 320697131,
+    "Chenh_Lech": -27498549,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0207",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 150852032,
+    "Chi_Tieu_Thuc_Te": 138746236,
+    "Chenh_Lech": 12105796,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0208",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 341788396,
+    "Chi_Tieu_Thuc_Te": 326670624,
+    "Chenh_Lech": 15117772,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0209",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 434826803,
+    "Chi_Tieu_Thuc_Te": 501357185,
+    "Chenh_Lech": -66530382,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0210",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 460529146,
+    "Chi_Tieu_Thuc_Te": 277144451,
+    "Chenh_Lech": 183384695,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0211",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 484533246,
+    "Chi_Tieu_Thuc_Te": 341119541,
+    "Chenh_Lech": 143413705,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0212",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 198477341,
+    "Chi_Tieu_Thuc_Te": 195766575,
+    "Chenh_Lech": 2710766,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0213",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 192752899,
+    "Chi_Tieu_Thuc_Te": 232984511,
+    "Chenh_Lech": -40231612,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0214",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 145392880,
+    "Chi_Tieu_Thuc_Te": 174356462,
+    "Chenh_Lech": -28963582,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0215",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 419810534,
+    "Chi_Tieu_Thuc_Te": 390878608,
+    "Chenh_Lech": 28931926,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0216",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 285927541,
+    "Chi_Tieu_Thuc_Te": 364665440,
+    "Chenh_Lech": -78737899,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0217",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 486916802,
+    "Chi_Tieu_Thuc_Te": 326358528,
+    "Chenh_Lech": 160558274,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0218",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 28239679,
+    "Chi_Tieu_Thuc_Te": 31224914,
+    "Chenh_Lech": -2985235,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0219",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 60173111,
+    "Chi_Tieu_Thuc_Te": 55879363,
+    "Chenh_Lech": 4293748,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0220",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 368878398,
+    "Chi_Tieu_Thuc_Te": 242065649,
+    "Chenh_Lech": 126812749,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0221",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 190006162,
+    "Chi_Tieu_Thuc_Te": 197370691,
+    "Chenh_Lech": -7364529,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0222",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 351496025,
+    "Chi_Tieu_Thuc_Te": 227732349,
+    "Chenh_Lech": 123763676,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0223",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 142130766,
+    "Chi_Tieu_Thuc_Te": 159575392,
+    "Chenh_Lech": -17444626,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0224",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 258198108,
+    "Chi_Tieu_Thuc_Te": 184987416,
+    "Chenh_Lech": 73210692,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0225",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 194147323,
+    "Chi_Tieu_Thuc_Te": 224686779,
+    "Chenh_Lech": -30539456,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0226",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 251223208,
+    "Chi_Tieu_Thuc_Te": 176333282,
+    "Chenh_Lech": 74889926,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0227",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 111259276,
+    "Chi_Tieu_Thuc_Te": 80390228,
+    "Chenh_Lech": 30869048,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0228",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 287183069,
+    "Chi_Tieu_Thuc_Te": 355814168,
+    "Chenh_Lech": -68631099,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0229",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 362472440,
+    "Chi_Tieu_Thuc_Te": 281925314,
+    "Chenh_Lech": 80547126,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0230",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 451984092,
+    "Chi_Tieu_Thuc_Te": 418391404,
+    "Chenh_Lech": 33592688,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0231",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 59654306,
+    "Chi_Tieu_Thuc_Te": 54238342,
+    "Chenh_Lech": 5415964,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0232",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 363027603,
+    "Chi_Tieu_Thuc_Te": 462286737,
+    "Chenh_Lech": -99259134,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0233",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 473819091,
+    "Chi_Tieu_Thuc_Te": 384497165,
+    "Chenh_Lech": 89321926,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0234",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 147348842,
+    "Chi_Tieu_Thuc_Te": 127744816,
+    "Chenh_Lech": 19604026,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0235",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 395422599,
+    "Chi_Tieu_Thuc_Te": 318972197,
+    "Chenh_Lech": 76450402,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0236",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 24347562,
+    "Chi_Tieu_Thuc_Te": 24253831,
+    "Chenh_Lech": 93731,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0237",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 345562007,
+    "Chi_Tieu_Thuc_Te": 387589433,
+    "Chenh_Lech": -42027426,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0238",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 137577164,
+    "Chi_Tieu_Thuc_Te": 143855155,
+    "Chenh_Lech": -6277991,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0239",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 357288135,
+    "Chi_Tieu_Thuc_Te": 238673744,
+    "Chenh_Lech": 118614391,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0240",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 185857076,
+    "Chi_Tieu_Thuc_Te": 214112432,
+    "Chenh_Lech": -28255356,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0241",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 413182656,
+    "Chi_Tieu_Thuc_Te": 285917549,
+    "Chenh_Lech": 127265107,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0242",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 114296046,
+    "Chi_Tieu_Thuc_Te": 84642663,
+    "Chenh_Lech": 29653383,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0243",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 465856595,
+    "Chi_Tieu_Thuc_Te": 333171829,
+    "Chenh_Lech": 132684766,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0244",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 451769059,
+    "Chi_Tieu_Thuc_Te": 307482512,
+    "Chenh_Lech": 144286547,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0245",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 481784466,
+    "Chi_Tieu_Thuc_Te": 517160264,
+    "Chenh_Lech": -35375798,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0246",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 68480985,
+    "Chi_Tieu_Thuc_Te": 78991267,
+    "Chenh_Lech": -10510282,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0247",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 264161390,
+    "Chi_Tieu_Thuc_Te": 226653103,
+    "Chenh_Lech": 37508287,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0248",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 333833311,
+    "Chi_Tieu_Thuc_Te": 289339289,
+    "Chenh_Lech": 44494022,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0249",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 382300116,
+    "Chi_Tieu_Thuc_Te": 291953167,
+    "Chenh_Lech": 90346949,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0250",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 347535387,
+    "Chi_Tieu_Thuc_Te": 262374287,
+    "Chenh_Lech": 85161100,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0251",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 396387939,
+    "Chi_Tieu_Thuc_Te": 321681941,
+    "Chenh_Lech": 74705998,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0252",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 44345382,
+    "Chi_Tieu_Thuc_Te": 55980859,
+    "Chenh_Lech": -11635477,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0253",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 72179558,
+    "Chi_Tieu_Thuc_Te": 55171168,
+    "Chenh_Lech": 17008390,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0254",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 263548136,
+    "Chi_Tieu_Thuc_Te": 226574456,
+    "Chenh_Lech": 36973680,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0255",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 335325947,
+    "Chi_Tieu_Thuc_Te": 375427010,
+    "Chenh_Lech": -40101063,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0256",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 467585565,
+    "Chi_Tieu_Thuc_Te": 440719466,
+    "Chenh_Lech": 26866099,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0257",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 390591609,
+    "Chi_Tieu_Thuc_Te": 335663090,
+    "Chenh_Lech": 54928519,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0258",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 479266325,
+    "Chi_Tieu_Thuc_Te": 409236038,
+    "Chenh_Lech": 70030287,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0259",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 52507582,
+    "Chi_Tieu_Thuc_Te": 46138294,
+    "Chenh_Lech": 6369288,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0260",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 69216793,
+    "Chi_Tieu_Thuc_Te": 73642384,
+    "Chenh_Lech": -4425591,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0261",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 47154131,
+    "Chi_Tieu_Thuc_Te": 54262909,
+    "Chenh_Lech": -7108778,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0262",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 56834794,
+    "Chi_Tieu_Thuc_Te": 67114644,
+    "Chenh_Lech": -10279850,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0263",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 456504494,
+    "Chi_Tieu_Thuc_Te": 551816605,
+    "Chenh_Lech": -95312111,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0264",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 168860798,
+    "Chi_Tieu_Thuc_Te": 202782279,
+    "Chenh_Lech": -33921481,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0265",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 448698844,
+    "Chi_Tieu_Thuc_Te": 324026965,
+    "Chenh_Lech": 124671879,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0266",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 27978076,
+    "Chi_Tieu_Thuc_Te": 23802896,
+    "Chenh_Lech": 4175180,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0267",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 28472405,
+    "Chi_Tieu_Thuc_Te": 20556288,
+    "Chenh_Lech": 7916117,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0268",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 302440017,
+    "Chi_Tieu_Thuc_Te": 205524478,
+    "Chenh_Lech": 96915539,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0269",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 437694716,
+    "Chi_Tieu_Thuc_Te": 373540611,
+    "Chenh_Lech": 64154105,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0270",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 290496338,
+    "Chi_Tieu_Thuc_Te": 219349377,
+    "Chenh_Lech": 71146961,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0271",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 265909704,
+    "Chi_Tieu_Thuc_Te": 279295194,
+    "Chenh_Lech": -13385490,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0272",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 474889943,
+    "Chi_Tieu_Thuc_Te": 418440762,
+    "Chenh_Lech": 56449181,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0273",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 402467541,
+    "Chi_Tieu_Thuc_Te": 497768063,
+    "Chenh_Lech": -95300522,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0274",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 346577194,
+    "Chi_Tieu_Thuc_Te": 243932701,
+    "Chenh_Lech": 102644493,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0275",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 224496488,
+    "Chi_Tieu_Thuc_Te": 291001199,
+    "Chenh_Lech": -66504711,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0276",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 291415667,
+    "Chi_Tieu_Thuc_Te": 298350996,
+    "Chenh_Lech": -6935329,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0277",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 477839613,
+    "Chi_Tieu_Thuc_Te": 505697218,
+    "Chenh_Lech": -27857605,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0278",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 250892040,
+    "Chi_Tieu_Thuc_Te": 229839297,
+    "Chenh_Lech": 21052743,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0279",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 464217313,
+    "Chi_Tieu_Thuc_Te": 425895817,
+    "Chenh_Lech": 38321496,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0280",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 187798118,
+    "Chi_Tieu_Thuc_Te": 168780704,
+    "Chenh_Lech": 19017414,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0281",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 101947397,
+    "Chi_Tieu_Thuc_Te": 110182169,
+    "Chenh_Lech": -8234772,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0282",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 466554133,
+    "Chi_Tieu_Thuc_Te": 307811445,
+    "Chenh_Lech": 158742688,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0283",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 455815319,
+    "Chi_Tieu_Thuc_Te": 315005223,
+    "Chenh_Lech": 140810096,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0284",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 379710635,
+    "Chi_Tieu_Thuc_Te": 260315144,
+    "Chenh_Lech": 119395491,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0285",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 486053421,
+    "Chi_Tieu_Thuc_Te": 603236317,
+    "Chenh_Lech": -117182896,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0286",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 208788610,
+    "Chi_Tieu_Thuc_Te": 140414598,
+    "Chenh_Lech": 68374012,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0287",
+    "Quy": "Q2-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 372582616,
+    "Chi_Tieu_Thuc_Te": 349308340,
+    "Chenh_Lech": 23274276,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0288",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Kinh Doanh",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 81678583,
+    "Chi_Tieu_Thuc_Te": 92609132,
+    "Chenh_Lech": -10930549,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0289",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Quang Cao",
+    "Ngan_Sach_Duyet": 473739223,
+    "Chi_Tieu_Thuc_Te": 470269552,
+    "Chenh_Lech": 3469671,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0290",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 346951654,
+    "Chi_Tieu_Thuc_Te": 433814124,
+    "Chenh_Lech": -86862470,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0291",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 116860142,
+    "Chi_Tieu_Thuc_Te": 92470176,
+    "Chenh_Lech": 24389966,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0292",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dich Vu Cloud",
+    "Ngan_Sach_Duyet": 23278020,
+    "Chi_Tieu_Thuc_Te": 16922745,
+    "Chenh_Lech": 6355275,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0293",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Marketing",
+    "Hang_Muc_Chi": "Di Chuyen & Cong Tac",
+    "Ngan_Sach_Duyet": 57358390,
+    "Chi_Tieu_Thuc_Te": 40111425,
+    "Chenh_Lech": 17246965,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0294",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Ke Toan",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 420565702,
+    "Chi_Tieu_Thuc_Te": 408511398,
+    "Chenh_Lech": 12054304,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0295",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 203017138,
+    "Chi_Tieu_Thuc_Te": 144180029,
+    "Chenh_Lech": 58837109,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0296",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Nhan Su",
+    "Hang_Muc_Chi": "Dao Tao",
+    "Ngan_Sach_Duyet": 437060446,
+    "Chi_Tieu_Thuc_Te": 550252631,
+    "Chenh_Lech": -113192185,
+    "Trang_Thai": "Vuot Ngan Sach"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0297",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 103526326,
+    "Chi_Tieu_Thuc_Te": 73523043,
+    "Chenh_Lech": 30003283,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0298",
+    "Quy": "Q1-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 166084101,
+    "Chi_Tieu_Thuc_Te": 151166274,
+    "Chenh_Lech": 14917827,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0299",
+    "Quy": "Q4-2026",
+    "Phong_Ban": "Cong Nghe",
+    "Hang_Muc_Chi": "Van Phong Pham",
+    "Ngan_Sach_Duyet": 242363202,
+    "Chi_Tieu_Thuc_Te": 191761834,
+    "Chenh_Lech": 50601368,
+    "Trang_Thai": "Tiet Kiem"
+  },
+  {
+    "Ma_Giao_Dich": "TXN0300",
+    "Quy": "Q3-2026",
+    "Phong_Ban": "Van Phong",
+    "Hang_Muc_Chi": "Luong & Phu Cap",
+    "Ngan_Sach_Duyet": 250808125,
+    "Chi_Tieu_Thuc_Te": 169953314,
+    "Chenh_Lech": 80854811,
+    "Trang_Thai": "Tiet Kiem"
+  }
+]

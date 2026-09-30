@@ -26,7 +26,6 @@ ENV/
 env/
 
 # Scratch & Temporary
-scratch/
 canva_response.html
 open-slide/
 
