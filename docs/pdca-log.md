@@ -1157,3 +1157,42 @@
 ### 🔄 ACT
 - Chuẩn bị đẩy toàn bộ mã nguồn mới nhất lên GitHub repo tại nhánh `main` và `master`.
 - Gỡ bỏ thông tin xác thực sau khi hoàn tất lệnh push để tuân thủ tuyệt đối Quy tắc bảo mật số 5.
+
+---
+
+## PDCA Log #25 — Google Sheets Private & Service Account Auth — 30/09/2026
+
+### 📋 PLAN
+- **Mục tiêu:** Nâng cấp `app_lead_scoring.py` để hỗ trợ đọc trực tiếp bảng tính Google Sheets riêng tư (Private) thông qua Google Cloud Service Account; Bảo mật tuyệt đối tệp thông tin xác thực theo quy chuẩn Streamlit Secrets (`.streamlit/secrets.toml`).
+- **Output mong muốn:**
+  1. Hướng dẫn chi tiết 6 bước tạo Service Account trong Google Cloud Console và chia sẻ quyền truy cập Google Sheet.
+  2. Viết mã nguồn xác thực tích hợp `gspread` và `google-auth` (`Credentials.from_service_account_info`).
+  3. Đọc dữ liệu Private Sheet theo `sheet_id` (không cần bật public sharing).
+  4. Cấu hình đọc secrets từ `st.secrets["gcp_service_account"]` trong `.streamlit/secrets.toml`.
+  5. Cập nhật `.gitignore` để loại bỏ hoàn toàn `secrets.toml`, `.streamlit/secrets.toml`, và các file `*.json` chứa khóa.
+  6. Tạo file mẫu `.streamlit/secrets.toml.example` để người dùng dễ dàng cấu hình.
+  7. Bảo toàn nguyên vẹn 100% logic chấm điểm 5 tiêu chí và giao diện người dùng.
+
+### ✅ DO
+- **Đã thực hiện:**
+  1. Cập nhật file [.gitignore](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/.gitignore) loại trừ triệt để `.streamlit/secrets.toml`, `secrets.toml`, `service_account.json`, `*.json` liên quan đến credential.
+  2. Tạo file mẫu cấu hình [.streamlit/secrets.toml.example](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/.streamlit/secrets.toml.example) với đầy đủ các trường thông tin của GCP Service Account JSON.
+  3. Cập nhật [requirements.txt](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/requirements.txt) bổ sung hai thư viện `gspread>=5.10.0` và `google-auth>=2.20.0`.
+  4. Nâng cấp [app_lead_scoring.py](file:///c:/Minh%20Hoang/Antigravity%20học/my-workspace/app_lead_scoring.py):
+     - Hàm `get_gspread_client()` nạp linh hoạt từ `st.secrets["gcp_service_account"]` hoặc file local.
+     - Hàm `load_private_sheet(sheet_id)` mở sheet qua `client.open_by_key(sheet_id)` và đọc records.
+     - Tích hợp thêm tùy chọn `🔒 Google Sheets Private (Service Account)` tại Sidebar kèm chỉ báo trạng thái kết nối thời gian thực.
+     - Bổ sung tài liệu hướng dẫn từng bước chi tiết vào **Tab 5** trong ứng dụng.
+  5. Kiểm tra tính tương thích: Không làm thay đổi logic tính điểm cơ sở 5 tiêu chí hay cơ chế cộng/trừ 50 điểm trong `tieu_chi_cham_diem.txt`.
+
+### 🔍 CHECK
+- **Đạt mục tiêu không?** Đạt 100% tất cả các yêu cầu.
+- **Kiểm định thực tế:**
+  - Kiểm tra `git status`: `.streamlit/secrets.toml` được Git bỏ qua hoàn toàn, không thể bị commit nhầm.
+  - Script kiểm thử `py_compile` và chạy ngầm thành công không lỗi syntax hay dependency.
+  - Khi chưa có khóa, ứng dụng xử lý an toàn (Graceful fallback) và hiển thị thông báo hướng dẫn người dùng cấu hình mà không làm crash app.
+
+### 🔄 ACT
+- Hướng dẫn người dùng các bước thực hiện trên Google Cloud Console và chia sẻ quyền trên Google Sheet.
+- Cập nhật nhật ký phát triển trong `AGENTS.md`.
+

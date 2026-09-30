@@ -1,11 +1,11 @@
 """
 =============================================================================
-HỆ THỐNG CHẤM ĐIỂM & PHÂN LOẠI KHÁCH HÀNG BẤT ĐỘNG SẢN (AI LEAD SCORING v2.0)
+HỆ THỐNG CHẤM ĐIỂM & PHÂN LOẠI KHÁCH HÀNG BẤT ĐỘNG SẢN (AI LEAD SCORING v2.1)
 Phát triển bởi: Phạm Minh Hoàng (AI4A - Antigravity)
 Dựa trên:
   1. Skill: real-estate:lead-scoring (SKILL.md & lead_scoring_skill.md)
   2. Quy chuẩn tiêu chí: knowledge-base/tieu_chi_cham_diem.txt
-  3. Dữ liệu: khach_hang_bds_500.xlsx (hoặc Google Sheets 500 Leads)
+  3. Dữ liệu: khach_hang_bds_500.xlsx / Google Sheets Private qua Service Account
 =============================================================================
 """
 
@@ -20,6 +20,10 @@ from openpyxl.utils import get_column_letter
 import pandas as pd
 import altair as alt
 import streamlit as st
+
+# Thư viện xác thực Google Cloud Service Account & Google Sheets
+import gspread
+from google.oauth2.service_account import Credentials
 
 # ---------------------------------------------------------------------------
 # 1. CẤU HÌNH TRANG STREAMLIT & GIAO DIỆN
@@ -120,17 +124,6 @@ st.markdown("""
         font-size: 0.85rem;
         border: 1px solid #CBD5E1;
         display: inline-block;
-    }
-    
-    .quick-btn {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 14px;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-decoration: none;
-        margin-right: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -365,17 +358,103 @@ def ai_score_lead(description: str, name: str = "", phone: str = "", hot_thresho
 
 
 # ---------------------------------------------------------------------------
-# 3. TẢI DỮ LIỆU TỪ EXCEL CỤC BỘ HOẶC GOOGLE SHEETS
+# 3. XÁC THỰC GOOGLE CLOUD SERVICE ACCOUNT & ĐỌC PRIVATE SHEET
+# ---------------------------------------------------------------------------
+def get_gspread_client():
+    """
+    Khởi tạo gspread client sử dụng Google Cloud Service Account
+    Ưu tiên đọc từ st.secrets["gcp_service_account"] (.streamlit/secrets.toml)
+    Fallback: file json service_account.json nếu có ở local
+    """
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+    
+    # 1. Thử nạp từ st.secrets (Streamlit Secrets Management)
+    try:
+        if "gcp_service_account" in st.secrets:
+            sa_info = dict(st.secrets["gcp_service_account"])
+            # Chuẩn hóa nếu private_key bị escape thừa
+            if "private_key" in sa_info:
+                sa_info["private_key"] = sa_info["private_key"].replace("\\n", "\n")
+            creds = Credentials.from_service_account_info(sa_info, scopes=scopes)
+            return gspread.authorize(creds)
+    except Exception:
+        pass
+        
+    # 2. Thử nạp từ các file json cục bộ
+    for path in ["service_account.json", ".streamlit/service_account.json", "credential.json", "credentials.json"]:
+        if os.path.exists(path):
+            try:
+                creds = Credentials.from_service_account_file(path, scopes=scopes)
+                return gspread.authorize(creds)
+            except Exception:
+                continue
+                
+    return None
+
+
+def load_private_sheet(sheet_id_or_url: str, worksheet_identifier=0):
+    """
+    Đọc Google Sheet private thông qua gspread + Google Cloud Service Account
+    Không cần công khai link (public sharing), chỉ cần Share Sheet cho email của Service Account!
+    """
+    client = get_gspread_client()
+    if client is None:
+        raise ValueError(
+            "Chưa tìm thấy cấu hình Google Cloud Service Account!\n"
+            "Vui lòng tạo file `.streamlit/secrets.toml` chứa khóa `[gcp_service_account]` (xem mẫu tại `.streamlit/secrets.toml.example`)."
+        )
+        
+    sheet_id = sheet_id_or_url.strip()
+    if "spreadsheets/d/" in sheet_id:
+        match = re.search(r"spreadsheets/d/([a-zA-Z0-9-_]+)", sheet_id)
+        if match:
+            sheet_id = match.group(1)
+            
+    try:
+        spreadsheet = client.open_by_key(sheet_id)
+    except Exception as e:
+        raise RuntimeError(
+            f"Không thể mở Google Sheet với ID '{sheet_id}'. Chi tiết: {e}.\n"
+            "Hãy kiểm tra lại xem bạn đã bấm 'Chia sẻ' (Share) bảng tính này cho email của Service Account chưa!"
+        )
+        
+    if isinstance(worksheet_identifier, int):
+        worksheet = spreadsheet.get_worksheet(worksheet_identifier)
+    else:
+        worksheet = spreadsheet.worksheet(worksheet_identifier)
+        
+    records = worksheet.get_all_records()
+    if not records:
+        values = worksheet.get_all_values()
+        if values and len(values) > 1:
+            header = [str(c).strip().lower() for c in values[0]]
+            df = pd.DataFrame(values[1:], columns=header)
+        else:
+            df = pd.DataFrame()
+    else:
+        df = pd.DataFrame(records)
+        
+    return df
+
+
+# ---------------------------------------------------------------------------
+# 4. HÀM TẢI DỮ LIỆU ĐA NGUỒN (LOCAL / PRIVATE SHEET / PUBLIC LINK / UPLOAD)
 # ---------------------------------------------------------------------------
 LOCAL_FILE = "khach_hang_bds_500.xlsx"
 DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM/export?format=csv&gid=1542775777"
+DEFAULT_PRIVATE_SHEET_ID = "149rRXA8rSQKsAaMW0Kyt3q6Mzv9_KltAXgIXVTnuQoM"
 
-def load_data(source_type="local", custom_url="", uploaded_file=None):
-    """Nạp dữ liệu từ file local, Google Sheets link hoặc uploaded file"""
+def load_data(source_type="local", custom_url="", uploaded_file=None, sheet_id=""):
+    """Nạp dữ liệu từ file local, Google Sheets private (SA), Google Sheets public hoặc upload"""
     df = None
     try:
         if source_type == "local" and os.path.exists(LOCAL_FILE):
             df = pd.read_excel(LOCAL_FILE)
+        elif source_type == "private_sheet" and sheet_id:
+            df = load_private_sheet(sheet_id)
         elif source_type == "sheet" and custom_url:
             if "export?format=csv" not in custom_url and "/edit" in custom_url:
                 custom_url = re.sub(r"/edit.*", "/export?format=csv&gid=1542775777", custom_url)
@@ -397,7 +476,7 @@ def load_data(source_type="local", custom_url="", uploaded_file=None):
                 df["sdt"] = df["sdt"].apply(lambda x: "0" + x if len(x) == 9 and not x.startswith("0") else x)
             return df
     except Exception as e:
-        st.error(f"Lỗi đọc dữ liệu: {e}")
+        st.error(f"Lỗi đọc dữ liệu ({source_type}): {e}")
         
     return pd.DataFrame([
         {"id": 1, "ten_khach": "Bùi Phương Tâm", "sdt": "0790240040", "nhu_cau_mo_ta": "Khách hàng VIP, quan tâm biệt thự đơn lập phân khu cao cấp nhất. Ngân sách trên 30 tỷ, thanh toán thẳng. Yêu cầu vị trí ven sông, hướng Đông Nam."},
@@ -409,7 +488,7 @@ def load_data(source_type="local", custom_url="", uploaded_file=None):
 
 
 # ---------------------------------------------------------------------------
-# 4. HÀM TẠO FILE EXCEL LEADS_SCORED.XLSX ĐỊNH DẠNG DOANH NGHIỆP
+# 5. HÀM TẠO FILE EXCEL LEADS_SCORED.XLSX ĐỊNH DẠNG DOANH NGHIỆP
 # ---------------------------------------------------------------------------
 def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
     """Tạo workbook Excel định dạng sang trọng, chuẩn doanh nghiệp từ danh sách khách đã duyệt"""
@@ -450,7 +529,6 @@ def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
         ("Ghi Chú Sales", "ghi_chu_sales", 25, "left")
     ]
 
-    # Ghi header
     for col_idx, (header_text, _, width, _) in enumerate(columns, 1):
         cell = ws.cell(row=1, column=col_idx, value=header_text)
         cell.font = font_header
@@ -461,10 +539,8 @@ def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
 
     ws.row_dimensions[1].height = 28
 
-    # Ghi dữ liệu từng dòng
     for row_idx, (_, row_data) in enumerate(approved_df.iterrows(), 2):
         tier = str(row_data.get("trang_thai", "")).upper()
-        
         for col_idx, (_, key, _, align) in enumerate(columns, 1):
             val = row_data.get(key, "")
             if key == "da_duyet":
@@ -474,7 +550,6 @@ def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
             cell.alignment = Alignment(horizontal=align, vertical="center", wrap_text=(key in ["ly_do_ai", "nhu_cau_mo_ta"]))
             cell.border = border_all
             
-            # Format riêng cột trạng thái
             if key == "trang_thai":
                 if "HOT" in tier:
                     cell.fill = fill_hot
@@ -490,19 +565,17 @@ def generate_excel_bytes(approved_df: pd.DataFrame) -> bytes:
                 
         ws.row_dimensions[row_idx].height = 24
 
-    # Xuất ra buffer bytes
     buf = io.BytesIO()
     wb.save(buf)
     return buf.getvalue()
 
 
 # ---------------------------------------------------------------------------
-# 5. KHỞI TẠO VÀ ĐỒNG BỘ SESSION STATE
+# 6. KHỞI TẠO VÀ ĐỒNG BỘ SESSION STATE
 # ---------------------------------------------------------------------------
 if "leads_df" not in st.session_state:
     initial_df = load_data(source_type="local")
     
-    # Khởi tạo các cột nghiệp vụ chuẩn
     if "da_duyet" not in initial_df.columns:
         initial_df.insert(0, "da_duyet", False)
     if "diem_so" not in initial_df.columns:
@@ -526,7 +599,7 @@ if "auto_approve_hot" not in st.session_state:
 
 
 # ---------------------------------------------------------------------------
-# 6. HEADER BANNER DOANH NGHIỆP
+# 7. HEADER BANNER DOANH NGHIỆP
 # ---------------------------------------------------------------------------
 st.markdown("""
 <div class="main-header">
@@ -536,7 +609,7 @@ st.markdown("""
                 🏢 AI Lead Scoring Bất Động Sản Pro — Enterprise Edition
             </h2>
             <p style="margin: 5px 0 0 0; color: #94A3B8; font-size: 0.92rem;">
-                Tự động thẩm định khách hàng 5 tiêu chí theo <code>tieu_chi_cham_diem.txt</code> • Phê duyệt Human-In-The-Loop qua <code>st.data_editor</code>
+                Tự động thẩm định khách hàng 5 tiêu chí theo <code>tieu_chi_cham_diem.txt</code> • Kết nối Google Sheets Private qua Service Account
             </p>
         </div>
         <div style="display: flex; gap: 8px;">
@@ -544,7 +617,7 @@ st.markdown("""
                 Skill: real-estate:lead-scoring
             </span>
             <span style="background: #059669; color: #FFF; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
-                v2.0 Pro
+                v2.1 Private Sheet
             </span>
         </div>
     </div>
@@ -553,17 +626,23 @@ st.markdown("""
 
 
 # ---------------------------------------------------------------------------
-# 7. SIDEBAR ĐIỀU KHIỂN & CẤU HÌNH NGUỒN DỮ LIỆU
+# 8. SIDEBAR ĐIỀU KHIỂN & CẤU HÌNH NGUỒN DỮ LIỆU
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.header("⚙️ Nguồn Dữ Liệu & Bộ Máy AI")
     
     source_choice = st.radio(
         "Chọn nguồn nạp dữ liệu:",
-        ["File khach_hang_bds_500.xlsx (Mặc định)", "Link Google Sheets Trực Tuyến", "Tải file Excel/CSV từ máy"],
+        [
+            "File khach_hang_bds_500.xlsx (Mặc định)",
+            "🔒 Google Sheets Private (Service Account)",
+            "🌐 Link Google Sheets Public (CSV Export)",
+            "📁 Tải file Excel/CSV từ máy"
+        ],
         index=0
     )
     
+    # 1. File local
     if source_choice == "File khach_hang_bds_500.xlsx (Mặc định)":
         if st.button("🔄 Nạp Lại Dữ Liệu Từ File Gốc", use_container_width=True):
             loaded = load_data(source_type="local")
@@ -576,10 +655,47 @@ with st.sidebar:
             st.session_state.has_run_scoring = False
             st.success("Đã nạp lại file khach_hang_bds_500.xlsx!")
             st.rerun()
+
+    # 2. Google Sheets Private (Service Account)
+    elif source_choice == "🔒 Google Sheets Private (Service Account)":
+        sa_ready = get_gspread_client() is not None
+        if sa_ready:
+            st.success("🟢 Service Account đã kết nối sẵn sàng!")
+        else:
+            st.warning("⚠️ Chưa cấu hình secrets.toml cho Service Account.")
+            with st.expander("ℹ️ Hướng dẫn cấu hình nhanh"):
+                st.markdown("""
+                1. Tạo Service Account trên Google Cloud Console & tải khóa JSON.
+                2. Điền vào `.streamlit/secrets.toml` (xem mẫu `.streamlit/secrets.toml.example`).
+                3. **Chia sẻ (Share)** Sheet của bạn cho email Service Account!
+                """)
+                
+        private_id_input = st.text_input(
+            "Nhập Sheet ID Private:",
+            value=DEFAULT_PRIVATE_SHEET_ID,
+            help="Mã ID nằm giữa /d/ và /edit trong URL Google Sheet"
+        )
+        
+        if st.button("🔐 Nạp Dữ Liệu Private Sheet", use_container_width=True):
+            with st.spinner("Đang kết nối Service Account và đọc dữ liệu private..."):
+                loaded = load_data(source_type="private_sheet", sheet_id=private_id_input)
+                if loaded is not None and len(loaded) > 0:
+                    loaded.insert(0, "da_duyet", False)
+                    loaded["diem_so"] = 0
+                    loaded["trang_thai"] = "COLD"
+                    loaded["ly_do_ai"] = "Chưa kích hoạt AI Scoring"
+                    loaded["ghi_chu_sales"] = ""
+                    st.session_state.leads_df = loaded
+                    st.session_state.has_run_scoring = False
+                    st.success(f"Đã nạp thành công {len(loaded)} dòng từ Private Google Sheet!")
+                    st.rerun()
+                else:
+                    st.error("Không thể đọc dữ liệu. Vui lòng kiểm tra lại cấu hình Service Account và quyền Share!")
             
-    elif source_choice == "Link Google Sheets Trực Tuyến":
+    # 3. Google Sheets Public
+    elif source_choice == "🌐 Link Google Sheets Public (CSV Export)":
         sheet_link = st.text_input("Nhập link Google Sheet:", value=DEFAULT_SHEET_URL)
-        if st.button("🌐 Tải Dữ Liệu Từ Google Sheet", use_container_width=True):
+        if st.button("🌐 Tải Dữ Liệu Từ Sheet Public", use_container_width=True):
             loaded = load_data(source_type="sheet", custom_url=sheet_link)
             loaded.insert(0, "da_duyet", False)
             loaded["diem_so"] = 0
@@ -591,7 +707,8 @@ with st.sidebar:
             st.success(f"Đã tải {len(loaded)} dòng từ Google Sheets!")
             st.rerun()
             
-    elif source_choice == "Tải file Excel/CSV từ máy":
+    # 4. Upload từ máy
+    elif source_choice == "📁 Tải file Excel/CSV từ máy":
         up_file = st.file_uploader("Chọn file (.xlsx, .csv):", type=["xlsx", "csv"])
         if up_file is not None and st.button("📥 Nạp File Tải Lên", use_container_width=True):
             loaded = load_data(source_type="upload", uploaded_file=up_file)
@@ -628,7 +745,6 @@ with st.sidebar:
             df_target.at[i, "trang_thai"] = res["trang_thai"]
             df_target.at[i, "ly_do_ai"] = res["ly_do_ai"]
             
-            # Gợi ý tự động duyệt nếu là khách HOT và đang bật cấu hình
             if st.session_state.auto_approve_hot and res["trang_thai"] == "HOT" and not df_target.at[i, "da_duyet"]:
                 df_target.at[i, "da_duyet"] = True
                 
@@ -661,7 +777,7 @@ with st.sidebar:
 
 
 # ---------------------------------------------------------------------------
-# 8. YÊU CẦU 6: HIỂN THỊ METRIC TỔNG QUAN (5 METRICS CHUẨN)
+# 9. YÊU CẦU 6: HIỂN THỊ METRIC TỔNG QUAN (5 METRICS CHUẨN)
 # ---------------------------------------------------------------------------
 df = st.session_state.leads_df
 
@@ -722,14 +838,14 @@ st.write("")
 
 
 # ---------------------------------------------------------------------------
-# 9. ĐIỀU HƯỚNG TABS ĐA NĂNG
+# 10. ĐIỀU HƯỚNG TABS ĐA NĂNG
 # ---------------------------------------------------------------------------
 tab_main, tab_card, tab_analytics, tab_quick, tab_config = st.tabs([
     "📋 Bảng Duyệt Khách Hàng (st.data_editor)",
     "📇 Thẻ Bàn Giao Lead Chi Tiết & Kịch Bản Sales",
     "📊 Báo Cáo Phân Tích Thông Minh (BI Analytics)",
     "⚡ Thẩm Định Nhanh 1 Khách Hàng",
-    "⚙️ Cấu Hình Ma Trận Điểm Số"
+    "⚙️ Cấu Hình Ma Trận & Hướng Dẫn Service Account"
 ])
 
 
@@ -758,7 +874,6 @@ with tab_main:
             placeholder="Nhập tên, số điện thoại, hoặc từ khóa mô tả..."
         )
 
-    # Áp dụng bộ lọc hiển thị
     filtered_df = df.copy()
 
     if filter_status:
@@ -782,7 +897,6 @@ with tab_main:
     st.markdown("### 📝 Bảng Dữ Liệu Khách Hàng (Tương tác duyệt & Chỉnh sửa điểm)")
     st.caption("💡 **Hướng dẫn cho Sales:** Tích chọn cột **`Đã duyệt`** để chọn khách cần xuất Excel. Bạn có thể **sửa trực tiếp Điểm Số** (0 - 100) hoặc đổi **Trạng Thái** (HOT / WARM / COLD) trên bảng, sau đó bấm **💾 Lưu Thay Đổi**.")
 
-    # Cấu hình st.data_editor
     column_config = {
         "da_duyet": st.column_config.CheckboxColumn(
             "Đã duyệt",
@@ -855,14 +969,12 @@ with tab_main:
         key="lead_scoring_editor"
     )
 
-    # Nút thao tác lưu & xuất Excel
     col_act1, col_act2, col_act3 = st.columns([2.5, 2.5, 3])
 
     with col_act1:
         if st.button("💾 Lưu Thay Đổi Vừa Chỉnh Sửa", type="secondary", use_container_width=True):
             sub_update = edited_df[["id", "da_duyet", "diem_so", "trang_thai", "ghi_chu_sales"]].set_index("id")
             
-            # Tự động gợi ý trạng thái theo điểm số nếu người dùng thay đổi điểm
             for row_id, r in sub_update.iterrows():
                 sc = r["diem_so"]
                 if sc >= st.session_state.hot_thresh and r["trang_thai"] != "HOT":
@@ -931,7 +1043,6 @@ with tab_card:
         duyet_bg = "#DCFCE7" if sel_lead["da_duyet"] else "#F1F5F9"
         duyet_color = "#15803D" if sel_lead["da_duyet"] else "#64748B"
         
-        # Phone call & Zalo link
         clean_phone = re.sub(r"\D", "", str(sel_lead['sdt']))
         if clean_phone.startswith("84"):
             clean_phone = "0" + clean_phone[2:]
@@ -939,7 +1050,6 @@ with tab_card:
         zalo_link = f"https://zalo.me/{clean_phone}"
         tel_link = f"tel:{clean_phone}"
         
-        # Tạo hook kịch bản mở lời thông minh
         if sel_lead["trang_thai"] == "HOT":
             script_text = f"Dạ em chào anh/chị {sel_lead['ten_khach']}, em là phụ trách phân khúc cao cấp tại dự án. Em nhận được thông tin anh/chị đang tìm hiểu dòng sản phẩm biệt thự/penthouse với ngân sách tài chính mạnh. Hiện bên em đang có suất ngoại giao vị trí đẹp ven sông vừa mở bán, em xin phép gửi thông tin mặt bằng chi tiết qua Zalo cho anh/chị trước nhé ạ!"
         elif sel_lead["trang_thai"] == "WARM":
@@ -990,7 +1100,6 @@ with tab_card:
         </div>
         """, unsafe_allow_html=True)
         
-        # Cho phép copy kịch bản mở lời
         st.text_area("📋 Sao chép nhanh tin nhắn gửi khách:", value=script_text, height=75)
     else:
         st.info("Không có khách hàng nào phù hợp với bộ lọc hiện tại.")
@@ -1050,8 +1159,8 @@ with tab_analytics:
 
     with col_c4:
         st.subheader("Ước Tính Giá Trị Cơ Hội (Sales Pipeline)")
-        est_hot_value = hot_count * 15 # Giả định TB 15 tỷ/hot lead
-        est_warm_value = warm_count * 6 # Giả định TB 6 tỷ/warm lead
+        est_hot_value = hot_count * 15
+        est_warm_value = warm_count * 6
         st.markdown(f"""
         <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px;">
             <p style="margin: 0; color: #64748B; font-weight: 600;">💰 Tổng giá trị giỏ hàng tiềm năng HOT:</p>
@@ -1102,7 +1211,6 @@ with tab_quick:
             st.info(f"**Căn cứ AI:** {q_res['ly_do_ai']}")
             st.success(f"**Gợi ý kịch bản mở lời:** {q_res['goi_y_sales']}")
             
-            # Nút thêm khách vào bảng chính
             if st.button("➕ Thêm Khách Hàng Này Vào Danh Sách Quản Trị", type="secondary"):
                 new_id = len(st.session_state.leads_df) + 1
                 new_row = {
@@ -1122,11 +1230,11 @@ with tab_quick:
 
 
 # ===========================================================================
-# TAB 5: CẤU HÌNH MA TRẬN ĐIỂM SỐ
+# TAB 5: CẤU HÌNH MA TRẬN & HƯỚNG DẪN SERVICE ACCOUNT
 # ===========================================================================
 with tab_config:
-    st.markdown("### ⚙️ Cấu Hình Ma Trận Điểm Số & Ngưỡng Phân Hạng")
-    st.caption("Cho phép Trưởng phòng kinh doanh tùy chỉnh ngưỡng điểm và cơ chế tự động theo chiến dịch từng dự án.")
+    st.markdown("### ⚙️ Cấu Hình Ma Trận Điểm Số & Thiết Lập Service Account")
+    st.caption("Cho phép tùy chỉnh ngưỡng điểm và xem hướng dẫn chi tiết kết nối Google Cloud Service Account để đọc Private Sheet.")
 
     col_cfg1, col_cfg2 = st.columns(2)
     with col_cfg1:
@@ -1140,9 +1248,62 @@ with tab_config:
         - Phạt Rác: -50 điểm (Nhầm số, đòi mua Q1 giá 1 tỷ, spam bảo hiểm, thuê bao)
         """)
 
+    st.markdown("---")
+    st.markdown("### 📖 HƯỚNG DẪN TẠO GOOGLE CLOUD SERVICE ACCOUNT (ĐỌC SHEET PRIVATE)")
+    
+    st.markdown("""
+    Để đọc Google Sheet private mà **không cần công khai link** (Public Link), bạn thực hiện theo 5 bước sau:
+
+    #### Bước 1: Tạo Project trên Google Cloud Console
+    1. Truy cập [Google Cloud Console](https://console.cloud.google.com/).
+    2. Đăng nhập tài khoản Google và nhấn chọn **Select a project** > **New Project**.
+    3. Đặt tên project (ví dụ: `BDS-Lead-Scoring`) rồi nhấn **Create**.
+
+    #### Bước 2: Bật Google Sheets API và Google Drive API
+    1. Vào thanh tìm kiếm gõ **Google Sheets API** > Nhấn **Enable**.
+    2. Vào thanh tìm kiếm gõ **Google Drive API** > Nhấn **Enable**.
+
+    #### Bước 3: Tạo Service Account (Tài khoản dịch vụ)
+    1. Vào menu **IAM & Admin** > **Service Accounts**.
+    2. Nhấn nút **+ Create Service Account**.
+    3. Điền tên (ví dụ: `lead-scoring-sa`), nhấn **Create and Continue**.
+    4. Tại mục phân quyền (Role), chọn quyền **Viewer** (hoặc **Editor**), rồi nhấn **Done**.
+    5. Copy lại địa chỉ **Email** của Service Account vừa tạo (dạng: `lead-scoring-sa@ten-project.iam.gserviceaccount.com`).
+
+    #### Bước 4: Tạo Khóa (Key JSON)
+    1. Nhấp vào tên Service Account vừa tạo.
+    2. Chuyển sang tab **Keys** > Nhấn **Add Key** > Chọn **Create new key**.
+    3. Chọn định dạng **JSON** > Nhấn **Create**. File JSON khóa bí mật sẽ tự động tải về máy bạn.
+
+    #### Bước 5: Cấu hình vào Streamlit Secrets (`.streamlit/secrets.toml`)
+    1. Mở file JSON vừa tải về bằng Notepad/VSCode.
+    2. Tạo file `.streamlit/secrets.toml` trong thư mục workspace (theo file mẫu `.streamlit/secrets.toml.example`).
+    3. Dán các thông tin vào theo cấu trúc TOML:
+    ```toml
+    [gcp_service_account]
+    type = "service_account"
+    project_id = "ten-project-cua-ban"
+    private_key_id = "..."
+    private_key = "-----BEGIN PRIVATE KEY-----\\nMIIEv...\\n-----END PRIVATE KEY-----\\n"
+    client_email = "lead-scoring-sa@ten-project.iam.gserviceaccount.com"
+    client_id = "..."
+    auth_uri = "https://accounts.google.com/o/oauth2/auth"
+    token_uri = "https://oauth2.googleapis.com/token"
+    auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url = "..."
+    ```
+
+    #### ⭐ Bước 6: QUAN TRỌNG NHẤT — Chia Sẻ Google Sheet Private
+    - Mở file Google Sheet Private của bạn lên.
+    - Nhấn nút **Chia sẻ (Share)** ở góc trên bên phải.
+    - Dán địa chỉ email của Service Account (`...iam.gserviceaccount.com`) vào ô mời.
+    - Chọn quyền **Người xem (Viewer)** hoặc **Người chỉnh sửa (Editor)** > Nhấn **Gửi (Send)**.
+    - Copy mã **Sheet ID** (chuỗi nằm giữa `/d/` và `/edit` trên thanh URL) dán vào ứng dụng là xong!
+    """)
+
 
 # ---------------------------------------------------------------------------
-# 14. FOOTER BẢN QUYỀN
+# 11. FOOTER BẢN QUYỀN
 # ---------------------------------------------------------------------------
 st.markdown("---")
 st.markdown("""

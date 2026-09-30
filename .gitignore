@@ -6,6 +6,12 @@ credential.json
 credentials.json
 token.json
 scratch_cookies.txt
+.streamlit/secrets.toml
+.streamlit/*.json
+secrets.toml
+service_account.json
+service-account*.json
+
 
 # Node & Frontend dependencies
 node_modules/
