@@ -11,9 +11,13 @@ scratch_cookies.txt
 node_modules/
 **/node_modules/
 dist/
+**/dist/
 .cache/
+**/.cache/
 .turbo/
 **/.turbo/
+.next/
+**/.next/
 
 # Python Cache & Virtual Environments
 __pycache__/
@@ -27,11 +31,11 @@ env/
 
 # Scratch & Temporary
 canva_response.html
-open-slide/
 
 # IDE & OS Artifacts
 .vscode/
 .idea/
 Thumbs.db
 Desktop.ini
+
 
