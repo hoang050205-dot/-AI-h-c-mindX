@@ -1,0 +1,85 @@
+{
+  "project_name": "Nâng Cấp Toàn Diện Chuyên Gia Thẩm Định Chứng Từ XNK (customs:doc-auditor v3.0 Pro)",
+  "date": "2026-10-02",
+  "author": "Minh Hoàng (Customs Documentation Audit Specialist)",
+  "mentor": "MT Đức Thuận",
+  "version": "3.0.0",
+  "contract": {
+    "outcome": {
+      "title": "Outcome (Kết quả đầu ra)",
+      "desc": "Nâng cấp toàn diện customs:doc-auditor lên v3.0 Enterprise: Khử bỏ 100% hardcoded mock data trong engine; Hoàn thiện thuật toán bao quát đủ 36 bẫy lỗi (L1-01 -> L5-05); Tích hợp 2 chiều với customs-legal-advisor (tra cứu phạt NĐ 128 qua SQLite) và customs-hs-classifier (sinh Handoff Payload khi nghi ngờ mã HS); Hỗ trợ Ingestion linh hoạt (JSON + Raw Text/Markdown); Xuất bản kép Báo cáo Markdown + Interactive HTML Glassmorphism Audit Dashboard kèm Dự thảo Công văn giải trình Hải quan tự động.",
+      "artifact": ".agents/skills/customs-doc-auditor/ (SKILL.md, audit_docs.py, resources/, templates/, HTML Dashboard)"
+    },
+    "constraints": {
+      "title": "Constraints (Ràng buộc & Ranh giới)",
+      "desc": "Vận hành hoàn toàn offline trên Windows; Tuyệt đối không rò rỉ dữ liệu thật của doanh nghiệp; Căn cứ pháp lý cập nhật chính xác nhất: Luật Hải quan 54/2014, Thông tư 38/2015, TT 39/2018, TT 121/2025/TT-BTC, Nghị định 128/2020/NĐ-CP, Nghị định 69/2018, Incoterms 2020, UCP 600.",
+      "rule": "100% logic động theo dữ liệu đầu vào (data-driven), không phụ thuộc vào ca mẫu cố định"
+    },
+    "non_goals": {
+      "title": "Non-goals (Những thứ KHÔNG làm)",
+      "desc": "Không truyền dữ liệu trực tiếp lên hệ thống VNACCS thật; Không xây dựng module OCR nhận dạng ảnh quét quá mờ hoặc chữ viết tay vượt khả năng đọc text; Không thay thế trách nhiệm ký tên và đóng dấu pháp lý của Giám đốc doanh nghiệp.",
+      "boundary": "Tập trung tối đa vào Thẩm định tiền khai báo, cảnh báo rủi ro, đối chiếu chéo và kiến tạo giải pháp khắc phục"
+    },
+    "acceptance_criteria": {
+      "title": "Acceptance Criteria (Tiêu chí nghiệm thu)",
+      "desc": "100% logic thuật toán không dính chuỗi ký tự gán cứng (Hansung Tech, KMTC Line, 18,450 kg); Bao quát đủ 36 bẫy lỗi; Tự động trích dẫn mức phạt VNĐ từ CSDL SQLite NĐ 128; Tự động sinh file handoff_payload.json cho HS Classifier khi phát hiện lệch mã HS; Kết xuất Dashboard HTML Glassmorphism có Risk Score Gauge và bộ lọc L1-L5.",
+      "metric": "Thời gian kiểm toán < 800ms, độ chính xác số học và logic 100%"
+    }
+  },
+  "approaches": [
+    {
+      "id": "app_1",
+      "name": "Phương Án 1: Lean Engine Refactor (Khử Hardcode & Hoàn Thiện 36 Bẫy Lỗi)",
+      "badge": "Gọn nhẹ / Độc lập (Lean)",
+      "badge_type": "viable",
+      "concept": "Tái cấu trúc thuần túy script audit_docs.py: Xóa sạch toàn bộ các giá trị gán cứng mẫu Hàn Quốc; Viết bổ sung hàm kiểm tra cho toàn bộ 36 bẫy lỗi từ L1-01 đến L5-05 bằng regex và toán học; Tham số hóa các hành động khuyến nghị theo biến động.",
+      "pros": [
+        "Triển khai nhanh, cấu trúc file đơn giản",
+        "Tốc độ thực thi cực nhanh (< 200ms), không phụ thuộc bên ngoài",
+        "Dễ bảo trì và debug độc lập"
+      ],
+      "cons": [
+        "Vẫn bắt buộc người dùng chuẩn bị file JSON đúng schema",
+        "Chỉ xuất file Markdown đơn giản, thiếu giao diện Dashboard ấn tượng",
+        "Chưa tận dụng được CSDL pháp lý SQLite và HS Classifier đã có"
+      ],
+      "key_assumption": "Người dùng luôn cung cấp file dữ liệu dạng JSON đã được cấu trúc sẵn.",
+      "first_failure_point": "Người dùng muốn paste văn bản thô từ email/chứng từ hoặc cần tra cứu mức phạt tiền chính xác theo NĐ 128."
+    },
+    {
+      "id": "app_2",
+      "name": "Phương Án 2: Agentic Customs Suite Integration (Liên Thông 3 Skill & Dashboard HTML)",
+      "badge": "Khuyên dùng (Recommended)",
+      "badge_type": "recommended",
+      "concept": "Nâng cấp audit_docs.py thành Dynamic 36-Rule Engine v3.0; Tích hợp module chuyển đổi Ingestion (đọc cả JSON và văn bản thô/Markdown); Liên thông hệ sinh thái: Truy vấn CSDL SQLite NĐ 128 của customs-legal-advisor để trích dẫn mức phạt VNĐ và tự động sinh Handoff JSON sang customs-hs-classifier khi mã HS có rủi ro; Xuất song song Markdown + Dashboard HTML Glassmorphism cao cấp + Mẫu Công văn giải trình.",
+      "pros": [
+        "Biến bộ 3 skill XNK thành hệ sinh thái chuyên gia tự động hóa khép kín",
+        "Đầu vào linh hoạt: Chấp nhận cả JSON lẫn copy-paste text chứng từ thô",
+        "Đầu ra đẳng cấp: Dashboard HTML Glassmorphism có Risk Score Gauge và Công văn mẫu",
+        "Tra cứu khung tiền phạt NĐ 128 chuẩn xác đến từng triệu đồng"
+      ],
+      "cons": [
+        "Cần kết nối đường dẫn script giữa các skill trong workspace"
+      ],
+      "key_assumption": "CSDL SQLite của customs-legal-advisor và engine của customs-hs-classifier hoạt động ổn định trong workspace.",
+      "first_failure_point": "Nếu cấu trúc thư mục .agents/skills bị di chuyển làm gãy liên kết gọi script nội bộ."
+    },
+    {
+      "id": "app_3",
+      "name": "Phương Án 3: Full-Scale OCR & Auto-NSW/VNACCS Mapper",
+      "badge": "Quá tải phạm vi (Over-engineered)",
+      "badge_type": "caution",
+      "concept": "Tích hợp thêm module OCR nhận dạng ảnh quét PDF/JPG chứng từ thực tế, tự động sinh tệp XML truyền dữ liệu Manifest lên NSW và sinh tệp XML tờ khai điện tử IDA/IDC nhập vào phần mềm ECUS5-VNACCS.",
+      "pros": [
+        "Tự động hóa hoàn toàn từ ảnh scan đến dữ liệu tờ khai hải quan"
+      ],
+      "cons": [
+        "Cần cài đặt nhiều thư viện nặng (Tesseract OCR, Poppler, OpenCV...)",
+        "Độ tin cậy thấp khi gặp chứng từ scan mờ, bản sao, chữ viết tay",
+        "Vượt quá giới hạn của một Skill Thẩm định chứng từ nội bộ"
+      ],
+      "key_assumption": "Ảnh scan chứng từ luôn đạt độ phân giải cao và định dạng văn bản chuẩn.",
+      "first_failure_point": "Ảnh scan hóa đơn bị nghiêng, mờ số hoặc thiếu nét dẫn đến OCR nhận nhầm số tiền hoặc số container."
+    }
+  ]
+}

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstorm Decision Brief — Nâng Cấp Toàn Diện Chuyên Gia Thẩm Định Chứng Từ XNK (customs:doc-auditor v3.0 Pro)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(51, 65, 85, 0.8);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-primary: #38bdf8;
+      --accent-success: #34d399;
+      --accent-warning: #fbbf24;
+      --accent-danger: #f87171;
+      --accent-purple: #a78bfa;
+      --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(167, 139, 250, 0.1) 0%, transparent 40%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      color: var(--accent-primary);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #f8fafc, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .meta-bar strong {
+      color: var(--text);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+    }
+
+    .section-title span {
+      color: var(--accent-primary);
+    }
+
+    /* The 4-Field Contract Grid */
+    .contract-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+
+    .contract-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contract-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .contract-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .card-outcome::before { background: var(--accent-primary); }
+    .card-constraints::before { background: var(--accent-warning); }
+    .card-nongoals::before { background: var(--accent-danger); }
+    .card-acceptance::before { background: var(--accent-success); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-outcome .card-icon { background: rgba(56, 189, 248, 0.15); }
+    .card-constraints .card-icon { background: rgba(251, 191, 36, 0.15); }
+    .card-nongoals .card-icon { background: rgba(248, 113, 113, 0.15); }
+    .card-acceptance .card-icon { background: rgba(52, 211, 153, 0.15); }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      min-height: 72px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    /* Workflow Pipeline (Flowchart) */
+    .pipeline-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 56px;
+      backdrop-filter: blur(8px);
+    }
+
+    .pipeline-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .step-item {
+      flex: 1;
+      min-width: 170px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .step-item:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .step-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .step-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .step-detail {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .step-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Approaches Comparison Matrix */
+    .approaches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 56px;
+    }
+
+    .approach-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .approach-card.is-recommended {
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 24px -6px rgba(56, 189, 248, 0.25);
+    }
+
+    .approach-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .approach-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .tag-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .badge-recommended {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .badge-viable {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-success);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+    }
+
+    .badge-overkill {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--accent-danger);
+      border: 1px solid rgba(248, 113, 113, 0.4);
+    }
+
+    .approach-concept {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .list-block {
+      margin-bottom: 16px;
+    }
+
+    .list-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .list-pros { color: var(--accent-success); }
+    .list-cons { color: var(--accent-danger); }
+
+    .list-items {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .list-items li {
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .list-items li::before {
+      position: absolute;
+      left: 0;
+    }
+
+    .list-pros-items li::before { content: '✓'; color: var(--accent-success); }
+    .list-cons-items li::before { content: '✕'; color: var(--accent-danger); }
+
+    .triad-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+
+    .triad-item {
+      margin-bottom: 8px;
+    }
+
+    .triad-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .triad-label {
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .triad-text {
+      color: var(--text-muted);
+    }
+
+    /* Recommendation Banner */
+    .recommendation-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .banner-icon {
+      font-size: 42px;
+    }
+
+    .banner-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
+    }
+
+    .banner-content p {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .banner-next {
+      font-size: 13px;
+      color: var(--accent-warning);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-steps {
+        flex-direction: column;
+      }
+      .step-arrow {
+        transform: rotate(90deg);
+        margin: 4px 0;
+      }
+      .recommendation-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-pill">⚡ AI4A Brainstorm Contract v3.0.0</div>
+      <h1>Nâng Cấp Toàn Diện Chuyên Gia Thẩm Định Chứng Từ XNK (customs:doc-auditor v3.0 Pro)</h1>
+      <div class="meta-bar">
+        <div>Học viên: <strong>Minh Hoàng (Customs Documentation Audit Specialist)</strong></div>
+        <div>Mentor: <strong>MT Đức Thuận</strong></div>
+        <div>Ngày lập: <strong>2026-10-02</strong></div>
+      </div>
+    </header>
+
+    <!-- 1. The 4-Field Contract -->
+    <section>
+      <h2 class="section-title"><span>01.</span> Bản Hợp Đồng Thực Thi (Core Contract)</h2>
+      <div class="contract-grid">
+        <div class="contract-card card-outcome">
+          <div class="card-header">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Outcome</div>
+          </div>
+          <div class="card-body">Nâng cấp toàn diện customs:doc-auditor lên v3.0 Enterprise: Khử bỏ 100% hardcoded mock data trong engine; Hoàn thiện thuật toán bao quát đủ 36 bẫy lỗi (L1-01 -> L5-05); Tích hợp 2 chiều với customs-legal-advisor (tra cứu phạt NĐ 128 qua SQLite) và customs-hs-classifier (sinh Handoff Payload khi nghi ngờ mã HS); Hỗ trợ Ingestion linh hoạt (JSON + Raw Text/Markdown); Xuất bản kép Báo cáo Markdown + Interactive HTML Glassmorphism Audit Dashboard kèm Dự thảo Công văn giải trình Hải quan tự động.</div>
+          <div class="card-tag">Artifact: .agents/skills/customs-doc-auditor/ (SKILL.md, audit_docs.py, resources/, templates/, HTML Dashboard)</div>
+        </div>
+
+        <div class="contract-card card-constraints">
+          <div class="card-header">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Constraints</div>
+          </div>
+          <div class="card-body">Vận hành hoàn toàn offline trên Windows; Tuyệt đối không rò rỉ dữ liệu thật của doanh nghiệp; Căn cứ pháp lý cập nhật chính xác nhất: Luật Hải quan 54/2014, Thông tư 38/2015, TT 39/2018, TT 121/2025/TT-BTC, Nghị định 128/2020/NĐ-CP, Nghị định 69/2018, Incoterms 2020, UCP 600.</div>
+          <div class="card-tag">Rule: 100% logic động theo dữ liệu đầu vào (data-driven), không phụ thuộc vào ca mẫu cố định</div>
+        </div>
+
+        <div class="contract-card card-nongoals">
+          <div class="card-header">
+            <div class="card-icon">🚫</div>
+            <div class="card-title">Non-goals</div>
+          </div>
+          <div class="card-body">Không truyền dữ liệu trực tiếp lên hệ thống VNACCS thật; Không xây dựng module OCR nhận dạng ảnh quét quá mờ hoặc chữ viết tay vượt khả năng đọc text; Không thay thế trách nhiệm ký tên và đóng dấu pháp lý của Giám đốc doanh nghiệp.</div>
+          <div class="card-tag">Boundary: Tập trung tối đa vào Thẩm định tiền khai báo, cảnh báo rủi ro, đối chiếu chéo và kiến tạo giải pháp khắc phục</div>
+        </div>
+
+        <div class="contract-card card-acceptance">
+          <div class="card-header">
+            <div class="card-icon">✅</div>
+            <div class="card-title">Acceptance Criteria</div>
+          </div>
+          <div class="card-body">100% logic thuật toán không dính chuỗi ký tự gán cứng (Hansung Tech, KMTC Line, 18,450 kg); Bao quát đủ 36 bẫy lỗi; Tự động trích dẫn mức phạt VNĐ từ CSDL SQLite NĐ 128; Tự động sinh file handoff_payload.json cho HS Classifier khi phát hiện lệch mã HS; Kết xuất Dashboard HTML Glassmorphism có Risk Score Gauge và bộ lọc L1-L5.</div>
+          <div class="card-tag">Metric: Thời gian kiểm toán < 800ms, độ chính xác số học và logic 100%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Workflow OIPO Flowchart -->
+    <section>
+      <h2 class="section-title"><span>02.</span> Quy Trình Đề Xuất (OIPO Pipeline)</h2>
+      <div class="pipeline-container">
+        <div class="pipeline-steps">
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Approach Exploration -->
+    <section>
+      <h2 class="section-title"><span>03.</span> So Sánh Các Phương Án Kỹ Thuật (Trade-off Matrix)</h2>
+      <div class="approaches-grid">
+        
+          <div class="approach-card">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Phương Án 1: Lean Engine Refactor (Khử Hardcode & Hoàn Thiện 36 Bẫy Lỗi)</div>
+                <div class="tag-badge badge-viable">Gọn nhẹ / Độc lập (Lean)</div>
+              </div>
+              <div class="approach-concept">Tái cấu trúc thuần túy script audit_docs.py: Xóa sạch toàn bộ các giá trị gán cứng mẫu Hàn Quốc; Viết bổ sung hàm kiểm tra cho toàn bộ 36 bẫy lỗi từ L1-01 đến L5-05 bằng regex và toán học; Tham số hóa các hành động khuyến nghị theo biến động.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Triển khai nhanh, cấu trúc file đơn giản</li><li>Tốc độ thực thi cực nhanh (< 200ms), không phụ thuộc bên ngoài</li><li>Dễ bảo trì và debug độc lập</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Vẫn bắt buộc người dùng chuẩn bị file JSON đúng schema</li><li>Chỉ xuất file Markdown đơn giản, thiếu giao diện Dashboard ấn tượng</li><li>Chưa tận dụng được CSDL pháp lý SQLite và HS Classifier đã có</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">Người dùng luôn cung cấp file dữ liệu dạng JSON đã được cấu trúc sẵn.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Người dùng muốn paste văn bản thô từ email/chứng từ hoặc cần tra cứu mức phạt tiền chính xác theo NĐ 128.</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="approach-card is-recommended">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Phương Án 2: Agentic Customs Suite Integration (Liên Thông 3 Skill & Dashboard HTML)</div>
+                <div class="tag-badge badge-recommended">Khuyên dùng (Recommended)</div>
+              </div>
+              <div class="approach-concept">Nâng cấp audit_docs.py thành Dynamic 36-Rule Engine v3.0; Tích hợp module chuyển đổi Ingestion (đọc cả JSON và văn bản thô/Markdown); Liên thông hệ sinh thái: Truy vấn CSDL SQLite NĐ 128 của customs-legal-advisor để trích dẫn mức phạt VNĐ và tự động sinh Handoff JSON sang customs-hs-classifier khi mã HS có rủi ro; Xuất song song Markdown + Dashboard HTML Glassmorphism cao cấp + Mẫu Công văn giải trình.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Biến bộ 3 skill XNK thành hệ sinh thái chuyên gia tự động hóa khép kín</li><li>Đầu vào linh hoạt: Chấp nhận cả JSON lẫn copy-paste text chứng từ thô</li><li>Đầu ra đẳng cấp: Dashboard HTML Glassmorphism có Risk Score Gauge và Công văn mẫu</li><li>Tra cứu khung tiền phạt NĐ 128 chuẩn xác đến từng triệu đồng</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Cần kết nối đường dẫn script giữa các skill trong workspace</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">CSDL SQLite của customs-legal-advisor và engine của customs-hs-classifier hoạt động ổn định trong workspace.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Nếu cấu trúc thư mục .agents/skills bị di chuyển làm gãy liên kết gọi script nội bộ.</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="approach-card">
+            <div>
+              <div class="approach-header">
+                <div class="approach-name">Phương Án 3: Full-Scale OCR & Auto-NSW/VNACCS Mapper</div>
+                <div class="tag-badge badge-caution">Quá tải phạm vi (Over-engineered)</div>
+              </div>
+              <div class="approach-concept">Tích hợp thêm module OCR nhận dạng ảnh quét PDF/JPG chứng từ thực tế, tự động sinh tệp XML truyền dữ liệu Manifest lên NSW và sinh tệp XML tờ khai điện tử IDA/IDC nhập vào phần mềm ECUS5-VNACCS.</div>
+
+              <div class="list-block">
+                <div class="list-title list-pros">Ưu điểm (Pros)</div>
+                <ul class="list-items list-pros-items"><li>Tự động hóa hoàn toàn từ ảnh scan đến dữ liệu tờ khai hải quan</li></ul>
+              </div>
+
+              <div class="list-block">
+                <div class="list-title list-cons">Nhược điểm (Cons)</div>
+                <ul class="list-items list-cons-items"><li>Cần cài đặt nhiều thư viện nặng (Tesseract OCR, Poppler, OpenCV...)</li><li>Độ tin cậy thấp khi gặp chứng từ scan mờ, bản sao, chữ viết tay</li><li>Vượt quá giới hạn của một Skill Thẩm định chứng từ nội bộ</li></ul>
+              </div>
+            </div>
+
+            <div class="triad-box">
+              <div class="triad-item">
+                <span class="triad-label">Giả định chịu lực cốt lõi:</span>
+                <span class="triad-text">Ảnh scan chứng từ luôn đạt độ phân giải cao và định dạng văn bản chuẩn.</span>
+              </div>
+              <div class="triad-item">
+                <span class="triad-label">Điểm gãy đầu tiên (First failure):</span>
+                <span class="triad-text">Ảnh scan hóa đơn bị nghiêng, mờ số hoặc thiếu nét dẫn đến OCR nhận nhầm số tiền hoặc số container.</span>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- 4. Recommendation & Next Action -->
+    <section>
+      <div class="recommendation-banner">
+        <div class="banner-icon">🏆</div>
+        <div class="banner-content">
+          <h3>Quyết Định Chọn: </h3>
+          <p></p>
+          <div class="banner-next">👉 Bước tiếp theo: </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Đóng gói theo chuẩn Antigravity Customization System & AI4A Course Framework • Mentor: MT Đức Thuận
+    </footer>
+  </div>
+</body>
+</html>

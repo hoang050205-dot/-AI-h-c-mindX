@@ -59,6 +59,25 @@ Không đưa API key, mật khẩu, dữ liệu khách hàng thật vào workspa
 | Chuyên đề BĐS | 30/09/2026 | Đóng gói Skill real-estate:lead-scoring & Web App Streamlit st.data_editor (Human-in-the-loop, AI Scoring Agent) | lead_scoring_skill.md, app_lead_scoring.py, pdca-log.md #23 |
 | Nâng cấp BĐS | 30/09/2026 | Nâng cấp Web App Streamlit v2.0 Pro (5 Tabs, BI Analytics Altair, Export Excel openpyxl, Call/Zalo) & Đồng bộ Git | app_lead_scoring.py, requirements.txt, pdca-log.md #24 |
 | Tích hợp GCP | 30/09/2026 | Nâng cấp đọc & đồng bộ 2 chiều Google Sheets Private qua Service Account (gspread, google-auth, .streamlit/secrets.toml) | app_lead_scoring.py, secrets.toml.example, pdca-log.md #25 |
+| Thực hành MKT | 30/09/2026 | Tạo dataset thực hành sample-data/marketing_campaigns.xlsx (70 dòng = 20 gốc + 50 mở rộng, 10 cột, mỗi lỗi > 5 case) | sample-data/marketing_campaigns.xlsx, pdca-log.md #26 |
+| Đóng gói Skill | 30/09/2026 | Đóng gói Skill marketing:healing (Marketing_Healing_Skill.md): quy đổi USDx25k/default VND, Active spend=0 -> Paused, giải mã ngày tự nhiên | Marketing_Healing_Skill.md, pdca-log.md #27 |
+| Thực thi Healer | 30/09/2026 | Triển khai marketing_healer.py: xử lý trực tiếp file gốc, ghi 44 sự kiện vào backlog.md, print Healed: 37 \| Warning: 15 \| Edge Case: 7 | marketing_healer.py, backlog.md, pdca-log.md #28 |
+| Nâng cấp Pháp chế | 01/10/2026 | Nâng cấp Skill customs:legal-advisor v2.0 Pro: CSDL SQLite FTS5 cấp Điều/Khoản (<15ms), nạp NĐ 128 & NĐ 69 (9 văn bản), Diff phả hệ TT38/39/121, Báo cáo HTML | query_legal_clauses.py, diff_legal_clauses.py, export_legal_report_html.py, pdca-log.md #29 |
+| Tự động hóa XNK | 01/10/2026 | Customs Legal Telegram Copilot: quét văn bản mới Cổng Chính phủ, nhắc hiệu lực T-0 & T-1, tự động hóa On-Logon khi mở máy | customs_telegram_bot.py, setup_customs_scheduler.ps1, pdca-log.md #30 |
+| Cải tiến Bot v2.5 | 01/10/2026 | Nâng cấp Multi-Doc Digest Batching: cập nhật đa văn bản (Luật, NĐ, TT, QĐ, FTA), tinh gọn bỏ tóm tắt dài dòng | customs_telegram_bot.py, pdca-log.md #31 |
+| Tái cấu trúc XNK | 02/10/2026 | Tách biệt thủ tục thông quan sang customs:legal-advisor; Nâng cấp customs-hs-classifier v2.0 chuyên sâu phân loại mã HS (4D Dissection, chỉ định rõ quy tắc GRI & lập luận giải thích, bắt mã đối trọng Borderline & Tax Delta, xuất HS Dossier & Handoff JSON) | customs-hs-classifier, customs-legal-advisor, pdca-log.md #32 |
+| Nâng cấp Thẩm định | 02/10/2026 | Nâng cấp customs:doc-auditor v3.0 Pro: Dynamic 36 bẫy lỗi (sạch 100% hardcode), liên thông SQLite NĐ 128 & HS Classifier, xuất Interactive HTML Glassmorphism Dashboard & Dự thảo Công văn giải trình | customs:doc-auditor, pdca-log.md #33 |
+| Đóng gói Xuất xứ ROO | 02/10/2026 | Đóng gói Skill customs:roo-specialist v1.0: Thẩm định Quy tắc Xuất xứ (WO/PE/PSR), tính RVC/VL/De Minimis, quét Box-by-Box (Form D, EUR.1, CPTPP, RCEP), Questionnaire 6 phần, liên thông NotebookLM C/O Master & Dashboard HTML | customs-roo-specialist, pdca-log.md #34 |
+| 71 | Nâng cấp CSDL FTA | 03/10/2026 | Nạp 5 văn bản pháp lý FTA gốc (681 trang PDF, ~69.5 MB: ATIGA, EVFTA TT 14/2026, RCEP TT 32/2022, CPTPP, VN-UAE CEPA TT 24/2026) vào thư viện tài sản cục bộ | assets/fta-rules/, fta_co_assets_registry.json, pdca-log.md #35 |
+| 72 | Tối ưu Xuất xứ v2.0 | 03/10/2026 | Nâng cấp customs-roo-specialist v2.0 Pro: Origin Engineering (4 bước cứu xuất xứ), FTA Arbitrage, 5 bẫy lỗi Hải quan, phỏng vấn 3 tầng & Công văn giải trình TT 33/2023 | SKILL.md, origin_engineering_framework.md, customs_defense_dossier_template.md, pdca-log.md #36 |
+| 73 | Streamlit Tiền Thông Quan v2.0 | 03/10/2026 | Nâng cấp Web App Streamlit v2.0 Pro (app_customs_preclearance.py, run_customs_app.bat): Nạp file chứng từ đa định dạng (PDF/Excel/Text qua pypdf), 6 Tabs liên hoàn, Sổ Tracking lô hàng đã thông quan & Báo cáo Hải quan cuối kỳ (openpyxl 2 sheet), Private PIN lock | app_customs_preclearance.py, run_customs_app.bat, pdca-log.md #37 |
+
+
+
+
+
+
+
 
 
 

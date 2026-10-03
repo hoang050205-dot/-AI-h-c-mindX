@@ -1,0 +1,134 @@
+{
+  "shipment_info": {
+    "shipment_id": "SHP-2026-US-VN-SOY88",
+    "commodity": "Hạt đậu tương vàng nguyên hạt chưa bóc vỏ dùng làm thức ăn chăn nuôi (Yellow Soybeans in Bulk)",
+    "intended_hs_code": "1201.90.00",
+    "country_of_origin": "Hoa Kỳ (United States)",
+    "incoterms": "CFR Dinh Vu Port, Hai Phong, Vietnam Incoterms 2020",
+    "customs_declaration_type": "A11 (Nhập khẩu kinh doanh tiêu dùng)",
+    "requires_specialized_inspection": true,
+    "inspection_registration_submitted": true
+  },
+  "sales_contract": {
+    "contract_no": "USVN-GRAIN-2026/09",
+    "contract_date": "15/09/2026",
+    "seller": {
+      "name": "MIDWEST GRAIN EXPORTERS LLC",
+      "address": "88 River Road, New Orleans, Louisiana, USA",
+      "tax_id": "EIN-72-998877"
+    },
+    "buyer": {
+      "name": "CONG TY CO PHAN NONG SAN VIET",
+      "address": "Khu Cong Nghiep Dinh Vu, Quan Hai An, Hai Phong, Vietnam",
+      "tax_id": "0201234567"
+    },
+    "items": [
+      {
+        "item_no": 1,
+        "description": "US Yellow Soybeans Grade 2 or better, in bulk",
+        "hs_code": "1201.90.00",
+        "quantity": 500.0,
+        "uom": "MT",
+        "unit_price": 540.0,
+        "total_amount": 270000.0
+      }
+    ],
+    "total_amount": 270000.0,
+    "currency": "USD",
+    "delivery_term": "CFR Dinh Vu Port, Hai Phong, Vietnam Incoterms 2020",
+    "pol": "New Orleans Port, USA",
+    "pod": "Dinh Vu Port, Hai Phong, Vietnam"
+  },
+  "commercial_invoice": {
+    "invoice_no": "INV-MGE-20260910",
+    "invoice_date": "10/09/2026",
+    "seller": {
+      "name": "MIDWEST GRAIN EXPORTERS LLC",
+      "address": "88 River Road, New Orleans, Louisiana, USA",
+      "tax_id": "EIN-72-998877"
+    },
+    "buyer": {
+      "name": "CONG TY CO PHAN NONG SAN VIET",
+      "address": "Khu Cong Nghiep Dinh Vu, Quan Hai An, Hai Phong, Vietnam",
+      "tax_id": "0201234567"
+    },
+    "contract_no": "USVN-GRAIN-2026/09",
+    "items": [
+      {
+        "item_no": 1,
+        "description": "US Yellow Soybeans Grade 2 or better, in bulk",
+        "hs_code": "1201.90.00",
+        "quantity": 500.0,
+        "uom": "MT",
+        "unit_price": 540.0,
+        "total_amount": 260000.0
+      }
+    ],
+    "total_amount": 260000.0,
+    "currency": "USD",
+    "incoterms": "CFR Dinh Vu Port, Hai Phong, Vietnam Incoterms 2020",
+    "pol": "New Orleans Port, USA",
+    "pod": "Dinh Vu Port, Hai Phong, Vietnam"
+  },
+  "packing_list": {
+    "pl_no": "PL-MGE-20260918",
+    "pl_date": "18/09/2026",
+    "seller": {
+      "name": "MIDWEST GRAIN EXPORTERS LLC",
+      "address": "88 River Road, New Orleans, Louisiana, USA"
+    },
+    "buyer": {
+      "name": "CONG TY CO PHAN NONG SAN VIET",
+      "address": "Khu Cong Nghiep Dinh Vu, Quan Hai An, Hai Phong, Vietnam"
+    },
+    "invoice_no": "INV-MGE-20260910",
+    "total_packages": 1,
+    "package_type": "In Bulk (Hàng xá xả hầm tàu)",
+    "gross_weight_kg": 500000.0,
+    "net_weight_kg": 500000.0,
+    "measurement_cbm": 680.0,
+    "container_no": "BULK-HOLD-01",
+    "seal_no": "BULK-NIL"
+  },
+  "bill_of_lading": {
+    "bl_no": "CMAUS20260920",
+    "bl_type": "Ocean Bill of Lading (Clean On Board)",
+    "shipped_on_board_date": "20/09/2026",
+    "issue_date": "20/09/2026",
+    "shipper": {
+      "name": "MIDWEST GRAIN EXPORTERS LLC",
+      "address": "88 River Road, New Orleans, Louisiana, USA"
+    },
+    "consignee": {
+      "name": "CONG TY CO PHAN NONG SAN VIET",
+      "address": "Khu Cong Nghiep Dinh Vu, Quan Hai An, Hai Phong, Vietnam"
+    },
+    "vessel_voyage": "MV OCEAN PIONEER V.2610N",
+    "pol": "New Orleans Port, USA",
+    "pod": "Dinh Vu Port, Hai Phong, Vietnam",
+    "goods_description": "500 MT US YELLOW SOYBEANS IN BULK",
+    "total_packages": 1,
+    "gross_weight_kg": 498500.0,
+    "measurement_cbm": 680.0,
+    "container_no": "BULK-HOLD-01",
+    "seal_no": "BULK-NIL",
+    "freight_term": "Freight Prepaid"
+  },
+  "certificate_of_origin": {
+    "co_form": "Certificate of Origin (Issued by US Chamber of Commerce)",
+    "co_no": "USCC-2026-GRAIN-0922",
+    "issue_date": "22/09/2026",
+    "issuing_authority": "Greater New Orleans Chamber of Commerce",
+    "box1_exporter": "MIDWEST GRAIN EXPORTERS LLC",
+    "box2_consignee": "CONG TY CO PHAN NONG SAN VIET",
+    "box3_transport_details": "FROM NEW ORLEANS TO HAI PHONG BY MV OCEAN PIONEER",
+    "box7_goods_description": "US Yellow Soybeans Grade 2 or better in bulk",
+    "box8_origin_criterion": "WO",
+    "box9_gross_weight_or_other_quantity": "500,000.00 KGS",
+    "box10_invoice_no": "INV-MGE-20260910",
+    "box10_invoice_date": "10/09/2026",
+    "box8_hs_code": "1201.90.00",
+    "box13_issued_retroactively": false,
+    "box13_third_party_invoicing": false
+  }
+}

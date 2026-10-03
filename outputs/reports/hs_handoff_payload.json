@@ -1,0 +1,23 @@
+{
+  "service": "customs:legal-advisor",
+  "action": "clearance_and_permits_audit",
+  "payload_timestamp": "2026-10-02",
+  "commodity_dossier": {
+    "commodity_name": "Hạt đậu tương",
+    "classified_hs_code": "1201.90.00",
+    "full_description_vn": "Đậu tương, đã hoặc chưa vỡ mảnh - - Loại khác",
+    "unit": "kg",
+    "country_of_origin": "Mỹ",
+    "co_form_provided": "None (MFN Rate Applied)",
+    "applicable_import_duty": "0",
+    "applicable_vat": "*/5/8/10",
+    "borderline_risk_code": "1201.10.00",
+    "borderline_risk_level": "CAO (RỦI RO THAM VẤN & ẤN ĐỊNH THUẾ)"
+  },
+  "delegated_tasks": [
+    "1. Tra cứu chính sách quản lý chuyên ngành, hàng cấm hoặc giấy phép nhập khẩu bắt buộc theo Nghị định 69/2018/NĐ-CP cho mã HS trên.",
+    "2. Lập danh mục thành phần bộ hồ sơ hải quan điện tử bắt buộc theo Điều 16 Thông tư 38/2015/TT-BTC (sửa đổi bởi TT 39/2018 & TT 121/2025).",
+    "3. Hướng dẫn quy trình 3 bước thông quan thực tế tại cửa khẩu/cảng biển và đăng ký trên Cổng Một cửa Quốc gia (NSW).",
+    "4. Rà soát chế tài xử phạt hành chính đối với các hành vi khai sai mã HS hoặc thiếu giấy phép theo Nghị định 128/2020/NĐ-CP."
+  ]
+}

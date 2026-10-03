@@ -1,0 +1,32 @@
+{
+  "source_skill": "customs:doc-auditor",
+  "timestamp": "2026-10-02T22:48:00.087919",
+  "shipment_id": "SHP-2026-KR-VN-001",
+  "commodity": "Dây chuyền chiết rót và đóng nắp chai tự động (Automatic Liquid Filling and Capping Line)",
+  "country_of_origin": "Hàn Quốc (South Korea)",
+  "discrepancy_code": "L4-04/L4-07",
+  "reason": "Lệch phân nhóm mã HS 6 số giữa Invoice và C/O",
+  "invoice_hs_code": "8479.89",
+  "co_hs_code": "8479.90",
+  "items": [
+    {
+      "item_no": 1,
+      "description": "Automatic Liquid Filling Machine, Model AFC-2026-KR",
+      "hs_code": "8479.89",
+      "quantity": 1,
+      "uom": "SET",
+      "unit_price": 90000.0,
+      "total_amount": 90000.0
+    },
+    {
+      "item_no": 2,
+      "description": "Automatic Bottle Feeding & Capping Conveyor, Model ACC-2026-KR",
+      "hs_code": "8479.89",
+      "quantity": 1,
+      "uom": "SET",
+      "unit_price": 25000.0,
+      "total_amount": 23000.0
+    }
+  ],
+  "recommended_action": "Execute /customs:classify or run classify_hs_expert.py to perform 4D technical dissection, verify GRI rule and calculate Tax Delta."
+}

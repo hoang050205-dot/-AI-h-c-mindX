@@ -1,9 +1,9 @@
 {
   "database_name": "Local Customs & Tax Legal Assets Database",
-  "version": "1.0.0",
-  "last_updated": "2026-09-16",
+  "version": "2.0.0",
+  "last_updated": "2026-10-01",
   "storage_directory": "knowledge-base/legal-assets",
-  "total_documents": 7,
+  "total_documents": 9,
   "documents": [
     {
       "id": "DOC-01",
@@ -201,6 +201,64 @@
         "Chuẩn hóa hồ sơ và thủ tục hoàn thuế, không thu thuế điện tử"
       ],
       "keywords": ["thông tư 121/2025", "sửa đổi quy định hải quan 2026", "số hóa hồ sơ hải quan", "giám sát tự động cảng biển", "e-C/O", "cập nhật tt38 tt39"]
+    },
+    {
+      "id": "DOC-08",
+      "doc_number": "128/2020/NĐ-CP",
+      "type": "Nghị định",
+      "issuing_authority": "Chính phủ",
+      "issue_date": "2020-10-19",
+      "effective_date": "2020-12-10",
+      "status": "Còn hiệu lực (sửa đổi bổ sung bởi NĐ 102/2021/NĐ-CP; chuyển tiếp NĐ 169/2026)",
+      "title": "Nghị định số 128/2020/NĐ-CP quy định xử phạt vi phạm hành chính trong lĩnh vực hải quan",
+      "file_name": "Nghi_Dinh_128_2020_ND_CP_Xu_Phat_VPHC_Hai_Quan.md",
+      "file_size_bytes": 10500,
+      "original_path": "vanban.chinhphu.vn",
+      "hierarchy_level": 2,
+      "category": "Nghị định thi hành / Chế tài & Xử phạt VPHC Hải quan",
+      "summary": "Quy định toàn diện về các hành vi vi phạm hành chính, hình thức xử phạt, mức phạt tiền cụ thể, biện pháp khắc phục hậu quả, thẩm quyền và thủ tục xử phạt trong lĩnh vực hải quan: Chậm nộp tờ khai/BCQT (Điều 7), khai sai hải quan (Điều 8), khai thiếu thuế (Điều 9: phạt 10%-20%), trốn thuế (Điều 14: phạt 1-3 lần), vi phạm hàng cấm/giấy phép (Điều 15), vi phạm nhãn hàng hóa (Điều 17).",
+      "relations": {
+        "implements": ["54/2014/QH13"],
+        "amended_by": ["102/2021/NĐ-CP"],
+        "replaced_by": ["169/2026/NĐ-CP (từ 01/07/2026)"]
+      },
+      "key_articles": [
+        "Điều 7: Vi phạm thời hạn nộp tờ khai hải quan, hồ sơ thanh khoản và báo cáo quyết toán",
+        "Điều 8: Vi phạm quy định về khai hải quan (khai sai tên hàng, chủng loại, mã số HS, trị giá)",
+        "Điều 9: Phạt 10% - 20% số tiền thuế khai thiếu hoặc tăng số thuế được miễn, giảm, hoàn",
+        "Điều 14: Phạt từ 1 đến 3 lần số tiền thuế trốn",
+        "Điều 15: Xử phạt hàng hóa cấm, tạm ngừng hoặc không có giấy phép XNK",
+        "Điều 17: Xử phạt vi phạm quy định về nhãn hàng hóa nhập khẩu"
+      ],
+      "keywords": ["nghị định 128/2020", "xử phạt hải quan", "khai sai hải quan", "phạt thiếu thuế", "trốn thuế hải quan", "chậm nộp báo cáo quyết toán", "vi phạm nhãn mác", "chế tài hải quan"]
+    },
+    {
+      "id": "DOC-09",
+      "doc_number": "69/2018/NĐ-CP",
+      "type": "Nghị định",
+      "issuing_authority": "Chính phủ",
+      "issue_date": "2018-05-15",
+      "effective_date": "2018-05-15",
+      "status": "Còn hiệu lực",
+      "title": "Nghị định số 69/2018/NĐ-CP quy định chi tiết một số điều của Luật Quản lý ngoại thương",
+      "file_name": "Nghi_Dinh_69_2018_ND_CP_Quan_Ly_Ngoai_Thuong.pdf",
+      "file_size_bytes": 3440485,
+      "original_path": ".agents/skills/customs-hs-classifier/assets/danh_muc_hang_can_giay_phep_ND69.pdf",
+      "hierarchy_level": 2,
+      "category": "Nghị định thi hành / Quản lý chuyên ngành & Giấy phép XNK",
+      "summary": "Quy định chi tiết các biện pháp quản lý ngoại thương: Danh mục hàng hóa cấm xuất khẩu, cấm nhập khẩu (Phụ lục I); Danh mục hàng hóa xuất nhập khẩu theo giấy phép, theo điều kiện quản lý của 8 Bộ chuyên ngành (Công Thương, NN&PTNT, Y tế, GTVT, TT&TT, VH-TT&DL, TN&MT, CAND-QP); Thủ tục cấp phép và cơ chế ủy thác XNK.",
+      "relations": {
+        "implements": ["05/2017/QH14 (Luật Quản lý ngoại thương)"]
+      },
+      "key_articles": [
+        "Phụ lục I: Danh mục hàng hóa cấm xuất khẩu, cấm nhập khẩu",
+        "Phụ lục II: Danh mục hàng hóa XNK theo giấy phép của Bộ Công Thương",
+        "Phụ lục III: Danh mục hàng hóa XNK theo giấy phép của Bộ NN&PTNT",
+        "Phụ lục IV: Danh mục hàng hóa XNK theo giấy phép của Bộ Y tế",
+        "Điều 7: Nguyên tắc áp dụng biện pháp quản lý giấy phép xuất khẩu, nhập khẩu",
+        "Điều 8: Quy trình và thủ tục cấp giấy phép xuất khẩu, nhập khẩu"
+      ],
+      "keywords": ["nghị định 69/2018", "danh mục hàng cấm", "giấy phép nhập khẩu", "quản lý chuyên ngành", "luật quản lý ngoại thương", "hàng có điều kiện"]
     }
   ]
 }

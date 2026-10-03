@@ -21,12 +21,15 @@ graph TD
     subgraph TANG_LUAT["TẦNG 1: LUẬT (QUỐC HỘI)"]
         L54["Luật Hải quan số 54/2014/QH13<br/><i>(Sửa đổi bởi Luật 90/2025/QH15)</i>"]
         L48["Luật Thuế GTGT số 48/2024/QH15<br/><i>(Có hiệu lực từ 01/07/2025)</i>"]
+        L05["Luật Quản lý ngoại thương 05/2017/QH14<br/><i>(Chính sách xuất nhập khẩu)</i>"]
         NQ204["Nghị quyết 204/2025/QH15<br/><i>(Chính sách giảm thuế GTGT)</i>"]
     end
 
     subgraph TANG_NGHI_DINH["TẦNG 2: NGHỊ ĐỊNH (CHÍNH PHỦ)"]
         ND167["Nghị định 167/2025/NĐ-CP<br/><i>(Sửa đổi bổ sung NĐ 08/2015/NĐ-CP)</i>"]
         ND174["Nghị định 174/2025/NĐ-CP<br/><i>(Quy định chi tiết giảm thuế GTGT 2%)</i>"]
+        ND128["Nghị định 128/2020/NĐ-CP<br/><i>(Xử phạt VPHC Hải quan - Sửa bởi NĐ 102/2021)</i>"]
+        ND69["Nghị định 69/2018/NĐ-CP<br/><i>(Danh mục hàng cấm & Giấy phép 8 Bộ)</i>"]
     end
 
     subgraph TANG_THONG_TU["TẦNG 3: THÔNG TƯ (BỘ TÀI CHÍNH)"]
@@ -36,6 +39,8 @@ graph TD
     end
 
     L54 --> ND167
+    L54 --> ND128
+    L05 --> ND69
     ND167 --> TT38
     TT38 --> TT39
     TT39 --> TT121
@@ -57,6 +62,8 @@ graph TD
 | **DOC-05** | **Thông tư 38/2015/TT-BTC** | Bộ Tài chính | 25/03/2015 | 01/04/2015 | Còn hiệu lực một phần | [Thong_Tu_38_2015_TT_BTC_Thu_Tuc_Hai_Quan.pdf](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/knowledge-base/legal-assets/Thong_Tu_38_2015_TT_BTC_Thu_Tuc_Hai_Quan.pdf) | 17.67 MB |
 | **DOC-06** | **Thông tư 39/2018/TT-BTC** | Bộ Tài chính | 20/04/2018 | 05/06/2018 | Còn hiệu lực một phần (sửa đổi TT 38) | [Thong_Tu_39_2018_TT_BTC_Sua_Doi_TT38.pdf](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/knowledge-base/legal-assets/Thong_Tu_39_2018_TT_BTC_Sua_Doi_TT38.pdf) | 9.38 MB |
 | **DOC-07** | **Thông tư 121/2025/TT-BTC** | Bộ Tài chính | 18/12/2025 | 01/02/2026 | Còn hiệu lực (sửa đổi mới nhất) | [Thong_Tu_121_2025_TT_BTC_Sua_Doi_Cac_Thong_Tu_Hai_Quan.pdf](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/knowledge-base/legal-assets/Thong_Tu_121_2025_TT_BTC_Sua_Doi_Cac_Thong_Tu_Hai_Quan.pdf) | 7.89 MB |
+| **DOC-08** | **Nghị định 128/2020/NĐ-CP** | Chính phủ | 19/10/2020 | 10/12/2020 | Còn hiệu lực (sửa đổi NĐ 102/2021) | [Nghi_Dinh_128_2020_ND_CP_Xu_Phat_VPHC_Hai_Quan.md](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/knowledge-base/legal-assets/Nghi_Dinh_128_2020_ND_CP_Xu_Phat_VPHC_Hai_Quan.md) | 10.5 KB |
+| **DOC-09** | **Nghị định 69/2018/NĐ-CP** | Chính phủ | 15/05/2018 | 15/05/2018 | Còn hiệu lực | [Nghi_Dinh_69_2018_ND_CP_Quan_Ly_Ngoai_Thuong.pdf](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/knowledge-base/legal-assets/Nghi_Dinh_69_2018_ND_CP_Quan_Ly_Ngoai_Thuong.pdf) | 3.28 MB |
 
 ---
 
@@ -67,6 +74,8 @@ graph TD
 | **Khai báo bộ hồ sơ hải quan NK** | TT 38/2015 + TT 39/2018 + TT 121/2025 | Điều 16 TT 38 (sửa đổi bởi Khoản 5 Điều 1 TT 39) | Nộp 100% bản đính kèm điện tử ký số; không nộp bản giấy trừ trường hợp bất khả kháng. |
 | **Hưởng chính sách giảm thuế VAT 8%** | NĐ 174/2025/NĐ-CP + Luật 48/2024 | Điều 1 NĐ 174 & Phụ lục I, II; Điều 8 Luật 48 | Tra cứu mã HS trên Phụ lục I & II; nếu không thuộc diện loại trừ, khai mã thuế suất giảm tương ứng trên VNACCS. |
 | **Khai bổ sung sau khi thông quan** | TT 38/2015 (sửa bởi TT 39/2018 & TT 121/2025) | Điều 20 TT 38 (sửa bởi Khoản 9 Điều 1 TT 39) | Chủ động khai bổ sung trong 60 ngày kể từ ngày thông quan và trước khi cơ quan hải quan ra quyết định kiểm tra sau thông quan. |
+| **Xử phạt khai sai / thiếu thuế** | NĐ 128/2020/NĐ-CP (sửa bởi NĐ 102/2021) | Điều 8 (Khai sai), Điều 9 (Thiếu thuế: phạt 10%-20%) | Tự phát hiện và nộp đủ tiền thuế trước khi lập biên bản VPHC để được hưởng mức phạt nhẹ nhất (10%). |
+| **Rà soát hàng cấm / Giấy phép 8 Bộ** | NĐ 69/2018/NĐ-CP (Luật Quản lý ngoại thương) | Phụ lục I (Hàng cấm), Phụ lục II - IX (Giấy phép) | Xin cấp giấy phép hoặc đăng ký kiểm tra chuyên ngành trước khi hàng đến cửa khẩu. |
 | **Hủy tờ khai hải quan** | TT 38/2015 (sửa đổi) | Điều 21 TT 38/2015/TT-BTC | Tờ khai quá 15 ngày chưa nộp chứng từ (luồng Vàng/Đỏ) hoặc khai trùng tờ khai. |
 | **Quản lý nguyên liệu Gia công / SXXK** | TT 38/2015 (sửa đổi bởi TT 39/2018) | Điều 59, 60 TT 38 (Mẫu 15/BCQT-NVL/GSQL) | Nộp Báo cáo quyết toán năm tài chính trong vòng 90 ngày kể từ ngày kết thúc năm tài chính. |
 | **Địa điểm làm thủ tục & Kiểm tra thực tế** | Luật 54/2014 + NĐ 167/2025/NĐ-CP | Điều 21 Luật 54; Khoản 1 Điều 1 NĐ 167 | Đăng ký địa điểm kiểm tra hàng hóa theo phân cấp Chi cục Hải quan cửa khẩu hoặc Chi cục Hải quan ngoài cửa khẩu. |

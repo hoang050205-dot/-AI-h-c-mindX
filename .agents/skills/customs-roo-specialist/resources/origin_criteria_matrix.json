@@ -1,0 +1,144 @@
+{
+  "ftas": {
+    "ATIGA": {
+      "name": "Hiệp định Thương mại Hàng hóa ASEAN (ATIGA)",
+      "legal_basis": "Thông tư số 22/2016/TT-BCT (sửa đổi, bổ sung bởi Thông tư 19/2020/TT-BCT và Thông tư 10/2022/TT-BCT)",
+      "form_type": "Form D (13 ô)",
+      "currency_default": "USD",
+      "fob_box_required": true,
+      "fob_box_exceptions": ["Campuchia", "Myanmar"],
+      "value_formulas": ["build_down", "build_up"],
+      "default_rvc_threshold": 40.0,
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "FOB",
+      "cumulation": "Toàn phần (Full) & Từng phần (Partial Cumulation nếu RVC từ 20% đến 39%)",
+      "simple_operations_clause": "Điều 31 Hiệp định ATIGA",
+      "retention_years_international": 3,
+      "retention_years_vn": 5,
+      "verification_deadlines": {
+        "rejection_return_days": 60,
+        "retroactive_check_reply_days": 90,
+        "total_verification_process_days": 180,
+        "visit_consent_days": 30,
+        "visit_conduct_days": 60
+      },
+      "third_party_box": "Box 13 (Third Country Invoicing)",
+      "retroactive_threshold_days": 3,
+      "retroactive_box": "Box 13 (Issued Retroactively)"
+    },
+    "EVFTA": {
+      "name": "Hiệp định Thương mại Tự do Việt Nam - Liên minh Châu Âu (EVFTA)",
+      "legal_basis": "Thông tư số 14/2026/TT-BCT ngày 25/03/2026 (Hiệu lực từ 10/05/2026, thay thế Thông tư 11/2020/TT-BCT và 41/2022/TT-BCT)",
+      "form_type": "Form EUR.1 (14 ô)",
+      "currency_default": "EUR",
+      "fob_box_required": false,
+      "value_metric": "Value Limit (VL) dựa trên Giá xuất xưởng (EXW)",
+      "value_formulas": ["value_limit_exw"],
+      "default_vl_threshold": 70.0,
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "EXW (hoặc trọng lượng đối với Dệt may Chương 50-63)",
+      "cumulation": "Cộng gộp song phương EU - VN; Cộng gộp nguyên liệu vải Hàn Quốc/Nhật Bản cho dệt may (theo điều kiện)",
+      "simple_operations_clause": "Điều 6 Phụ lục I Nghị định thư 1 EVFTA",
+      "retention_years_international": 3,
+      "retention_years_vn": 5,
+      "verification_deadlines": {
+        "retroactive_check_reply_days": 300,
+        "total_verification_process_days": 300
+      },
+      "paper_security": "Giấy có hoa văn nền mắt lưới guilloche màu xanh lá cây",
+      "remarks_box": "Box 7",
+      "invoice_box": "Box 10 (Optional)",
+      "customs_endorsement_box": "Box 11"
+    },
+    "CPTPP": {
+      "name": "Hiệp định Đối tác Toàn diện và Tiến bộ xuyên Thái Bình Dương (CPTPP)",
+      "legal_basis": "Thông tư số 03/2019/TT-BCT (sửa đổi, bổ sung bởi Thông tư số 06/2020/TT-BCT)",
+      "form_type": "Chứng nhận xuất xứ CPTPP (Định dạng dữ liệu tối thiểu - 9 trường)",
+      "certifier_types": ["Exporter", "Producer", "Importer"],
+      "value_formulas": ["build_down", "build_up", "net_cost", "focus_value"],
+      "default_rvc_threshold": {
+        "build_down": 45.0,
+        "build_up": 35.0,
+        "net_cost": 35.0,
+        "focus_value": 30.0
+      },
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "Trị giá hoặc Trọng lượng (áp dụng Chương 50-63 là 10% trọng lượng)",
+      "cumulation": "Cộng gộp nội khối 11 nước thành viên",
+      "simple_operations_clause": "Điều 3.6 Hiệp định CPTPP",
+      "retention_years_international": 5,
+      "retention_years_vn": 5,
+      "verification_deadlines": {
+        "questionnaire_reply_days": 90,
+        "total_verification_process_days": 180
+      }
+    },
+    "RCEP": {
+      "name": "Hiệp định Đối tác Kinh tế Toàn diện Khu vực (RCEP)",
+      "legal_basis": "Thông tư số 05/2022/TT-BCT (sửa đổi, bổ sung bởi Thông tư số 32/2022/TT-BCT)",
+      "form_type": "Form RCEP (13 ô)",
+      "value_formulas": ["build_down", "build_up"],
+      "default_rvc_threshold": 40.0,
+      "regional_value_metric": "RVC hoặc DVC (Domestic Value Content)",
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "FOB (Chương 50-63 tính theo trọng lượng)",
+      "cumulation": "Cộng gộp đa phương toàn bộ 15 nước RCEP",
+      "simple_operations_clause": "Điều 3.7 Hiệp định RCEP",
+      "box_3_producer": "Bắt buộc nếu đã biết: Ghi tên/địa chỉ, hoặc SAME AS EXPORTER, NOT AVAILABLE, CONFIDENTIAL, SEE BOX 8",
+      "box_5_official_use": "Dành riêng cho cơ quan Hải quan",
+      "rcep_country_of_origin": "Xác định rõ Nước xuất xứ RCEP dựa trên đóng góp sản xuất",
+      "retention_years_international": 3,
+      "retention_years_vn": 5,
+      "verification_deadlines": {
+        "questionnaire_reply_days": 90,
+        "total_verification_process_days": 180
+      }
+    },
+    "ACFTA": {
+      "name": "Hiệp định Khu vực Thương mại Tự do ASEAN - Trung Quốc (ACFTA)",
+      "legal_basis": "Thông tư số 12/2019/TT-BCT",
+      "form_type": "Form E (13 ô)",
+      "value_formulas": ["build_down"],
+      "default_rvc_threshold": 40.0,
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "FOB",
+      "cumulation": "Cộng gộp ASEAN - Trung Quốc",
+      "simple_operations_clause": "Điều 7 Phụ lục I Thông tư 12/2019/TT-BCT",
+      "third_party_invoicing": "Box 13 Third Party Invoicing - Bắt buộc ghi tên công ty & nước của bên thứ 3 phát hành invoice vào Box 7; Số invoice vào Box 10",
+      "retroactive_threshold_days": 3,
+      "retention_years_international": 3,
+      "retention_years_vn": 5
+    },
+    "VN_UAE_CEPA": {
+      "name": "Hiệp định Đối tác Kinh tế Toàn diện Việt Nam - UAE (CEPA)",
+      "legal_basis": "Thông tư số 24/2026/TT-BCT ngày 05/05/2026 của Bộ Công Thương",
+      "form_type": "Form VN-UAE (C/O CEPA)",
+      "currency_default": "USD",
+      "value_formulas": ["build_down", "build_up"],
+      "default_rvc_threshold": 40.0,
+      "de_minimis_threshold": 10.0,
+      "de_minimis_basis": "FOB",
+      "cumulation": "Cộng gộp song phương Việt Nam - UAE",
+      "simple_operations_clause": "Điều 8 Thông tư số 24/2026/TT-BCT",
+      "third_party_invoicing": "Chấp nhận hóa đơn bên thứ ba kèm ghi chú rõ tên bên phát hành",
+      "retroactive_threshold_days": 3,
+      "retention_years_international": 3,
+      "retention_years_vn": 5,
+      "verification_deadlines": {
+        "questionnaire_reply_days": 90,
+        "total_verification_process_days": 180
+      }
+    }
+  },
+  "forbidden_simple_operations": [
+    "Bảo quản trong quá trình vận chuyển và lưu kho (thông gió, trải ra, sấy khô, làm lạnh, ngâm muối, hun lưu huỳnh)",
+    "Các công việc đơn giản như lau bụi, sàng, sẩy, phân loại, chọn lọc, xếp nhóm, rửa, sơn, chia cắt thành từng phần",
+    "Thay đổi bao bì và tháo dỡ hoặc ghép các lô hàng",
+    "Đóng chai, đóng lọ, đóng túi, bao gói đơn giản",
+    "Dán nhãn mác, logo hoặc các dấu hiệu phân biệt tương tự lên sản phẩm hoặc bao bì",
+    "Pha loãng đơn giản bằng nước hoặc chất khác không làm thay đổi đặc tính sản phẩm",
+    "Lắp ráp đơn giản các bộ phận để tạo thành sản phẩm hoàn chỉnh hoặc tháo rời sản phẩm thành từng bộ phận",
+    "Giết mổ động vật",
+    "Kết hợp của hai hay nhiều công việc nêu trên"
+  ]
+}

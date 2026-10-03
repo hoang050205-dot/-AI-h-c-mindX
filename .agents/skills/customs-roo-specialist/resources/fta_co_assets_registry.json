@@ -1,0 +1,117 @@
+{
+  "registry_name": "Kho Tài Sản Pháp Lý Quy Tắc Xuất Xứ & C/O Thực Địa (Field FTA ROO & C/O Assets Registry)",
+  "version": "1.1.0",
+  "updated_at": "2026-10-03",
+  "total_documents": 5,
+  "total_pages": 681,
+  "storage_directory": ".agents/skills/customs-roo-specialist/assets/fta-rules/",
+  "assets": [
+    {
+      "asset_id": "FTA-DOC-01",
+      "fta_code": "ATIGA",
+      "fta_name": "Hiệp định Thương mại Hàng hóa ASEAN (ATIGA)",
+      "form_type": "Form D (13 ô)",
+      "circular_no": "Thông tư số 22/2016/TT-BCT (kèm các sửa đổi TT 19/2020 và TT 10/2022)",
+      "title": "Quy định thực hiện Quy tắc xuất xứ hàng hóa trong Hiệp định Thương mại hàng hóa ASEAN",
+      "issuing_authority": "Bộ Công Thương",
+      "issue_date": "2016-10-03",
+      "effective_date": "2016-11-18",
+      "status": "Đang có hiệu lực thi hành (Active)",
+      "file_name": "ATIGA_TT22_2016_BCT.pdf",
+      "relative_path": ".agents/skills/customs-roo-specialist/assets/fta-rules/ATIGA_TT22_2016_BCT.pdf",
+      "file_size_bytes": 2957278,
+      "page_count": 296,
+      "core_content": [
+        "Phụ lục I: Quy tắc xuất xứ hàng hóa (Giải thích thuật ngữ, Tiêu chí WO, PE, PSR CTC/RVC, De Minimis 10% FOB, Công đoạn gia công đơn giản Điều 31, Cộng gộp toàn phần & từng phần 20-40%).",
+        "Phụ lục II: Danh mục Quy tắc cụ thể mặt hàng (PSR) toàn diện 97 Chương.",
+        "Quy định khai báo Form D: Bắt buộc ghi trị giá FOB tại Box 9 (trừ Campuchia, Myanmar); kiểm tra ô tick Box 13 (Third Country Invoicing, Issued Retroactively sau 3 ngày, Accumulation, Partial Cumulation, De Minimis)."
+      ]
+    },
+    {
+      "asset_id": "FTA-DOC-02",
+      "fta_code": "EVFTA",
+      "fta_name": "Hiệp định Thương mại Tự do Việt Nam - Liên minh Châu Âu (EVFTA)",
+      "form_type": "Form EUR.1 (14 ô) & Tự chứng nhận xuất xứ (REX)",
+      "circular_no": "Thông tư số 14/2026/TT-BCT",
+      "title": "Quy định Quy tắc xuất xứ hàng hóa trong Hiệp định Thương mại tự do giữa Cộng hòa xã hội chủ nghĩa Việt Nam và Liên minh châu Âu",
+      "issuing_authority": "Bộ Công Thương",
+      "issue_date": "2026-03-25",
+      "effective_date": "2026-05-10",
+      "status": "Đang có hiệu lực thi hành (Thay thế hoàn toàn Thông tư 11/2020/TT-BCT và Thông tư 41/2022/TT-BCT)",
+      "file_name": "EVFTA_TT14_2026_BCT.pdf",
+      "relative_path": ".agents/skills/customs-roo-specialist/assets/fta-rules/EVFTA_TT14_2026_BCT.pdf",
+      "file_size_bytes": 11049671,
+      "page_count": 112,
+      "core_content": [
+        "Cập nhật toàn bộ Quy tắc xuất xứ hàng hóa EVFTA theo tiến trình hội nhập mới nhất năm 2026.",
+        "Công thức Giá trị: Căn cứ trên Giá xuất xưởng (EXW) - Value Limit (VL: VNM/EXW <= 70% hoặc ngưỡng cụ thể), không dùng giá FOB.",
+        "Quy tắc chuyển đổi mã số kèm ngoại trừ chặt chẽ cho Dệt may, Giày dép, Thủy sản, Nông sản.",
+        "Cơ chế cộng gộp song phương EU - Việt Nam và cộng gộp nguyên liệu vải dệt từ Hàn Quốc, Nhật Bản.",
+        "Mẫu Form EUR.1 gồm 14 ô chuẩn mực; quy định tự chứng nhận xuất xứ REX đối với lô hàng trên 6.000 EUR."
+      ]
+    },
+    {
+      "asset_id": "FTA-DOC-03",
+      "fta_code": "RCEP",
+      "fta_name": "Hiệp định Đối tác Kinh tế Toàn diện Khu vực (RCEP)",
+      "form_type": "Form RCEP (13 ô)",
+      "circular_no": "Thông tư số 32/2022/TT-BCT (sửa đổi, bổ sung Thông tư 05/2022/TT-BCT)",
+      "title": "Sửa đổi Thông tư số 05/2022/TT-BCT ngày 18 tháng 02 năm 2022 của Bộ trưởng Bộ Công Thương quy định Quy tắc xuất xứ hàng hóa trong Hiệp định Đối tác Kinh tế toàn diện khu vực",
+      "issuing_authority": "Bộ Công Thương",
+      "issue_date": "2022-11-18",
+      "effective_date": "2023-01-01",
+      "status": "Đang có hiệu lực thi hành (Active)",
+      "file_name": "RCEP_TT32_2022_BCT.pdf",
+      "relative_path": ".agents/skills/customs-roo-specialist/assets/fta-rules/RCEP_TT32_2022_BCT.pdf",
+      "file_size_bytes": 43076486,
+      "page_count": 235,
+      "core_content": [
+        "Thay thế toàn bộ Phụ lục I: Danh mục Quy tắc cụ thể mặt hàng (PSR) chuyển đổi hoàn chỉnh theo Danh mục HS 2022.",
+        "Thay thế Phụ lục III: Mẫu C/O RCEP xuất khẩu và mẫu Tờ khai bổ sung C/O.",
+        "Quy định nghiêm ngặt Box 3 (Nhà sản xuất): Bắt buộc khai tên NSX hoặc các cụm từ chuẩn ('SAME AS EXPORTER', 'NOT AVAILABLE', 'CONFIDENTIAL', 'SEE BOX 8').",
+        "Box 5 dành riêng cho cơ quan Hải quan; xác định chuẩn xác Nước xuất xứ RCEP (RCEP Country of Origin)."
+      ]
+    },
+    {
+      "asset_id": "FTA-DOC-04",
+      "fta_code": "CPTPP",
+      "fta_name": "Hiệp định Đối tác Toàn diện và Tiến bộ xuyên Thái Bình Dương (CPTPP)",
+      "form_type": "Chứng nhận xuất xứ CPTPP & Hạn ngạch Dệt may sang Mexico",
+      "circular_no": "Thông tư số 55/2025/TT-BCT",
+      "title": "Sửa đổi, bổ sung một số điều của Thông tư số 07/2019/TT-BCT ngày 19 tháng 4 năm 2019 của Bộ trưởng Bộ Công Thương quy định về xuất khẩu hàng dệt may sang Mê-hi-cô theo Hiệp định Đối tác Toàn diện và Tiến bộ xuyên Thái Bình Dương",
+      "issuing_authority": "Bộ Công Thương",
+      "issue_date": "2025-11-28",
+      "effective_date": "2026-01-15",
+      "status": "Đang có hiệu lực thi hành (Active)",
+      "file_name": "CPTPP_TT55_2025_BCT.pdf",
+      "relative_path": ".agents/skills/customs-roo-specialist/assets/fta-rules/CPTPP_TT55_2025_BCT.pdf",
+      "file_size_bytes": 2834622,
+      "page_count": 7,
+      "core_content": [
+        "Cơ chế hạn ngạch thuế quan và kiểm soát chứng nhận xuất xứ cho hàng dệt may xuất khẩu sang Mexico sử dụng nguồn cung thiếu hụt (Short Supply List) theo Thư song phương giữa Việt Nam và Mexico.",
+        "Áp dụng kết hợp với Thông tư 03/2019/TT-BCT và Thông tư 06/2020/TT-BCT về 9 trường dữ liệu tối thiểu và công thức Net Cost (NC) / Focus Value."
+      ]
+    },
+    {
+      "asset_id": "FTA-DOC-05",
+      "fta_code": "VN-UAE CEPA",
+      "fta_name": "Hiệp định Đối tác Kinh tế Toàn diện Việt Nam - Các Tiểu vương quốc Ả-rập Thống nhất (CEPA)",
+      "form_type": "Form VN-UAE (C/O CEPA)",
+      "circular_no": "Thông tư số 24/2026/TT-BCT",
+      "title": "Quy định Quy tắc xuất xứ hàng hóa trong Hiệp định Đối tác kinh tế toàn diện giữa Chính phủ nước Cộng hòa Xã hội chủ nghĩa Việt Nam và Chính phủ Các Tiểu vương quốc Ả-rập thống nhất",
+      "issuing_authority": "Bộ Công Thương",
+      "issue_date": "2026-05-05",
+      "effective_date": "2026-06-20",
+      "status": "Đang có hiệu lực thi hành mới nhất năm 2026 (Active)",
+      "file_name": "VN_UAE_CEPA_TT24_2026_BCT.pdf",
+      "relative_path": ".agents/skills/customs-roo-specialist/assets/fta-rules/VN_UAE_CEPA_TT24_2026_BCT.pdf",
+      "file_size_bytes": 9538630,
+      "page_count": 31,
+      "core_content": [
+        "Văn bản pháp lý nền tảng đầu tiên thực thi Hiệp định CEPA giữa Việt Nam và UAE được ký kết ngày 28/10/2024.",
+        "Quy tắc xuất xứ chuyên biệt: Tiêu chí WO, PE, PSR (CTC, RVC theo giá FOB/EXW), De Minimis, và danh mục các công đoạn gia công đơn giản không làm thay đổi bản chất xuất xứ.",
+        "Mẫu C/O ưu đãi VN-UAE, cơ chế cấp sau, hóa đơn bên thứ ba và thẩm tra xác minh song phương giữa Hải quan Việt Nam và Hải quan UAE."
+      ]
+    }
+  ]
+}

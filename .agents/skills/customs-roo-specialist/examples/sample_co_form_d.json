@@ -1,0 +1,61 @@
+{
+  "co_reference_no": "VN-TH 26/02/08892",
+  "form_type": "Form D",
+  "fta": "ATIGA",
+  "issuing_country": "Thailand",
+  "importing_country": "Vietnam",
+  "issue_date": "2026-08-28",
+  "declaration_date": "2026-09-05",
+  "declaration_no": "105992019920/A11",
+  "bl_date": "2026-08-20",
+  "bl_type": "Through B/L",
+  "transit_country": null,
+  "has_cnm_cert": false,
+  "exporter": {
+    "name": "Siam Precision Machinery Co., Ltd.",
+    "country": "Thailand",
+    "address": "128/9 Bangna-Trad Rd, KM.18, Bang Chalong, Bang Phli, Samut Prakan 10540, Thailand"
+  },
+  "consignee": {
+    "name": "Vietnam Industrial Automation JSC",
+    "country": "Vietnam",
+    "address": "Lot CN-05, Thach That Industrial Park, Quoc Oai District, Hanoi, Vietnam"
+  },
+  "producer": {
+    "name": "Siam Precision Machinery Co., Ltd.",
+    "country": "Thailand",
+    "address": "Same as Exporter"
+  },
+  "invoice": {
+    "no": "INV-SIN-2026-9921",
+    "date": "2026-08-15",
+    "issuer_name": "Siam Global Trading (Singapore) Pte. Ltd.",
+    "issuer_country": "Singapore",
+    "currency": "USD",
+    "fob_amount": 45000.0,
+    "exw_amount": 42500.0
+  },
+  "co_boxes": {
+    "box_1_exporter": "Siam Precision Machinery Co., Ltd.\n128/9 Bangna-Trad Rd, Samut Prakan, Thailand",
+    "box_2_consignee": "Vietnam Industrial Automation JSC\nLot CN-05, Thach That IP, Hanoi, Vietnam",
+    "box_3_producer": "Same as Exporter",
+    "box_7_description": "10 Units of Industrial Gearboxes Model SPM-8483\nThird Country Invoicing by: Siam Global Trading (Singapore) Pte. Ltd., 8 Marina View, Singapore",
+    "box_8_criterion": "RVC 40%",
+    "box_9_fob_or_qty": "FOB USD 45,000.00 / 4,350 KGM",
+    "box_10_invoice": "INV-SIN-2026-9921 Date: 15/08/2026",
+    "box_13_ticks": {
+      "third_party_invoicing": true,
+      "issued_retroactively": true,
+      "accumulation": true,
+      "partial_cumulation": false,
+      "de_minimis": false
+    }
+  },
+  "readiness_checklist": {
+    "has_cost_statement": true,
+    "has_bom": true,
+    "has_raw_material_invoices": true,
+    "has_accounting_inventory_records": true,
+    "has_manufacturing_process_chart": true
+  }
+}

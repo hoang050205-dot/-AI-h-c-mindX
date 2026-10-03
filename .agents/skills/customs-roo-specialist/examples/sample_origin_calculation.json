@@ -1,0 +1,47 @@
+{
+  "product_name": "Hộp giảm tốc trục vít bánh vít công nghiệp (Industrial Gearboxes)",
+  "finished_hs": "8483.40.90",
+  "origin_country": "Thái Lan",
+  "fta": "ATIGA",
+  "declared_criterion": "RVC 40% / CTH",
+  "fob": 45000.0,
+  "exw": 42500.0,
+  "materials": [
+    {
+      "name": "Phôi thép hợp kim tròn đặc (Nhật Bản)",
+      "hs": "7224.90.00",
+      "originating": false,
+      "val": 14000.0,
+      "weight": 2800.0
+    },
+    {
+      "name": "Vòng bi côn tự lựa (Trung Quốc)",
+      "hs": "8482.20.00",
+      "originating": false,
+      "val": 5500.0,
+      "weight": 350.0
+    },
+    {
+      "name": "Bánh răng và trục hợp kim sơ chế (Thái Lan - có Form D nội khối)",
+      "hs": "8483.40.10",
+      "originating": true,
+      "val": 12000.0,
+      "weight": 1200.0
+    },
+    {
+      "name": "Dầu bôi trơn tổng hợp chịu nhiệt (Malaysia - có Form D)",
+      "hs": "2710.19.90",
+      "originating": true,
+      "val": 2500.0,
+      "weight": 200.0
+    }
+  ],
+  "process_steps": [
+    "Cắt phôi thép và gia công phay, tiện CNC 5 trục chi tiết bánh răng độ chính xác cao",
+    "Nhiệt luyện tôi cao tần và thấm cacbon bề mặt răng đạt độ cứng HRC 58-62",
+    "Gia công mài nghiền biên dạng răng chống ồn",
+    "Lắp ráp chi tiết trục, bánh răng và vòng bi vào thân vỏ hộp số",
+    "Chạy rà kiểm tra cân bằng động và thử tải rung động âm thanh 60 phút"
+  ],
+  "psr_rule": "CTH hoặc RVC 40%"
+}

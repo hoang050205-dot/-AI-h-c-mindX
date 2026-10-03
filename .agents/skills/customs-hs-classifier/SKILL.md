@@ -1,189 +1,175 @@
 ---
 name: customs-hs-classifier
-description: "Chuyên gia Phân loại Hàng hóa & Thủ tục Hải quan (HS Classification & Customs Clearance Specialist): tiếp nhận mô tả hàng hóa, rà soát chính sách quản lý chuyên ngành và tra cứu các loại giấy phép nhập khẩu bắt buộc (Nghị định 69/2018/NĐ-CP), tra cứu mã HS 8 số theo 6 quy tắc GRI, tính toán nghĩa vụ thuế/phí (MFN, FTA theo C/O, VAT, TTĐB, BVMT) và lập danh mục hồ sơ chứng từ, quy trình thông quan chi tiết. Sở hữu thư mục Assets riêng biệt tích hợp Biểu thuế XNK 2026, 6 Quy tắc GRI và Danh mục hàng có giấy phép/điều kiện. Hỗ trợ lệnh /customs:hs-classifier, /customs:classify, /customs:tax-calc, /customs:permits."
+description: "Chuyên gia Thẩm định & Biện luận Phân loại Mã HS (HS Classification & Tariff Specialist v2.0): Bóc tách kỹ thuật 4 chiều (Chất liệu, Mức độ gia công, Công năng, Bao gói), ấn định chuẩn xác Quy tắc phân loại áp dụng (GRI 1 đến GRI 6) kèm Lập luận biện luận pháp lý chi tiết, tra cứu mã HS 8 số quốc gia (AHTN 2026), cảnh báo Mã HS đối trọng lân cận (Borderline HS) & đo lường chênh lệch thuế (Tax Delta), tính toán nghĩa vụ thuế nhập khẩu thực tế theo Nước xuất xứ & C/O Form, xuất Hồ sơ Biện luận Phân loại (HS Dossier) và bàn giao dữ liệu (Handoff Payload) sang skill customs-legal-advisor. Hỗ trợ lệnh /customs:hs-classifier, /customs:classify, /customs:hs-dossier, /customs:tariff."
 user-invocable: true
-when_to_use: "Sử dụng khi người dùng yêu cầu phân loại mã HS Code cho bất kỳ mặt hàng nào, tra cứu giấy phép nhập khẩu chuyên ngành, tra cứu thuế suất xuất nhập khẩu (MFN, ACFTA, ATIGA, EVFTA, CPTPP, VAT 8%/10%), kiểm tra hàng có bị cấm hoặc cần giấy phép chuyên ngành hay không, lập danh mục chứng từ thông quan (Điều 16 TT 38/39/121), hoặc lập báo cáo giải trình thông quan chi tiết."
+when_to_use: "Sử dụng khi người dùng yêu cầu phân loại mã HS Code cho bất kỳ mặt hàng nào, cần xác định rõ quy tắc GRI nào được áp dụng và giải thích lý do cụ thể, tra cứu biểu thuế XNK 2026 (MFN, ACFTA Form E, ATIGA Form D, EVFTA EUR.1, CPTPP, VAT), phân tích rủi ro tranh chấp mã HS với Hải quan và đo lường chênh lệch thuế (Tax Delta), hoặc xuất bản Hồ sơ Biện luận Phân loại HS chuyên nghiệp."
 category: workflow
-keywords: [customs-hs-classifier, customs:hs-classifier, customs:classify, customs:tax-calc, customs:permits, hs-code, tariff-lookup, import-permits, clearance-specialist, phan-loai-hs, bieu-thue-xnk, 6-quy-tac-gri, ai4a]
-argument-hint: "[mô tả hàng hóa] [--origin <nước>] [--type <mã loại hình A11/A12/E21...>] [--classify] [--tax]"
+keywords: [customs-hs-classifier, customs:hs-classifier, customs:classify, customs:hs-dossier, customs:tariff, hs-code, 6-quy-tac-gri, gri-rules, classification-rationale, borderline-hs, tax-delta, bieu-thue-xnk, phan-loai-hs, ai4a]
+argument-hint: "[mô tả hàng hóa] [-m <chất liệu>] [-f <công năng>] [-s <trạng thái gia công>] [-o <nước xuất xứ>] [--co <form C/O>] [--classify] [--dossier]"
 metadata:
-  author: "Chuyên gia Phân loại Hàng hóa & Thủ tục Hải quan"
+  author: "Chuyên gia Thẩm định Mã HS & Biện Luận Thuế XNK"
   course: "Agentic AI with Google Antigravity (AI4A)"
   brand: "AI4A"
-  version: "1.0.0"
+  version: "2.0.0"
 ---
 
-# CUSTOMS HS CLASSIFIER & CLEARANCE SPECIALIST
-## Chuyên Gia Phân Loại Hàng Hóa & Thủ Tục Hải Quan
+# CUSTOMS HS CLASSIFIER & TARIFF SPECIALIST v2.0
+## Chuyên Gia Thẩm Định & Biện Luận Phân Loại Mã HS Chuyên Sâu
 
-> **Đóng gói chuẩn Antigravity Customization System (v1.0.0)**  
-> *Vận hành quy trình phân loại hàng hóa 4 bước khép kín, tra cứu mã HS 8 số theo 6 Quy tắc GRI, tính toán toàn bộ biểu thuế và xác lập lộ trình thông quan thực tế kết hợp Thư viện Tài sản Riêng biệt (Dedicated Assets).*
+> **Đóng gói chuẩn Antigravity Customization System (v2.0.0)**  
+> *Chuyên môn hóa tuyệt đối vào bài toán Phân loại Mã HS & Thuế XNK: Tích hợp Ma trận bóc tách kỹ thuật 4 chiều, Chỉ định rõ ràng Quy tắc phân loại GRI áp dụng & Lập luận giải thích chi tiết, Bản đồ cảnh báo Mã đối trọng lân cận (Borderline HS) & Chênh lệch thuế (Tax Delta), Mô phỏng Biểu thuế theo Nước xuất xứ & C/O Form, và Giao thức bàn giao dữ liệu (Handoff Protocol) sang `customs-legal-advisor`.*
 
 ---
 
 ## 1. Bản Hợp Đồng Thực Thi (Core Contract)
 
 1. **Outcome:**
-   - Báo cáo kết quả phân tích tiêu chuẩn gồm **đúng 4 phần cấu trúc**:
-     1. Kết luận về tính pháp lý mặt hàng (Cấm XNK, Có điều kiện - Giấy phép, XNK tự do).
-     2. Phân loại mã HS Code (8 chữ số), mô tả chi tiết song ngữ, mã dự phòng, lập luận kỹ thuật & trích dẫn GRI.
-     3. Nghĩa vụ thuế & phí (Thuế thông thường, MFN, VAT, Form E, Form D, EUR.1, CPTPP, TTĐB, BVMT, điều kiện miễn thuế).
-     4. Danh mục bộ chứng từ hải quan bắt buộc và Quy trình 3 bước thực thi thông quan thực tế tại cảng.
+   - **Báo Cáo Thẩm Định & Biện Luận Phân Loại Mã HS (HS Classification Dossier)** gồm đúng 6 phần chuẩn mực:
+     1. Thẩm định bản chất kỹ thuật & Bóc tách 4 chiều (Chất liệu, Gia công, Công năng, Bao gói).
+     2. Kết quả phân loại Mã HS 8 số quốc gia (AHTN 2026) kèm mô tả song ngữ chuẩn Thông tư 31/2022/TT-BTC.
+     3. **Quy tắc phân loại áp dụng (GRI Rule) & Lập luận giải thích chi tiết** (Dẫn chiếu Chú giải pháp lý Legal Notes & Explanatory Notes; lý do bác bỏ các quy tắc khác).
+     4. Ma trận Mã đối trọng tiềm ẩn (Borderline HS), Chênh lệch thuế (Tax Delta) & Cảnh báo rủi ro tham vấn/ấn định thuế.
+     5. Bảng tính nghĩa vụ thuế thực tế theo Origin & Mô phỏng số thuế phải nộp của lô hàng.
+     6. Giao thức bàn giao Handoff Payload (JSON Block) sang `customs-legal-advisor`.
 2. **Constraints:**
-   - **Bắt buộc dẫn chiếu căn cứ pháp lý rõ ràng:** Luật Hải quan số 54/2014, Luật Quản lý ngoại thương số 05/2017, Luật Thuế XNK số 107/2016, Nghị định 69/2018/NĐ-CP, Nghị định 26/2023/NĐ-CP, Thông tư 38/2015/TT-BTC sửa đổi bổ sung bởi Thông tư 39/2018/TT-BTC và Thông tư 121/2025/TT-BTC.
-   - Khai thác trực tiếp từ **Mục Assets riêng biệt** nằm trong Skill này (`assets/`), tuyệt đối không bịa đặt mã HS hoặc mức thuế suất.
-   - Bảo mật PII và thông tin nội bộ của doanh nghiệp.
-3. **Non-goals:**
-   - Không truyền nộp tờ khai chính thức lên cổng kết nối của Tổng cục Hải quan (VNACCS thật) trong môi trường thử nghiệm.
-   - Không tự ý giải thích hoặc suy diễn mở rộng vượt ngoài câu chữ của Biểu thuế và Chú giải HS.
+   - **Vận hành hoàn toàn Offline:** Khai thác 100% tài nguyên nội bộ độc lập tại `assets/`: `Bieu_thue_XNK_2026.xlsx`, `hs_tariff_index.sqlite`, `Phu_luc_I_Danh_muc_hang_hoa_XNK_VN.pdf`, `Phu_luc_II_Sau_quy_tac_tong_quat_GRI.txt`.
+   - **Bắt buộc dẫn chiếu chính xác Quy tắc GRI & Căn cứ pháp lý:** 6 Quy tắc tổng quát GRI, Chú giải Chương/Phần (Legal Notes), Danh mục hàng hóa XNK Việt Nam (Thông tư 31/2022/TT-BTC), Nghị định Biểu thuế FTA tương ứng.
+   - Tuyệt đối không suy diễn mã HS chủ quan; luôn có cơ sở kỹ thuật và cơ chế đối trọng kiểm chứng.
+3. **Non-goals (Ranh giới cấm & Phân tách trách nhiệm):**
+   - **Không làm thủ tục thông quan & giấy phép chuyên ngành:** Toàn bộ phần kiểm tra giấy phép 8 Bộ (Nghị định 69/2018/NĐ-CP), checklist chứng từ Điều 16 (TT 38/39/121) và quy trình thực địa tại Cảng/NSW đã được chuyển giao hoàn toàn cho skill [`customs-legal-advisor`](file:///c:/Minh%20Hoang/Antigravity%20h%E1%BB%8Dc/my-workspace/.agents/skills/customs-legal-advisor/SKILL.md).
+   - Không truyền nộp tờ khai lên hệ thống VNACCS thật.
 4. **Acceptance Criteria:**
-   - 100% mã HS được xác định tới cấp độ 8 chữ số chuẩn hóa quốc gia.
-   - Bóc tách đầy đủ các mức thuế theo từng hiệp định thương mại tự do tương ứng với nước xuất xứ và điều kiện C/O form.
-   - Lập checklist hồ sơ hải quan đầy đủ và cảnh báo các bẫy rủi ro thực tế (kiểm dịch, tuổi thiết bị, kiểm tra chất lượng).
+   - 100% kết quả phân loại đạt cấp độ **Mã HS 8 chữ số chuẩn hóa quốc gia**.
+   - Chỉ rõ chính xác **quy tắc nào trong 6 Quy tắc GRI** được áp dụng (GRI 1, 2a, 2b, 3a, 3b, 3c, 4, 5a, 5b, 6) và có đoạn văn **giải thích lập luận đầy đủ** vì sao chọn quy tắc đó.
+   - Có bảng so sánh Mã HS đối trọng lân cận và đo lường chênh lệch thuế (Tax Delta).
+   - Xuất bản file Markdown Dossier và file JSON Handoff sang `outputs/reports/`.
 
 ---
 
 ## 2. Thư Viện Tài Sản Riêng Biệt Của Skill (Dedicated Assets)
 
-Toàn bộ tài nguyên nghiệp vụ được lưu trữ độc lập tại thư mục `assets/` nội bộ của Skill:
+Toàn bộ tài nguyên phục vụ việc phân loại và tính thuế được lưu trữ độc lập tại thư mục `assets/`:
 
-| Mã Tài Sản | Tên Tệp Tin | Định Dạng & Kích Thước | Căn Cứ Ban Hành / Thẩm Quyền | Vai Trò & Ứng Dụng Trong Skill |
+| Mã Tài Sản | Tên Tệp Tin | Định Dạng & Quy Mô | Thẩm Quyền / Cơ Sở Ban Hành | Vai Trò Chuyên Sâu Trong Skill |
 |:---:|---|:---:|---|---|
-| **ASSET-01** | `Bieu_thue_XNK_2026.xlsx`<br>*(kèm `hs_tariff_index.sqlite`)* | Excel (.xlsx) ~32.3 MB<br>SQLite Index ~3.8 MB | Bộ Tài chính, Tổng cục Hải quan, các Nghị định Biểu thuế FTA | Tra cứu tức thì mã HS 8 số, thuế NK Thông thường, MFN, VAT, Form E (ACFTA), Form D (ATIGA), EUR.1 (EVFTA), CPTPP, VKFTA, TTĐB, BVMT. |
-| **ASSET-02** | `Phu_luc_I_Danh_muc_hang_hoa_XNK_VN.pdf` | PDF Vector ~11.7 MB (604 trang) | Thông tư 31/2022/TT-BTC của Bộ Tài chính | Danh mục chuẩn hóa quốc gia gồm 21 Phần, 97 Chương, mô tả song ngữ Anh - Việt và Đơn vị tính tiêu chuẩn. |
-| **ASSET-03** | `Phu_luc_II_Sau_quy_tac_tong_quat_GRI.doc`<br>*(kèm bản UTF-8: `.txt`)* | Word (.doc) + Plain text UTF-8 | Thông tư 31/2022/TT-BTC của Bộ Tài chính / WCO HS Convention | Toàn văn 6 Quy tắc tổng quát (GRI 1 đến GRI 6) và Chú giải chi tiết (Explanatory Notes) phục vụ lập luận phân loại. |
-| **ASSET-04** | `danh_muc_hang_can_giay_phep_ND69.pdf` | PDF Scan ~3.44 MB (89 trang) | Nghị định số 69/2018/NĐ-CP của Chính phủ | Rà soát danh mục hàng cấm XNK (Phụ lục I) và hàng XNK theo giấy phép/điều kiện quản lý của 8 Bộ chuyên ngành. |
+| **ASSET-01** | `Bieu_thue_XNK_2026.xlsx`<br>*(kèm `hs_tariff_index.sqlite`)* | Excel (.xlsx) ~32.3 MB<br>SQLite Index ~13.8 MB | Bộ Tài chính, Tổng cục Hải quan, các Nghị định Biểu thuế FTA | Tra cứu siêu tốc toàn bộ dòng thuế 8 số, thuế Thông thường, MFN, VAT, Form E (ACFTA), Form D (ATIGA), EUR.1 (EVFTA), CPTPP, VKFTA, TTĐB, BVMT. |
+| **ASSET-02** | `Phu_luc_I_Danh_muc_hang_hoa_XNK_VN.pdf` | PDF Vector ~11.7 MB (604 trang) | Thông tư số 31/2022/TT-BTC của Bộ Tài chính | Danh mục chuẩn hóa quốc gia (21 Phần, 97 Chương), mô tả song ngữ Anh - Việt và Đơn vị tính tiêu chuẩn. |
+| **ASSET-03** | `Phu_luc_II_Sau_quy_tac_tong_quat_GRI.doc`<br>*(kèm bản UTF-8: `.txt`)* | Word (.doc) + Plain text UTF-8 (~53 KB) | Thông tư số 31/2022/TT-BTC / Công ước HS WCO | Toàn văn 6 Quy tắc tổng quát (GRI 1 đến GRI 6) và Chú giải chi tiết (Explanatory Notes) phục vụ lập luận phân loại. |
 
 ---
 
-## 3. Quy Trình Phân Tích Thực Thi 4 Bước (4-Step Process)
+## 3. Quy Trình Thẩm Định & Biện Luận Phân Loại 5 Bước (5-Step Engine)
 
 ```mermaid
 graph TD
-    A["INPUT: Mô Tả Hàng Hóa, Tình Trạng, Xuất Xứ, Loại Hình"] --> B["BƯỚC 1: Rà Soát Chính Sách & Tính Hợp Pháp<br>(ASSET-04: Nghị định 69/2018/NĐ-CP & Quản lý Chuyên ngành)"]
+    A["INPUT: Mô Tả Hàng Hóa, Chất Liệu, Công Năng, Gia Công, Bao Gói, Xuất Xứ"] --> B["BƯỚC 1: Bóc Tách Bản Chất Kỹ Thuật 4 Chiều<br>(Composition, Processing State, Principal Function, Presentation)"]
     
-    B -- "Xác nhận Hợp pháp / Có điều kiện" --> C["BƯỚC 2: Xác Định Mã HS 8 Số Theo 6 Quy Tắc GRI<br>(ASSET-03: 6 Quy tắc GRI + ASSET-02: Danh mục XNK VN)"]
-    B -- "CẤM XUẤT NHẬP KHẨU" --> STOP["DỪNG NGAY THỦ TỤC<br>Trích dẫn căn cứ cấm"]
+    B --> C["BƯỚC 2: Cây Quyết Định GRI & Định Danh Quy Tắc Áp Dụng<br>(GRI 1, 2a, 2b, 3a, 3b, 3c, 4, 5, 6 + Lập luận Legal Notes)"]
     
-    C --> D["BƯỚC 3: Xác Định Nghĩa Vụ Thuế & Phí<br>(ASSET-01: Biểu thuế XNK 2026 - MFN, VAT, FTA, TTĐB, BVMT)"]
+    C --> D["BƯỚC 3: Tra Cứu Mã 8 Số & Bản Đồ Mã Đối Trọng (Borderline HS)<br>(Ấn định mã chính 8 số + Phát hiện mã đối trọng + Tính Tax Delta)"]
     
-    D --> E["BƯỚC 4: Lập Danh Mục Hồ Sơ & Lộ Trình Thông Quan<br>(Điều 16 TT 38/2015, TT 39/2018, TT 121/2025 & Cổng NSW)"]
+    D --> E["BƯỚC 4: Mô Phỏng Biểu Thuế Đa Tầng Theo Nước Xuất Xứ<br>(MFN WTO vs FTA Form E, D, EUR.1, CPTPP + VAT 8%/10%)"]
     
-    E --> F["OUTPUT: BÁO CÁO PHÂN TÍCH TIÊU CHUẨN 4 PHẦN"]
+    E --> F["BƯỚC 5: Xuất Báo Cáo HS Dossier & Đóng Gói Handoff JSON<br>(Lưu outputs/reports/ & chuyển giao sang customs-legal-advisor)"]
 ```
 
-### Bước 1: Rà soát chính sách mặt hàng & Tính hợp pháp
-- **Kiểm tra hàng cấm:** Đối chiếu mô tả với Phụ lục I Nghị định 69/2018/NĐ-CP (vũ khí, pháo, hóa chất cấm, phế liệu độc hại, rác thải e-waste...).
-- **Kiểm tra hàng đã qua sử dụng:** Nếu là máy móc, thiết bị, dây chuyền công nghệ đã qua sử dụng: kiểm tra giới hạn tuổi thiết bị (tối đa 10 năm theo Quyết định 18/2019/QĐ-TTg). Nếu là thiết bị điện tử tiêu dùng/CNTT cũ: CẤM nhập khẩu tuyệt đối theo Thông tư 11/2018/TT-BTTTT.
-- **Kết luận:** Xác nhận hàng được phép XNK tự do, XNK có điều kiện/giấy phép, hay bị CẤM. Nếu bị CẤM, dừng ngay quy trình và trích dẫn văn bản cấm.
+### Bước 1: Bóc tách bản chất kỹ thuật 4 chiều (Technical Dissection)
+Hải quan không phân loại theo tên thương mại cảm tính. Chuyên viên bóc tách 4 yếu tố:
+1. *Thành phần / Chất liệu:* Kim loại, polyme, hữu cơ, khoáng sản, sợi dệt...
+2. *Mức độ gia công:* Sống, tươi, đông lạnh, sơ chế, tinh chế, tháo rời, thành phẩm...
+3. *Chức năng chính:* Công nghiệp vs gia dụng; chuyên dùng cho máy nào (Chú giải 2 Phần XVI).
+4. *Quy cách bao gói:* Hàng rời, đóng thùng, bao bì chuyên dụng (GRI 5a) hay bộ kẹp bán lẻ (GRI 3b).
 
-### Bước 2: Xác định mã HS Code theo 6 quy tắc GRI & Chuẩn hóa 8 Chữ Số Quốc Gia
-- **Nguyên tắc bắt buộc xác định mã HS 8 số:** Theo Điều 16 & 29 Luật Hải quan số 54/2014/QH13 và Thông tư 38/2015/TT-BTC (sửa đổi bởi TT 39/2018/TT-BTC), việc khai báo hải quan điện tử trên hệ thống VNACCS/ECUS5 và tính thuế nhập khẩu bắt buộc phải áp dụng **mã HS 8 chữ số quốc gia (National Tariff Line)**. Tuyệt đối không để mã khuyến nghị ở cấp độ 4 số (Heading) hay 6 số (Subheading) và không đẩy mã 8 số vào mã dự phòng.
-- **Phân tích kỹ thuật:** Tách biệt bản chất vật lý, chất liệu, chức năng chính, công dụng, thành phần cấu tạo.
-- **Áp dụng tuần tự 6 Quy tắc tổng quát (Phụ lục II):**
-  - *GRI 1:* Xác định Nhóm 4 số (Heading) căn cứ nội dung tên nhóm và Chú giải Phần/Chương liên quan.
-  - *GRI 2(a):* Hàng chưa hoàn chỉnh/tháo rời mang đặc trưng cơ bản của hàng hoàn thiện.
-  - *GRI 2(b):* Hỗn hợp, hợp chất của nguyên liệu hoặc chất.
-  - *GRI 3(a):* Nhóm có mô tả cụ thể, đặc trưng nhất được ưu tiên hơn mô tả khái quát.
-  - *GRI 3(b):* Hàng hỗn hợp, ghép bộ bán lẻ phân loại theo thành phần/bộ phận tạo nên **đặc tính cơ bản (Essential Character)**.
-  - *GRI 3(c):* Phân loại vào nhóm có thứ tự đánh số cuối cùng trong số các nhóm tương đương.
-  - *GRI 4:* Hàng hóa không thể phân loại theo GRI 1-3 thì xếp vào nhóm hàng giống chúng nhất.
-  - *GRI 5(a) & 5(b):* Phân loại bao bì, hộp chứa chuyên dụng và bao bì thông thường.
-  - *GRI 6:* So sánh cấp độ phân nhóm 6 số và ấn định dòng thuế 8 số quốc gia giữa các dòng có cùng cấp độ gạch (-).
-- **Dẫn chứng tiền lệ & Ranh giới phân loại:** Rõ ràng đối chiếu với các mã HS lân cận dễ gây nhầm lẫn hoặc tranh chấp phân loại.
+### Bước 2: Cây quyết định GRI, định danh quy tắc áp dụng & lập luận chi tiết
+- **Nguyên tắc bắt buộc:** Phải nêu rõ **Tên và số hiệu Quy tắc GRI** được áp dụng và **Giải thích cặn kẽ lý do**:
+  - **GRI 1 (Phân loại theo tên Nhóm & Chú giải):** Dẫn chiếu câu chữ Heading 4 số và Chú giải pháp lý Chương/Phần (Legal Notes). Chứng minh sản phẩm thỏa mãn tiêu chí nhóm và không bị loại trừ.
+  - **GRI 2(a) (Hàng chưa hoàn chỉnh / Tháo rời):** Chứng minh hàng dở dang hoặc bộ linh kiện tháo rời đã mang *đặc trưng cơ bản* của thành phẩm hoàn chỉnh.
+  - **GRI 2(b) (Hỗn hợp, hợp chất):** Phân loại hợp chất của nhiều nguyên liệu.
+  - **GRI 3(a) (Mô tả cụ thể nhất):** Ưu tiên nhóm định danh cụ thể sản phẩm thay vì nhóm mô tả công năng chung.
+  - **GRI 3(b) (Hàng ghép bộ bán lẻ / Composite goods):** Xác định thành phần nào mang lại **Đặc tính cơ bản (Essential Character)** chi phối công năng/giá trị để áp mã cho cả bộ.
+  - **GRI 3(c) (Thứ tự đánh số cuối cùng):** Áp dụng khi các nhóm tương đương không thể phân định theo 3(a) hoặc 3(b).
+  - **GRI 4 (Hàng giống chúng nhất):** Chỉ dùng khi không thể áp dụng GRI 1-3.
+  - **GRI 5(a) & 5(b) (Bao bì, hộp chứa):** Phân loại bao bì chuyên dụng hoặc bao bì thông thường đi kèm.
+  - **GRI 6 (Phân nhóm 6 số & Dòng thuế 8 số):** So sánh các dòng có cùng cấp độ gạch (- và --) để chốt mã 8 số quốc gia.
+- **Biện luận loại trừ:** Giải thích ngắn gọn vì sao không áp dụng các quy tắc khác.
 
-### Bước 3: Xác định nghĩa vụ thuế, phí thực tế theo Nước Xuất Xứ (Origin)
-> ⚖️ **LƯU Ý VỀ CĂN CỨ PHÁP LÝ:** Tập tin `assets/Bieu_thue_XNK_2026.xlsx` chỉ là tài liệu tổng hợp nghiệp vụ dùng để tra cứu tham khảo. Căn cứ pháp lý có hiệu lực thi hành bắt buộc là các **Luật của Quốc hội và Nghị định của Chính phủ** được trích dẫn cụ thể.
-- **Nguyên tắc tinh gọn:** CHỈ đưa ra con số và các sắc thuế mà sản phẩm và mã HS đó **THỰC SỰ PHẢI CHỊU** cho lô hàng cụ thể, không liệt kê tràn lan tất cả các biểu thuế FTA không liên quan.
-- **Cơ chế xác định Thuế Nhập Khẩu theo Origin:**
-  - *Trường hợp 1 (Có FTA & Có C/O):* Nước xuất xứ nằm trong các hiệp định thương mại tự do với Việt Nam VÀ có chứng từ chứng nhận xuất xứ hợp lệ (Form E, Form D, EUR.1, CPTPP...) $\rightarrow$ Áp dụng **Thuế NK Ưu đãi Đặc biệt (FTA)** theo Nghị định Biểu thuế FTA tương ứng (Nghị định 118/2022 cho ACFTA, 126/2022 cho ATIGA, 116/2022 cho EVFTA, 115/2022 cho CPTPP...).
-  - *Trường hợp 2 (WTO MFN):* Nước xuất xứ là quốc gia thành viên WTO có quan hệ Tối huệ quốc với Việt Nam (như Hoa Kỳ, Brazil, Argentina...) hoặc hàng hóa từ nước có FTA nhưng không có C/O ưu đãi $\rightarrow$ Áp dụng **Thuế NK Ưu đãi (MFN)** theo **Nghị định số 26/2023/NĐ-CP** (sửa đổi bởi Nghị định số 144/2024/NĐ-CP), **chứ KHÔNG áp dụng thuế nhập khẩu thông thường**.
-  - *Trường hợp 3 (Non-MFN):* Hàng hóa từ quốc gia/vùng lãnh thổ chưa có quan hệ MFN với Việt Nam $\rightarrow$ Áp dụng **Thuế NK Thông thường** (theo Quyết định số 15/2023/QĐ-TTg của Thủ tướng Chính phủ).
-- **Thuế Giá trị gia tăng (VAT):** Căn cứ Luật Thuế GTGT số 13/2008/QH12 (sửa đổi) và Thông tư số 219/2013/TT-BTC. Xác định chính xác hàng hóa thuộc diện: Không chịu thuế GTGT khâu nhập khẩu (Khoản 1 Điều 4 TT 219 đối với nông sản, cây trồng chưa chế biến), thuế suất 5%, hay 8%/10% (theo Nghị định 174/2025/NĐ-CP).
-- **Thuế TTĐB & BVMT:**
-  - Nếu sản phẩm **KHÔNG** thuộc diện chịu thuế theo Luật Thuế TTĐB số 27/2008 và Luật Thuế BVMT số 57/2010: **Không đưa vào bảng thuế phải chịu**, chỉ ghi 1 dòng xác nhận rõ ràng "Không áp dụng".
-  - Nếu sản phẩm **THUỘC** diện chịu thuế (rượu bia, ô tô, xăng dầu, túi ni lông...): Đưa vào bảng tính thuế với mức thuế suất và căn cứ pháp lý quy định.
-- **Mô phỏng công thức tính thuế:** Cung cấp ví dụ tính thuế minh họa cho lô hàng giả định trị giá CIF cụ thể (Thuế NK $\rightarrow$ Thuế VAT $\rightarrow$ Tổng thuế phải nộp).
+### Bước 3: Định vị Mã HS đối trọng (Borderline HS) & Đo lường chênh lệch thuế (Tax Delta)
+- Tự động phát hiện 1–2 mã HS lân cận có nguy cơ bị Hải quan nghi ngờ hoặc ấn định mã (thường là mã có thuế suất cao hơn).
+- So sánh thuế suất MFN/VAT giữa Mã Khuyến Nghị và Mã Đối Trọng để tính **Tax Delta**.
+- Đưa ra cảnh báo nguy cơ bị truy thu và phạt 20% theo Điều 9 Nghị định 128/2020/NĐ-CP nếu áp sai mã.
+- Cung cấp **Bộ tiêu chí phân định kỹ thuật (Discrimination Criteria)**: Các bằng chứng kỹ thuật (COA, MSDS, Test Report, Catalog) doanh nghiệp cần chuẩn bị trước để bảo vệ mã khi bị tham vấn.
 
-### Bước 4: Lập danh mục hồ sơ chứng từ & Thủ tục thông quan
-- **Bộ hồ sơ hải quan cơ bản (Điều 16 TT 38/2015 sửa đổi bởi TT 39/2018 & TT 121/2025):** Tờ khai hải quan điện tử, Commercial Invoice, Packing List, Bill of Lading, C/O...
-- **Kiểm tra chuyên ngành (Chính sách ngành):** Xác định thuộc diện Kiểm dịch thực vật/động vật, An toàn thực phẩm (Bộ NN&PTNT), Kiểm tra chất lượng nhà nước QCVN (Bộ KH&CN), Dán nhãn năng lượng (Bộ Công Thương), Hợp quy viễn thông (Bộ TT&TT)...
-- **Quy trình 3 bước thông quan:** Đăng ký chuyên ngành trên Cổng một cửa quốc gia (NSW) $\rightarrow$ Khai tờ khai VNACCS/ECUS5 và nhận phân luồng $\rightarrow$ Làm việc tại Chi cục Hải quan cửa khẩu lấy mẫu và thông quan giải phóng hàng.
+### Bước 4: Mô phỏng Biểu thuế theo Nước xuất xứ (Origin-Based Tariff Engine)
+- Tra cứu biểu thuế tương ứng với Nước xuất xứ và chứng từ C/O:
+  - Nếu có FTA & C/O hợp lệ $\rightarrow$ Thuế NK Ưu đãi Đặc biệt (Form E ACFTA, Form D ATIGA, EUR.1 EVFTA...).
+  - Nếu từ nước thành viên WTO hoặc không có C/O $\rightarrow$ Thuế NK Ưu đãi (MFN) theo Nghị định 26/2023/NĐ-CP (sửa đổi bởi NĐ 144/2024/NĐ-CP).
+  - Thuế GTGT (VAT) căn cứ Luật Thuế GTGT số 48/2024/QH15 và Nghị định 174/2025/NĐ-CP (8% hay 10% hay không chịu thuế khâu nhập khẩu).
+- Tính toán mô phỏng tiền thuế lô hàng trên trị giá CIF cụ thể.
+
+### Bước 5: Đóng gói Dossier & Giao thức bàn giao Handoff Payload
+- Tự động xuất bản file Markdown chuyên sâu: `outputs/reports/HS_Classification_Dossier_[Mặt_Hàng].md`.
+- Xuất file JSON `outputs/reports/hs_handoff_payload.json` sẵn sàng bàn giao cho `customs-legal-advisor`.
 
 ---
 
-## 4. Công Cụ Khai Thác Cục Bộ Bằng Dòng Lệnh (CLI Tools)
+## 4. Bộ Công Cụ Dòng Lệnh Nghiệp Vụ (CLI Toolset v2.0)
 
-Agent hoặc người dùng có thể kích hoạt trực tiếp các công cụ tự động hóa cao:
+Toàn bộ công cụ đều hoạt động zero-dependency trên PowerShell:
 
 ```powershell
-# 1. Tra cứu Biểu thuế XNK 2026 (Mã HS 8 số, thuế MFN, VAT, Form E, Form D, EUR.1, CPTPP...)
-python .agents/skills/customs-hs-classifier/scripts/query_hs_tariff.py -q "đậu tương" -l 5
-python .agents/skills/customs-hs-classifier/scripts/query_hs_tariff.py -q "1201.90.00"
+# 1. Thẩm định phân loại HS chuyên sâu: Bóc tách 4 chiều, chọn quy tắc GRI & giải thích, bắt mã đối trọng
+python .agents/skills/customs-hs-classifier/scripts/classify_hs_expert.py -c "Hạt đậu tương" -m "Đậu tương hạt nguyên chất" -f "Làm dầu ăn và thức ăn chăn nuôi" -s "Đã làm sạch, chưa bóc vỏ" -o "Mỹ"
 
-# 2. Tra cứu 6 Quy tắc GRI và Chú giải Explanatory Notes
+# 2. Phân loại hàng ghép bộ bán lẻ (GRI 3b) có C/O Form E từ Trung Quốc
+python .agents/skills/customs-hs-classifier/scripts/classify_hs_expert.py -c "Bộ dụng cụ sửa chữa" -m "Thép và nhựa" -f "Sửa chữa cơ khí gia dụng" -p "Đóng trong hộp nhựa tạo dáng thành bộ bán lẻ" -o "Trung Quốc" --co "Form E"
+
+# 3. Xuất bản Hồ sơ Biện luận Phân loại Mã HS (HS Classification Dossier) & Handoff Payload JSON
+python .agents/skills/customs-hs-classifier/scripts/generate_hs_dossier.py -c "Hạt đậu tương" -m "Đậu tương hạt nguyên chất" -f "Ép dầu thực phẩm" -s "Nguyên hạt chưa chế biến" -o "Hoa Kỳ" --cif 50000
+
+# 4. Tra cứu nhanh Biểu thuế XNK 2026 (Mã 8 số, MFN, VAT, Form E, Form D, EUR.1, CPTPP...)
+python .agents/skills/customs-hs-classifier/scripts/query_hs_tariff.py -q "1201.90.00"
+python .agents/skills/customs-hs-classifier/scripts/query_hs_tariff.py -q "máy tính xách tay" --only-8
+
+# 5. Tra cứu 6 Quy tắc GRI và Chú giải Explanatory Notes
 python .agents/skills/customs-hs-classifier/scripts/query_gri_rules.py -r 3b
 python .agents/skills/customs-hs-classifier/scripts/query_gri_rules.py -k "tháo rời"
-
-# 3. Tra cứu chính sách mặt hàng & điều kiện giấy phép Nghị định 69/2018/NĐ-CP
-python .agents/skills/customs-hs-classifier/scripts/query_conditional_goods.py -q "đậu tương"
-python .agents/skills/customs-hs-classifier/scripts/query_conditional_goods.py -q "máy móc đã qua sử dụng"
-
-# 4. Tra cứu Giấy phép Nhập khẩu & Thủ tục Quản lý Chuyên ngành chi tiết
-python .agents/skills/customs-hs-classifier/scripts/query_permits.py -q "đậu tương" --hs "1201.90.00"
-python .agents/skills/customs-hs-classifier/scripts/query_permits.py -q "mỹ phẩm"
-python .agents/skills/customs-hs-classifier/scripts/query_permits.py -q "hóa chất"
-
-# 5. Tự động xuất bản Báo cáo Thông quan Tiêu chuẩn 4 phần (lọc thuế theo Nước xuất xứ & Giấy phép)
-python .agents/skills/customs-hs-classifier/scripts/generate_clearance_report.py -c "Đậu tương" -o "Mỹ (USA)" -code "A11" -out "outputs/reports/Bao_Cao_Thong_Quan_Dau_Tuong_Master.md"
-python .agents/skills/customs-hs-classifier/scripts/generate_clearance_report.py -c "Đậu tương" -o "Trung Quốc" -co "Form E" -code "A11"
 ```
 
 ---
 
-## 5. Cấu Trúc Báo Cáo Kết Quả Phân Tích Chuẩn Hóa (Standard Output Format)
+## 5. Giao Thức Bàn Giao Hệ Sinh Thái (Ecosystem Handoff Protocol)
 
-Mọi báo cáo xuất ra bắt buộc tuân theo mẫu chuẩn 4 phần:
-```markdown
-# BÁO CÁO KẾT QUẢ PHÂN TÍCH TIÊU CHUẨN — HỒ SƠ THÔNG QUAN HÀNG HÓA
+Sau khi `customs-hs-classifier` hoàn tất phân loại mã HS và tính thuế, gói dữ liệu được bàn giao liền mạch sang `customs-legal-advisor`:
 
-## 1. KẾT LUẬN VỀ TÍNH PHÁP LÝ & GIẤY PHÉP NHẬP KHẨU BẮT BUỘC
-### A. Tình Trạng Pháp Lý & Cơ Quan Quản Lý Chuyên Ngành
-- **Tình trạng:** [ĐƯỢC PHÉP XNK TỰ DO / XNK CÓ ĐIỀU KIỆN - PHẢI XIN PHÉP / CẤM XNK]
-- **Cơ quan chuyên ngành quản lý:** (Tên Bộ & Cục/Vụ chuyên trách)
-- **Căn cứ pháp lý quy phạm pháp luật:** Tên văn bản, số Điều, Khoản cụ thể.
-
-### B. Danh Mục Giấy Phép & Xác Nhận Chuyên Ngành Bắt Buộc (Import Licenses & Permits Matrix)
-*(Bảng tra cứu chi tiết Tên Giấy phép, Cơ quan cấp, Điều kiện bắt buộc, Điều kiện miễn trừ, Thời điểm xin & Kênh nộp trên NSW)*
-
-### C. Danh Mục Chứng Từ Chuyên Ngành Đi Kèm Lô Hàng
-- Checklist các chứng thư bắt buộc (Phytosanitary Certificate gốc, Health Cert, Chứng nhận GMO...).
-
-### D. Cảnh Báo Bẫy Rủi Ro Pháp Lý & Chế Tài Xử Phạt (Risk Warning)
-- Cảnh báo các bẫy rủi ro đình chỉ thông quan và chế tài phạt tiền / buộc tái xuất theo Nghị định 128/2020/NĐ-CP.
-
-## 2. PHÂN LOẠI MÃ HS CODE & MÔ TẢ CHI TIẾT
-- **Mã HS khuyến nghị (8 số chuẩn hóa):** `xxxx.xx.xx`
-- **Mô tả hàng hóa theo Danh mục hàng hóa XNK Việt Nam:** (Tiếng Việt & Tiếng Anh, Đơn vị tính)
-- **Mã HS dự phòng / Tiềm năng có thể tranh chấp:**
-- **Lập luận phân loại:**
-  - Quy tắc phân loại áp dụng (GRI 1 đến GRI 6).
-  - Phân tích kỹ thuật bản chất hàng hóa.
-  - Trích dẫn Chú giải Chương/Nhóm (Legal Notes / Explanatory Notes).
-  - Tiền lệ tham khảo: Công văn hướng dẫn TCHQ hoặc kết quả phân loại trước.
-
-## 3. NGHĨA VỤ THUẾ & PHÍ THỰC TẾ PHẢI NỘP CHO LÔ HÀNG
-*(Chỉ hiển thị các loại thuế và con số mà sản phẩm và mã HS đó thực sự phải chịu)*
-- **Lưu ý pháp lý:** Biểu thuế 2026 trong assets là tài liệu tham khảo nghiệp vụ; căn cứ áp thuế là các Luật và Nghị định được trích dẫn.
-- **Bảng các sắc thuế lô hàng thực sự phải chịu:** (Thuế NK áp dụng theo Origin, Thuế VAT...) kèm số Nghị định/Luật và điều kiện hưởng.
-- **Xác nhận các sắc thuế không phải chịu:** Thuế TTĐB, Thuế BVMT (nêu rõ căn cứ điều khoản luật).
-- **Cơ chế xác định thuế NK ưu đãi theo Nước Xuất Xứ (Origin):** Phân tích rõ FTA vs MFN WTO.
-- **Mô phỏng công thức tính thuế cho lô hàng:** Tính toán số tiền thuế cụ thể trên trị giá tính thuế CIF.
-
-## 4. BỘ HỒ SƠ CHỨNG TỪ & HƯỚNG DẪN THỰC THI THÔNG QUAN
-- **Hồ sơ hải quan bắt buộc:** Checklist các chứng từ theo Điều 16 Thông tư 38/2015/TT-BTC sửa đổi bởi TT 39/2018 & TT 121/2025.
-- **Quy trình 3 bước thực hiện thực tế:**
-  - Bước 1 (Đăng ký chuyên ngành trên Cổng Một cửa Quốc gia NSW trước khi tàu cập cảng).
-  - Bước 2 (Khai báo Hải quan điện tử VNACCS/ECUS5 và nhận phân luồng).
-  - Bước 3 (Thủ tục thực địa tại Cảng & Giải phóng hàng/Thông quan).
+```json
+{
+  "service": "customs:legal-advisor",
+  "action": "clearance_and_permits_audit",
+  "payload_timestamp": "2026-10-02",
+  "commodity_dossier": {
+    "commodity_name": "Hạt đậu tương",
+    "classified_hs_code": "1201.90.00",
+    "full_description_vn": "Đậu tương, đã hoặc chưa vỡ mảnh - - Loại khác",
+    "unit": "kg",
+    "country_of_origin": "Mỹ",
+    "co_form_provided": "None (MFN Rate Applied)",
+    "applicable_import_duty": "0%",
+    "applicable_vat": "Không chịu thuế GTGT khâu nhập khẩu",
+    "borderline_risk_code": "1201.10.00",
+    "borderline_risk_level": "CAO (RỦI RO THAM VẤN & ẤN ĐỊNH THUẾ)"
+  },
+  "delegated_tasks": [
+    "1. Tra cứu chính sách quản lý chuyên ngành & giấy phép kiểm dịch theo Nghị định 69/2018/NĐ-CP.",
+    "2. Lập danh mục thành phần bộ hồ sơ hải quan bắt buộc theo Điều 16 Thông tư 38/39/121.",
+    "3. Hướng dẫn quy trình 3 bước thông quan thực tế tại cảng và đăng ký Một cửa quốc gia (NSW)."
+  ]
+}
 ```
+
+---
+
+## 6. Ranh Giới & Guardrails Nghiệp Vụ
+
+1. **Tuyệt đối không giải đáp thủ tục thông quan tại cảng biển hoặc danh mục giấy phép 8 Bộ trong Skill này:** Chuyển giao ngay lập tức cho `customs-legal-advisor` qua lệnh `/customs:legal-advisor`.
+2. **Bắt buộc ấn định mã ở cấp độ 8 số quốc gia:** Tuyệt đối không dừng lại ở mã 4 số (Heading) hoặc 6 số (Subheading).
+3. **Luôn cung cấp Mã HS đối trọng & Chênh lệch thuế (Tax Delta):** Để bảo vệ doanh nghiệp trước các đợt kiểm tra sau thông quan và tham vấn giá/mã của Hải quan.
