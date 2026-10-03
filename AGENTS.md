@@ -71,6 +71,7 @@ Không đưa API key, mật khẩu, dữ liệu khách hàng thật vào workspa
 | 71 | Nâng cấp CSDL FTA | 03/10/2026 | Nạp 5 văn bản pháp lý FTA gốc (681 trang PDF, ~69.5 MB: ATIGA, EVFTA TT 14/2026, RCEP TT 32/2022, CPTPP, VN-UAE CEPA TT 24/2026) vào thư viện tài sản cục bộ | assets/fta-rules/, fta_co_assets_registry.json, pdca-log.md #35 |
 | 72 | Tối ưu Xuất xứ v2.0 | 03/10/2026 | Nâng cấp customs-roo-specialist v2.0 Pro: Origin Engineering (4 bước cứu xuất xứ), FTA Arbitrage, 5 bẫy lỗi Hải quan, phỏng vấn 3 tầng & Công văn giải trình TT 33/2023 | SKILL.md, origin_engineering_framework.md, customs_defense_dossier_template.md, pdca-log.md #36 |
 | 73 | Streamlit Tiền Thông Quan v2.0 | 03/10/2026 | Nâng cấp Web App Streamlit v2.0 Pro (app_customs_preclearance.py, run_customs_app.bat): Nạp file chứng từ đa định dạng (PDF/Excel/Text qua pypdf), 6 Tabs liên hoàn, Sổ Tracking lô hàng đã thông quan & Báo cáo Hải quan cuối kỳ (openpyxl 2 sheet), Private PIN lock | app_customs_preclearance.py, run_customs_app.bat, pdca-log.md #37 |
+| 74 | Tự Động Hóa Tiền Thông Quan v3.0 | 03/10/2026 | Nâng cấp Streamlit v3.0 Connected: Nút 1-click kích hoạt 5 Trạm Skill AI tự động, trích xuất Regex chứng từ thông minh từ PDF/Excel, Bộ đếm ngược 30 ngày nợ C/O (Điều 7 TT 38) & Sổ Master bền vững | app_customs_preclearance.py, pdca-log.md #38 |
 
 
 

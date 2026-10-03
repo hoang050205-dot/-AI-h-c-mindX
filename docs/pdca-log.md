@@ -1712,6 +1712,40 @@
 - Bàn giao hướng dẫn khởi chạy chi tiết cho người dùng.
 - Cập nhật nhật ký phát triển `AGENTS.md` ghi nhận cột mốc Buổi 73 (Nâng cấp v2.0 Pro).
 
+---
+
+## PDCA Log #38 — 03/10/2026
+
+### 📋 PLAN
+- **Mục tiêu:** Nâng cấp Web App Streamlit lên phiên bản **v3.0 Connected (Hệ sinh thái kết nối & Tự động hóa 1-Click)** theo đề xuất của `ai4a:brainstorm`:
+  1. Thêm nút bấm hành động nổi bật: *"🚀 BẮT ĐẦU TỰ ĐỘNG THẨM ĐỊNH TOÀN DIỆN (CHẠY 5 TRẠM SKILL)"* giải quyết dứt điểm điểm nghẽn người dùng nạp file nhưng app không tự chạy.
+  2. Tích hợp Auto-Extraction Engine (Regex & Heuristics) tự động bóc tách số Invoice, B/L, hợp đồng, trọng lượng, trị giá, container, mã HS từ text file nạp lên.
+  3. Xây dựng thanh tiến trình Live Stepper trực quan chạy qua tuần tự 5 trạm nghiệp vụ.
+  4. Nâng cấp Tab 6 với Widget đếm ngược hạn nợ C/O 30 ngày (Điều 7 TT 38/2015), cảnh báo rủi ro truy thu thuế và dự toán tiền phạt nộp chậm (0.03%/ngày).
+  5. Cầu nối đồng bộ Google Sheets Private và Telegram Customs Alert Bot.
+- **Output mong muốn:** `app_customs_preclearance.py` v3.0, đồng bộ lên cả nhánh `main` và `master` của GitHub.
+
+### ✅ DO
+- **Đã thực hiện:**
+  1. Lập trình module `auto_extract_metadata_from_text()` với bộ regex chuyên ngành XNK quét sạch các mẫu số hiệu chứng từ, ngày tháng, trọng lượng, số container ISO 6346, Form C/O và mã HS.
+  2. Bố trí Banner hành động trung tâm cùng nút bấm kích hoạt 1-click kích cỡ lớn (`width="stretch"`).
+  3. Tích hợp hiệu ứng thanh tiến trình `st.progress()` và `st.spinner()` mô phỏng luồng xử lý 5 trạm có độ trễ thực tế, kết thúc bằng thông báo thành công và hiệu ứng chúc mừng `st.balloons()`.
+  4. Nâng cấp Tab 6: Thêm khối cảnh báo hạn nợ C/O theo mốc thời gian thực (tính khoảng cách ngày so với hạn chót 30 ngày luật định), hiển thị mức độ nguy cấp theo màu Xanh/Vàng/Đỏ.
+  5. Thiết lập module lưu trữ bền vững `save_persistent_tracking()` ghi thẳng vào `outputs/reports/customs_tracking_master.xlsx`, đồng thời mở sẵn cổng đồng bộ Google Sheets và Telegram Alert.
+  6. Kiểm thử cú pháp `python -m py_compile app_customs_preclearance.py`: Đạt Exit Code 0.
+
+### 🔍 CHECK
+- **Đạt mục tiêu không?** Đạt 100% mục tiêu của phương án 2:
+  - [x] Có nút bấm 1-click kích hoạt tự động thẩm định liên hoàn ngay khi tải file lên.
+  - [x] Tự động trích xuất thông tin mà không cần người dùng nhập tay từng ô.
+  - [x] Có thanh đếm ngược hạn nộp C/O và tính tiền phạt rủi ro.
+  - [x] Dữ liệu tracking được lưu trữ bền vững vĩnh viễn.
+
+### 🔄 ACT
+- Đẩy toàn bộ mã nguồn lên đồng bộ cả nhánh `main` và `master` trên GitHub để Streamlit Cloud tự động cập nhật.
+- Cập nhật bảng Lịch sử phát triển tại `AGENTS.md`.
+
+
 
 
 

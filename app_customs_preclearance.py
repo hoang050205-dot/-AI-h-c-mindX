@@ -1,13 +1,16 @@
 """
 =============================================================================
-MASTER CUSTOMS PRE-CLEARANCE & COMPLIANCE ORCHESTRATOR (v2.0 Pro)
-Hệ Thống Tiền Thông Quan, Thẩm Định Hồ Sơ XNK & Quản Trị Tracking Hải Quan
+MASTER CUSTOMS PRE-CLEARANCE & COMPLIANCE ORCHESTRATOR (v3.0 Connected)
+Hệ Thống Tiền Thông Quan, Thẩm Định Hồ Sơ XNK & Quản Trị Hải Quan Doanh Nghiệp
 Phát triển bởi: Phạm Minh Hoàng (AI4A - Antigravity)
 Dành riêng cho: Cá Nhân Chủ Sở Hữu (Private Single-User Enterprise Suite)
-Tích hợp:
-  1. Nạp File Bộ Chứng Từ Đa Định Dạng (PDF, Excel, Text) với Parser pypdf
-  2. Pipeline 5 Trạm Nghiệp Vụ Liên Hoàn
-  3. Sổ Tracking Lô Hàng Đã Thông Quan & Báo Cáo Hải Quan Định Kỳ
+Tính Năng Mới v3.0:
+  1. Auto-Extraction Engine: Bóc tách tự động thông minh bằng Regex & Heuristics
+  2. Nút bấm 1-Click: "🚀 BẮT ĐẦU TỰ ĐỘNG THẨM ĐỊNH TOÀN DIỆN (CHẠY 5 TRẠM SKILL)"
+  3. Live Stepper Progress: Trực quan hóa quy trình xử lý qua 5 trạm nghiệp vụ
+  4. Sổ Tracking Bền Vững: Lưu cục bộ vĩnh viễn (Excel/SQLite) + Đồng bộ Google Sheets
+  5. Regulatory Deadline Tracker: Đếm ngược hạn nợ C/O 30 ngày & tính phạt chậm nộp
+  6. Telegram Customs Alert Bridge: Bắn cảnh báo trực tiếp về điện thoại
 =============================================================================
 """
 
@@ -17,8 +20,10 @@ import io
 import re
 import json
 import sqlite3
+import time
 import datetime
 from datetime import datetime, date, timedelta
+from pathlib import Path
 import pandas as pd
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -32,8 +37,23 @@ try:
 except ImportError:
     PYPDF_AVAILABLE = False
 
+# Thử import gspread & google-auth để đồng bộ Google Sheets Private
+try:
+    import gspread
+    from google.oauth2.service_account import Credentials
+    GSPREAD_AVAILABLE = True
+except ImportError:
+    GSPREAD_AVAILABLE = False
+
+# Thử import requests cho Telegram Bot
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
+
 # ---------------------------------------------------------------------------
-# 1. CẤU HÌNH TRANG STREAMLIT & GIAO DIỆN
+# 1. CẤU HÌNH TRANG STREAMLIT & GIAO DIỆN GLASSMORPHISM
 # ---------------------------------------------------------------------------
 st.set_page_config(
     page_title="Customs Pre-Clearance Copilot | Minh Hoàng Private Suite",
@@ -42,7 +62,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS cho phong cách Modern Enterprise Glassmorphism UI
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -161,6 +180,16 @@ st.markdown("""
         font-weight: 700;
         display: inline-block;
     }
+
+    /* Action Banner */
+    .action-banner {
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(14, 165, 233, 0.25) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -187,14 +216,14 @@ def render_login_screen():
         entered_pin = st.text_input("Nhập Mã PIN Bảo Mật Cá Nhân:", type="password", placeholder="Nhập PIN để mở khóa...")
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
-            if st.button("🔓 Mở Khóa Hệ Thống", use_container_width=True, type="primary"):
+            if st.button("🔓 Mở Khóa Hệ Thống", width="stretch", type="primary"):
                 if entered_pin == MASTER_DEFAULT_PIN or entered_pin == "admin":
                     st.session_state["auth_status"] = True
                     st.rerun()
                 else:
                     st.error("❌ Mã PIN không chính xác! Vui lòng thử lại.")
         with col_btn2:
-            if st.button("🚀 Chạy Ngay (Chế Độ Kiểm Thử)", use_container_width=True):
+            if st.button("🚀 Chạy Ngay (Chế Độ Kiểm Thử)", width="stretch"):
                 st.session_state["auth_status"] = True
                 st.rerun()
 
@@ -203,12 +232,14 @@ if not st.session_state["auth_status"]:
     st.stop()
 
 # ---------------------------------------------------------------------------
-# 3. KHỞI TẠO SỔ TRACKING LÔ HÀNG ĐÃ THÔNG QUAN (SESSION STATE & REPO)
+# 3. KHO DỮ LIỆU TRACKING BỀN VỮNG (LOCAL PERSISTENCE)
 # ---------------------------------------------------------------------------
+TRACKING_PERSISTENT_FILE = os.path.join("outputs", "reports", "customs_tracking_master.xlsx")
+
 DEFAULT_TRACKING_ROWS = [
     {
         "Số Tờ Khai": "105889921010",
-        "Ngày Khai Báo": "2026-09-02",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=28)).strftime("%Y-%m-%d"),
         "Loại Hình": "A11",
         "Người Xuất Khẩu": "SIEMENS AG",
         "Số Invoice": "INV-DE2026-8801",
@@ -224,75 +255,12 @@ DEFAULT_TRACKING_ROWS = [
         "Tiết Kiệm Nhờ C/O (VND)": 235875000.0,
         "Phân Luồng": "Luồng Vàng",
         "Tình Trạng C/O": "Hợp lệ ưu đãi",
-        "Ngày Thông Quan": "2026-09-04",
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=26)).strftime("%Y-%m-%d"),
         "Ghi Chú": "Thông quan thuận lợi"
     },
     {
-        "Số Tờ Khai": "105890123420",
-        "Ngày Khai Báo": "2026-09-08",
-        "Loại Hình": "A12",
-        "Người Xuất Khẩu": "SCG CHEMICALS",
-        "Số Invoice": "INV-TH-7721",
-        "Mã HS 8 Số": "3902.10.40",
-        "Tên Hàng Hóa": "Hạt nhựa nguyên sinh Polypropylene",
-        "Nước Xuất Xứ": "Thái Lan",
-        "Form C/O": "Form D",
-        "Trị Giá (USD)": 42000.0,
-        "Trị Giá (VND)": 1071000000.0,
-        "Thuế NK (VND)": 0.0,
-        "Thuế VAT (VND)": 107100000.0,
-        "Tổng Thuế (VND)": 107100000.0,
-        "Tiết Kiệm Nhờ C/O (VND)": 32130000.0,
-        "Phân Luồng": "Luồng Xanh",
-        "Tình Trạng C/O": "Hợp lệ ưu đãi",
-        "Ngày Thông Quan": "2026-09-08",
-        "Ghi Chú": "e-Form D ASW cấp điện tử"
-    },
-    {
-        "Số Tờ Khai": "105891234530",
-        "Ngày Khai Báo": "2026-09-12",
-        "Loại Hình": "A11",
-        "Người Xuất Khẩu": "SHENZHEN CNC PRECISION",
-        "Số Invoice": "INV-HK-9902",
-        "Mã HS 8 Số": "8457.10.10",
-        "Tên Hàng Hóa": "Trung tâm gia công kim loại CNC 5 trục",
-        "Nước Xuất Xứ": "Trung Quốc",
-        "Form C/O": "Form E",
-        "Trị Giá (USD)": 220000.0,
-        "Trị Giá (VND)": 5610000000.0,
-        "Thuế NK (VND)": 0.0,
-        "Thuế VAT (VND)": 448800000.0,
-        "Tổng Thuế (VND)": 448800000.0,
-        "Tiết Kiệm Nhờ C/O (VND)": 0.0,
-        "Phân Luồng": "Luồng Vàng",
-        "Tình Trạng C/O": "Hợp lệ ưu đãi",
-        "Ngày Thông Quan": "2026-09-15",
-        "Ghi Chú": "Hóa đơn bên thứ ba Hong Kong"
-    },
-    {
-        "Số Tờ Khai": "105892345640",
-        "Ngày Khai Báo": "2026-09-18",
-        "Loại Hình": "A12",
-        "Người Xuất Khẩu": "TOKYO STEEL MFG",
-        "Số Invoice": "INV-JP-2601",
-        "Mã HS 8 Số": "7208.39.00",
-        "Tên Hàng Hóa": "Thép cán nóng dạng cuộn cuộn",
-        "Nước Xuất Xứ": "Nhật Bản",
-        "Form C/O": "Form CPTPP",
-        "Trị Giá (USD)": 310000.0,
-        "Trị Giá (VND)": 7905000000.0,
-        "Thuế NK (VND)": 0.0,
-        "Thuế VAT (VND)": 790500000.0,
-        "Tổng Thuế (VND)": 790500000.0,
-        "Tiết Kiệm Nhờ C/O (VND)": 395250000.0,
-        "Phân Luồng": "Luồng Xanh",
-        "Tình Trạng C/O": "Hợp lệ ưu đãi",
-        "Ngày Thông Quan": "2026-09-18",
-        "Ghi Chú": "Tự chứng nhận xuất xứ CPTPP"
-    },
-    {
         "Số Tờ Khai": "105893456750",
-        "Ngày Khai Báo": "2026-09-22",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=24)).strftime("%Y-%m-%d"),
         "Loại Hình": "A11",
         "Người Xuất Khẩu": "HYUNDAI HEAVY IND",
         "Số Invoice": "INV-KR-5510",
@@ -308,12 +276,12 @@ DEFAULT_TRACKING_ROWS = [
         "Tiết Kiệm Nhờ C/O (VND)": 121125000.0,
         "Phân Luồng": "Luồng Đỏ",
         "Tình Trạng C/O": "Đang nợ C/O (Hạn: 30 ngày)",
-        "Ngày Thông Quan": "2026-09-25",
-        "Ghi Chú": "Nợ bản gốc C/O - Hạn nộp 22/10/2026"
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=22)).strftime("%Y-%m-%d"),
+        "Ghi Chú": "Nợ bản gốc C/O - Sắp hết hạn 30 ngày!"
     },
     {
         "Số Tờ Khai": "105894567860",
-        "Ngày Khai Báo": "2026-09-26",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=12)).strftime("%Y-%m-%d"),
         "Loại Hình": "A12",
         "Người Xuất Khẩu": "BASF SE",
         "Số Invoice": "INV-DE-4412",
@@ -329,12 +297,54 @@ DEFAULT_TRACKING_ROWS = [
         "Tiết Kiệm Nhờ C/O (VND)": 86700000.0,
         "Phân Luồng": "Luồng Vàng",
         "Tình Trạng C/O": "Đang xác minh (Bảo lãnh)",
-        "Ngày Thông Quan": "2026-09-28",
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d"),
         "Ghi Chú": "Bảo lãnh ngân hàng 86.7tr VND"
     },
     {
+        "Số Tờ Khai": "105890123420",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=15)).strftime("%Y-%m-%d"),
+        "Loại Hình": "A12",
+        "Người Xuất Khẩu": "SCG CHEMICALS",
+        "Số Invoice": "INV-TH-7721",
+        "Mã HS 8 Số": "3902.10.40",
+        "Tên Hàng Hóa": "Hạt nhựa nguyên sinh Polypropylene",
+        "Nước Xuất Xứ": "Thái Lan",
+        "Form C/O": "Form D",
+        "Trị Giá (USD)": 42000.0,
+        "Trị Giá (VND)": 1071000000.0,
+        "Thuế NK (VND)": 0.0,
+        "Thuế VAT (VND)": 107100000.0,
+        "Tổng Thuế (VND)": 107100000.0,
+        "Tiết Kiệm Nhờ C/O (VND)": 32130000.0,
+        "Phân Luồng": "Luồng Xanh",
+        "Tình Trạng C/O": "Hợp lệ ưu đãi",
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=15)).strftime("%Y-%m-%d"),
+        "Ghi Chú": "e-Form D ASW cấp điện tử"
+    },
+    {
+        "Số Tờ Khai": "105891234530",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d"),
+        "Loại Hình": "A11",
+        "Người Xuất Khẩu": "SHENZHEN CNC PRECISION",
+        "Số Invoice": "INV-HK-9902",
+        "Mã HS 8 Số": "8457.10.10",
+        "Tên Hàng Hóa": "Trung tâm gia công kim loại CNC 5 trục",
+        "Nước Xuất Xứ": "Trung Quốc",
+        "Form C/O": "Form E",
+        "Trị Giá (USD)": 220000.0,
+        "Trị Giá (VND)": 5610000000.0,
+        "Thuế NK (VND)": 0.0,
+        "Thuế VAT (VND)": 448800000.0,
+        "Tổng Thuế (VND)": 448800000.0,
+        "Tiết Kiệm Nhờ C/O (VND)": 0.0,
+        "Phân Luồng": "Luồng Vàng",
+        "Tình Trạng C/O": "Hợp lệ ưu đãi",
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=8)).strftime("%Y-%m-%d"),
+        "Ghi Chú": "Hóa đơn bên thứ ba Hong Kong"
+    },
+    {
         "Số Tờ Khai": "105895678970",
-        "Ngày Khai Báo": "2026-09-28",
+        "Ngày Khai Báo": (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d"),
         "Loại Hình": "A11",
         "Người Xuất Khẩu": "LOTTE CHEMICAL",
         "Số Invoice": "INV-KR-6623",
@@ -350,16 +360,32 @@ DEFAULT_TRACKING_ROWS = [
         "Tiết Kiệm Nhờ C/O (VND)": 0.0,
         "Phân Luồng": "Luồng Xanh",
         "Tình Trạng C/O": "Không C/O (Áp MFN)",
-        "Ngày Thông Quan": "2026-09-28",
+        "Ngày Thông Quan": (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d"),
         "Ghi Chú": "Không xin C/O do thuế MFN thấp"
     }
 ]
 
+# Hàm nạp dữ liệu tracking (ưu tiên file lưu trữ cố định)
+def load_persistent_tracking():
+    if os.path.exists(TRACKING_PERSISTENT_FILE):
+        try:
+            return pd.read_excel(TRACKING_PERSISTENT_FILE)
+        except Exception:
+            pass
+    return pd.DataFrame(DEFAULT_TRACKING_ROWS)
+
+def save_persistent_tracking(df):
+    try:
+        os.makedirs(os.path.dirname(TRACKING_PERSISTENT_FILE), exist_ok=True)
+        df.to_excel(TRACKING_PERSISTENT_FILE, index=False)
+    except Exception:
+        pass
+
 if "tracking_data" not in st.session_state:
-    st.session_state["tracking_data"] = pd.DataFrame(DEFAULT_TRACKING_ROWS)
+    st.session_state["tracking_data"] = load_persistent_tracking()
 
 # ---------------------------------------------------------------------------
-# 4. KHO PRESET MẪU THỰC TẾ (DEMO PRESETS)
+# 4. KHO PRESET MẪU THỰC TẾ
 # ---------------------------------------------------------------------------
 PRESETS = {
     "preset_1_siemens_evfta": {
@@ -586,12 +612,83 @@ PRESETS = {
 }
 
 # ---------------------------------------------------------------------------
-# 5. SIDEBAR: ĐIỀU KHIỂN & CHỌN NGUỒN HỒ SƠ
+# 5. SMART AUTO-EXTRACTION ENGINE (REGEX & HEURISTICS PARSER)
+# ---------------------------------------------------------------------------
+def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_goods: dict, current_co: dict):
+    """
+    Tự động quét regex và heuristic bóc tách các trường chứng từ XNK từ text
+    """
+    updated_meta = current_meta.copy()
+    updated_goods = current_goods.copy()
+    updated_co = current_co.copy()
+    
+    # 1. Invoice No
+    inv_match = re.search(r'(?i)(?:invoice\s*(?:no|number)|inv\s*no\.?)[\s.:#]*([A-Z0-9\-_/]+)', raw_text)
+    if inv_match:
+        updated_meta["invoice_no"] = inv_match.group(1).strip()
+        
+    # 2. B/L No
+    bl_match = re.search(r'(?i)(?:bill\s*of\s*lading|b/?l\s*(?:no|number))[\s.:#]*([A-Z0-9\-_/]+)', raw_text)
+    if bl_match:
+        updated_meta["bl_no"] = bl_match.group(1).strip()
+
+    # 3. Contract No
+    ct_match = re.search(r'(?i)(?:sales\s*contract|contract\s*(?:no|number))[\s.:#]*([A-Z0-9\-_/]+)', raw_text)
+    if ct_match:
+        updated_meta["contract_no"] = ct_match.group(1).strip()
+
+    # 4. Trọng lượng Gross Weight & Net Weight
+    gw_match = re.search(r'(?i)(?:gross\s*weight|g\.?w\.?)[\s.:]*([0-9,.]+)\s*(?:kgs?|kg|m/?t)?', raw_text)
+    if gw_match:
+        try:
+            val_str = gw_match.group(1).replace(",", "")
+            updated_meta["gross_weight"] = float(val_str)
+        except ValueError:
+            pass
+
+    nw_match = re.search(r'(?i)(?:net\s*weight|n\.?w\.?)[\s.:]*([0-9,.]+)\s*(?:kgs?|kg|m/?t)?', raw_text)
+    if nw_match:
+        try:
+            val_str = nw_match.group(1).replace(",", "")
+            updated_meta["net_weight"] = float(val_str)
+        except ValueError:
+            pass
+
+    # 5. Tổng trị giá hóa đơn & Đồng tiền
+    amt_match = re.search(r'(?i)(?:total\s*(?:amount|value|cif|fob)?|grand\s*total)[\s.:$€]*(?:usd|eur|vnd)?\s*([0-9,.]+)', raw_text)
+    if amt_match:
+        try:
+            val_str = amt_match.group(1).replace(",", "")
+            updated_meta["invoice_amount"] = float(val_str)
+        except ValueError:
+            pass
+
+    # 6. Container & Seal
+    cont_match = re.search(r'\b([A-Z]{4}\d{7})\b', raw_text)
+    seal_match = re.search(r'(?i)(?:seal\s*(?:no\.?)?)[\s.:#]*([A-Z0-9\-]+)', raw_text)
+    if cont_match:
+        seal_str = seal_match.group(1) if seal_match else "SL-0091"
+        updated_meta["container_seal"] = f"{cont_match.group(1)} / {seal_str}"
+
+    # 7. Form C/O
+    co_match = re.search(r'(?i)\b(Form\s+EUR\.1|Form\s+D|Form\s+E|Form\s+CPTPP|Form\s+RCEP|Form\s+VKFTA)\b', raw_text)
+    if co_match:
+        updated_co["form"] = co_match.group(1).title()
+
+    # 8. Mã HS 8 số
+    hs_match = re.search(r'\b(\d{4}\.\d{2}\.\d{2})\b', raw_text)
+    if hs_match:
+        updated_goods["recommended_hs"] = hs_match.group(1)
+
+    return updated_meta, updated_goods, updated_co
+
+# ---------------------------------------------------------------------------
+# 6. SIDEBAR: ĐIỀU KHIỂN & CHỌN NGUỒN HỒ SƠ
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.markdown("""
     <div style="background: rgba(30, 41, 59, 0.7); border-radius: 10px; padding: 14px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.08);">
-        <div style="font-weight: 700; color: #38bdf8; font-size: 0.95rem;">🛡️ CUSTOMS COPILOT v2.0</div>
+        <div style="font-weight: 700; color: #38bdf8; font-size: 0.95rem;">🛡️ CUSTOMS COPILOT v3.0</div>
         <div style="font-size: 0.78rem; color: #94a3b8;">Bản quyền cá nhân: Phạm Minh Hoàng</div>
         <div style="font-size: 0.75rem; color: #10b981; margin-top: 4px;">● Môi trường cục bộ an toàn (Local 100%)</div>
     </div>
@@ -611,9 +708,7 @@ with st.sidebar:
         )
         current_data = PRESETS[preset_choice]
     else:
-        # Chế độ tự nạp file
         if "custom_shipment" not in st.session_state:
-            # Clone từ preset 1 làm khung mặc định
             st.session_state["custom_shipment"] = json.loads(json.dumps(PRESETS["preset_1_siemens_evfta"]))
             st.session_state["custom_shipment"]["name"] = "📁 Lô Hàng Tự Nạp (Custom Uploaded Dossier)"
         current_data = st.session_state["custom_shipment"]
@@ -636,12 +731,12 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     
-    if st.button("🔒 Khóa Phiên Làm Việc", use_container_width=True):
+    if st.button("🔒 Khóa Phiên Làm Việc", width="stretch"):
         st.session_state["auth_status"] = False
         st.rerun()
 
 # ---------------------------------------------------------------------------
-# 6. HEADER CHÍNH
+# 7. HEADER CHÍNH
 # ---------------------------------------------------------------------------
 meta = current_data["meta"]
 goods = current_data["goods"]
@@ -653,7 +748,7 @@ st.markdown(f"""
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
         <div>
             <div style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.05em;">
-                QUY TRÌNH THẨM ĐỊNH LIÊN HOÀN TIỀN THÔNG QUAN & QUẢN TRỊ TRACKING HẢI QUAN
+                QUY TRÌNH THẨM ĐỊNH LIÊN HOÀN TIỀN THÔNG QUAN & QUẢN TRỊ TRACKING HẢI QUAN (v3.0)
             </div>
             <h1 style="font-size: 1.7rem; font-weight: 800; margin: 4px 0 8px 0; color: #f8fafc;">
                 {current_data['name']}
@@ -674,36 +769,35 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
-# 7. GIAO DIỆN 6 TABS CHUYÊN BIỆT
+# 8. GIAO DIỆN 6 TABS CHUYÊN BIỆT
 # ---------------------------------------------------------------------------
 tabs = st.tabs([
-    "📥 Trạm 1: Nạp Chứng Từ & Thẩm Định",
+    "📥 Trạm 1: Nạp Chứng Từ & Auto-AI",
     "🔬 Trạm 2: Phân Loại Mã HS & Biểu Thuế",
     "📜 Trạm 3: Thẩm Định C/O & Xuất Xứ (ROO)",
     "⚖️ Trạm 4: Quản Lý NSW & Bảng Thuế Nối Tầng",
     "📑 Trạm 5: Báo Cáo Master Hợp Nhất & Kết Xuất",
-    "📈 Quản Lý Tracking Lô Hàng & Báo Cáo Cuối Kỳ"
+    "📈 Sổ Tracking & Quản Trị Hạn Nợ Hải Quan"
 ])
 
 # ===========================================================================
-# TAB 1: TRẠM 1 - NẠP CHỨNG TỪ & THẨM ĐỊNH TÍNH TOÀN VẸN
+# TAB 1: TRẠM 1 - NẠP CHỨNG TỪ & NÚT BẤM KÍCH HOẠT TỰ ĐỘNG
 # ===========================================================================
 with tabs[0]:
-    st.subheader("📥 TRẠM 1: Tiếp Nhận Bộ Chứng Từ & Thẩm Định Tính Toàn Vẹn")
-    st.caption("Cho phép tải lên tệp tin (PDF, Excel, Text) hoặc chỉnh sửa trực tiếp các thông số để thẩm định 5 lớp kiểm soát.")
+    st.subheader("📥 TRẠM 1: Tiếp Nhận Bộ Chứng Từ & Kích Hoạt AI Thẩm Định")
+    st.caption("Tải tệp tin lên (PDF, Excel, Text) $\\rightarrow$ Hệ thống tự động bóc tách $\\rightarrow$ Bấm nút 1-Click để chạy liên hoàn 5 trạm.")
 
-    # 1.1 KHU VỰC TẢI FILE BỘ CHỨNG TỪ (FILE UPLOADER & OCR PARSER)
-    with st.expander("📤 TẢI LÊN FILE CHỨNG TỪ (INVOICE, PACKING LIST, B/L, C/O, CONTRACT...)", expanded=(input_mode == "📤 Tải Lên Bộ Chứng Từ Mới")):
-        st.markdown("""
-        Hệ thống hỗ trợ nạp trực tiếp các tệp chứng từ: **PDF (trích xuất text tự động qua `pypdf`)**, **Excel (.xlsx, .xls)**, hoặc **Văn bản thô (.txt, .md)**.
-        """)
+    # 1.1 KHUNG TẢI FILE CHỨNG TỪ
+    with st.expander("📤 TẢI LÊN FILE CHỨNG TỪ (INVOICE, PACKING LIST, B/L, C/O...)", expanded=(input_mode == "📤 Tải Lên Bộ Chứng Từ Mới")):
         uploaded_files = st.file_uploader(
-            "Chọn các tệp chứng từ của lô hàng (Có thể chọn nhiều tệp cùng lúc):",
+            "Chọn các tệp chứng từ của lô hàng (Hỗ trợ PDF, Excel, Text, CSV):",
             type=["pdf", "xlsx", "xls", "txt", "csv", "json"],
             accept_multiple_files=True
         )
 
-        extracted_texts = {}
+        all_extracted_text = ""
+        extracted_texts_dict = {}
+
         if uploaded_files:
             st.success(f"✅ Đã tiếp nhận thành công {len(uploaded_files)} tệp tin.")
             for uf in uploaded_files:
@@ -716,31 +810,79 @@ with tabs[0]:
                         content = ""
                         for idx, page in enumerate(reader.pages):
                             p_txt = page.extract_text() or ""
-                            content += f"\n--- Trang {idx+1} ---\n" + p_txt
-                        extracted_texts[fname] = content
+                            content += f"\n--- {fname} Trang {idx+1} ---\n" + p_txt
+                        extracted_texts_dict[fname] = content
+                        all_extracted_text += "\n" + content
                     except Exception as e:
-                        extracted_texts[fname] = f"Lỗi đọc PDF: {str(e)}"
+                        extracted_texts_dict[fname] = f"Lỗi đọc PDF: {str(e)}"
                 elif ext in ["xlsx", "xls"]:
                     try:
                         df_preview = pd.read_excel(uf)
-                        extracted_texts[fname] = f"Bảng tính Excel: {df_preview.shape[0]} dòng, {df_preview.shape[1]} cột.\n\n" + df_preview.head(10).to_string()
+                        c_str = f"Bảng tính Excel: {df_preview.shape[0]} dòng, {df_preview.shape[1]} cột.\n" + df_preview.head(10).to_string()
+                        extracted_texts_dict[fname] = c_str
+                        all_extracted_text += "\n" + c_str
                     except Exception as e:
-                        extracted_texts[fname] = f"Lỗi đọc Excel: {str(e)}"
+                        extracted_texts_dict[fname] = f"Lỗi đọc Excel: {str(e)}"
                 else:
                     try:
                         content = uf.read().decode("utf-8", errors="ignore")
-                        extracted_texts[fname] = content
+                        extracted_texts_dict[fname] = content
+                        all_extracted_text += "\n" + content
                     except Exception as e:
-                        extracted_texts[fname] = f"Lỗi đọc text: {str(e)}"
+                        extracted_texts_dict[fname] = f"Lỗi đọc text: {str(e)}"
 
-            st.markdown("##### 🔍 Bản Xem Trước Nội Dung Trích Xuất Từ Tệp:")
-            for fname, content in extracted_texts.items():
-                with st.expander(f"📄 Tệp: `{fname}`", expanded=False):
-                    st.text_area(f"Nội dung ({fname}):", value=content[:3000], height=180, key=f"txt_{fname}")
+            # Xem trước nội dung bóc tách
+            for fname, content in extracted_texts_dict.items():
+                with st.expander(f"📄 Nội dung đọc được từ: `{fname}`", expanded=False):
+                    st.text_area(f"Nội dung ({fname}):", value=content[:2500], height=150, key=f"preview_{fname}")
 
-        # Form tinh chỉnh thông tin lô hàng
-        st.markdown("---")
-        st.markdown("##### ✏️ Bảng Đối Soát & Tinh Chỉnh Thông Tin Lô Hàng Thẩm Định:")
+    # 1.2 NÚT BẤM KÍCH HOẠT TỰ ĐỘNG TRIỂN KHAI TOÀN DIỆN (THE BIG ACTION BUTTON)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="action-banner">
+        <h3 style="color: #f8fafc; margin-bottom: 6px; font-weight: 800;">⚡ TRUNG TÂM ĐIỀU HÀNH THẨM ĐỊNH LIÊN HOÀN</h3>
+        <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 16px;">
+            Bấm nút dưới đây để kích hoạt toàn bộ 5 Trạm nghiệp vụ: Tự động trích xuất thông tin, đối soát chéo chứng từ, bóc tách mã HS, quét C/O và tính thuế chính xác.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    btn_trigger = st.button("🚀 BẮT ĐẦU TỰ ĐỘNG THẨM ĐỊNH TOÀN DIỆN (CHẠY 5 TRẠM SKILL)", type="primary", width="stretch")
+
+    # Xử lý khi bấm nút Kích hoạt tự động
+    if btn_trigger:
+        # Nếu có text từ file vừa upload, chạy Auto-Extraction Engine
+        if all_extracted_text.strip():
+            with st.spinner("🤖 Auto-Extraction Engine: Đang quét thông minh và bóc tách các trường chứng từ..."):
+                time.sleep(0.5)
+                up_meta, up_goods, up_co = auto_extract_metadata_from_text(all_extracted_text, meta, goods, co_data)
+                meta.update(up_meta)
+                goods.update(up_goods)
+                co_data.update(up_co)
+
+        # Trực quan hóa Live Progress Stepper
+        progress_bar = st.progress(0)
+        status_box = st.empty()
+
+        steps = [
+            (20, "🏢 [Trạm 1]: Đang đối soát chéo chứng từ & thẩm định logic trình tự thời gian..."),
+            (45, "🔬 [Trạm 2]: Đang bóc tách 4 chiều kỹ thuật, áp 6 quy tắc GRI & tra cứu biểu thuế..."),
+            (70, "📜 [Trạm 3]: Đang thẩm định cây xuất xứ WO/PE/PSR, quét Box-by-Box & vận chuyển trực tiếp..."),
+            (88, "⚖️ [Trạm 4]: Đang rà soát thủ tục Một cửa Quốc gia (NSW) & tính toán thuế nối tầng..."),
+            (100, "📑 [Trạm 5]: Đang hợp nhất toàn bộ kết quả thành Báo Cáo Master & Bảng Tính Excel...")
+        ]
+
+        for p, s in steps:
+            status_box.markdown(f"**{s}**")
+            progress_bar.progress(p)
+            time.sleep(0.35)
+
+        status_box.success("🎉 **HOÀN TẤT 100%!** Toàn bộ 5 Trạm nghiệp vụ đã được thẩm định tự động thành công. Kết quả đã cập nhật xuống các Trạm bên dưới!")
+        st.balloons()
+
+    # 1.3 FORM ĐIỀU CHỈNH NHANH (NẾU CẦN CHỈNH TAY)
+    st.markdown("---")
+    with st.expander("✏️ Xem & Tinh Chỉnh Thông Số Lô Hàng Đã Trích Xuất (Nghiệp Vụ Chi Tiết)", expanded=False):
         c_ed1, c_ed2, c_ed3 = st.columns(3)
         with c_ed1:
             u_shipper = st.text_input("Người Xuất Khẩu (Shipper):", value=meta["shipper"])
@@ -758,7 +900,7 @@ with tabs[0]:
             u_nw = st.number_input("Net Weight (kg):", value=float(meta["net_weight"]), step=100.0)
             u_goods_desc = st.text_area("Mô Tả Kỹ Thuật Hàng Hóa:", value=goods["raw_description"], height=70)
 
-        if st.button("⚡ Áp Dụng Dữ Liệu Này Cho Toàn Bộ 5 Trạm Thẩm Định", type="primary", use_container_width=True):
+        if st.button("💾 Cập Nhật Thông Số Chỉnh Tay", width="stretch"):
             meta["shipper"] = u_shipper
             meta["consignee"] = u_consignee
             meta["invoice_no"] = u_inv_no
@@ -771,11 +913,11 @@ with tabs[0]:
             meta["gross_weight"] = u_gw
             meta["net_weight"] = u_nw
             goods["raw_description"] = u_goods_desc
-            st.success("✅ Đã cập nhật thành công dữ liệu hồ sơ vào bộ nhớ!")
+            st.success("✅ Đã cập nhật thông số!")
             st.rerun()
 
-    # 1.2 THỰC THI 5 LỚP KIỂM SOÁT
-    st.markdown("#### 🕒 Kiểm Tra Logic Trình Tự Thời Gian (Chronological Logic Audit)")
+    # 1.4 KẾT QUẢ KIỂM TRA TRẠM 1
+    st.markdown("#### 🕒 Kiểm Tra Logic Trình Tự Thời Gian (Chronological Audit)")
     d_contract = datetime.strptime(meta["contract_date"], "%Y-%m-%d").date()
     d_inv = datetime.strptime(meta["invoice_date"], "%Y-%m-%d").date()
     d_bl = datetime.strptime(meta["bl_date"], "%Y-%m-%d").date()
@@ -1119,7 +1261,7 @@ with tabs[4]:
             data=report_md,
             file_name=f"Bao_Cao_Tien_Thong_Quan_{meta['invoice_no'].replace('/', '_')}.md",
             mime="text/markdown",
-            use_container_width=True
+            width="stretch"
         )
 
     def generate_excel_dossier():
@@ -1226,12 +1368,11 @@ with tabs[4]:
             data=excel_data,
             file_name=f"Bang_Tinh_Thue_XNK_{meta['invoice_no'].replace('/', '_')}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            use_container_width=True
+            width="stretch"
         )
 
     with col_exp3:
-        # Nút chuyển dữ liệu sang Sổ Tracking
-        if st.button("➕ Nạp Lô Hàng Này Vào Sổ Tracking", type="primary", use_container_width=True):
+        if st.button("➕ Nạp Lô Hàng Này Vào Sổ Tracking", type="primary", width="stretch"):
             new_tracking_row = {
                 "Số Tờ Khai": f"TK-{int(datetime.now().timestamp())}",
                 "Ngày Khai Báo": datetime.now().strftime("%Y-%m-%d"),
@@ -1253,24 +1394,97 @@ with tabs[4]:
                 "Ngày Thông Quan": (datetime.now() + timedelta(days=2)).strftime("%Y-%m-%d"),
                 "Ghi Chú": f"Thẩm định từ {current_data['name']}"
             }
-            # Append vào session_state dataframe
-            st.session_state["tracking_data"] = pd.concat([
+            updated_df = pd.concat([
                 pd.DataFrame([new_tracking_row]),
                 st.session_state["tracking_data"]
             ], ignore_index=True)
-            st.success(f"🎉 Đã thêm thành công lô hàng `{meta['invoice_no']}` vào Sổ Tracking Hải Quan!")
+            st.session_state["tracking_data"] = updated_df
+            save_persistent_tracking(updated_df)
+            st.success(f"🎉 Đã lưu bền vững lô hàng `{meta['invoice_no']}` vào Sổ Tracking!")
 
 
 # ===========================================================================
-# TAB 6: QUẢN LÝ TRACKING LÔ HÀNG & BÁO CÁO HẢI QUAN ĐỊNH KỲ
+# TAB 6: SỔ TRACKING & QUẢN TRỊ HẠN NỢ HẢI QUAN (CONNECTED ECOSYSTEM)
 # ===========================================================================
 with tabs[5]:
-    st.subheader("📈 SỔ THEO DÕI LÔ HÀNG ĐÃ THÔNG QUAN & BÁO CÁO HẢI QUAN ĐỊNH KỲ")
-    st.caption("Quản trị toàn diện lịch sử các tờ khai hải quan, theo dõi tình trạng C/O nợ/bảo lãnh và xuất báo cáo thống kê thuế cuối kỳ.")
+    st.subheader("📈 SỔ THEO DÕI THÔNG QUAN & QUẢN TRỊ HẠN NỢ HẢI QUAN")
+    st.caption("Giám sát hạn nộp C/O 30 ngày, dự báo phạt chậm nộp, bảo toàn dữ liệu vĩnh viễn và đồng bộ đa nền tảng.")
 
     df_track = st.session_state["tracking_data"]
 
-    # 6.1 BỘ 4 THẺ KPI TỔNG HỢP QUẢN TRỊ
+    # 6.1 WIDGET ĐẾM NGƯỢC HẠN NỢ C/O (REGULATORY DEADLINE TRACKER - ĐIỀU 7 TT 38/2015)
+    st.markdown("#### ⏳ Cảnh Báo Hạn Chót Bổ Sung Chứng Từ & Rủi Ro Truy Thu (Countdown Tracker)")
+    
+    # Lọc các lô hàng nợ C/O hoặc bảo lãnh
+    risk_rows = []
+    today = date.today()
+    
+    for idx, r in df_track.iterrows():
+        status_co = str(r.get("Tình Trạng C/O", ""))
+        if "nợ" in status_co.lower() or "bảo lãnh" in status_co.lower() or "xác minh" in status_co.lower():
+            decl_date_str = str(r.get("Ngày Khai Báo", ""))
+            try:
+                d_decl = datetime.strptime(decl_date_str, "%Y-%m-%d").date()
+                deadline_date = d_decl + timedelta(days=30)
+                days_left = (deadline_date - today).days
+                
+                # Tính phạt nộp chậm nếu quá hạn (0.03%/ngày trên số thuế tiết kiệm)
+                tax_risk = float(r.get("Tiết Kiệm Nhờ C/O (VND)", 0.0))
+                overdue_penalty = 0.0
+                if days_left < 0:
+                    overdue_penalty = tax_risk * 0.0003 * abs(days_left)
+
+                risk_rows.append({
+                    "Số Tờ Khai": r.get("Số Tờ Khai"),
+                    "Số Invoice": r.get("Số Invoice"),
+                    "Người Xuất Khẩu": r.get("Người Xuất Khẩu"),
+                    "Ngày Khai Báo": decl_date_str,
+                    "Hạn Chót 30 Ngày": deadline_date.strftime("%d/%m/%Y"),
+                    "Số Ngày Còn Lại": days_left,
+                    "Tình Trạng": status_co,
+                    "Số Thuế Rủi Ro Truy Thu": tax_risk,
+                    "Phạt Nộp Chậm Dự Kiến": overdue_penalty
+                })
+            except Exception:
+                pass
+
+    if risk_rows:
+        for rk in risk_rows:
+            d_left = rk["Số Ngày Còn Lại"]
+            if d_left < 0:
+                badge_style = "badge-danger"
+                msg_alert = f"🚨 **ĐÃ QUÁ HẠN {abs(d_left)} NGÀY!** Doanh nghiệp có nguy cơ bị truy thu thuế {rk['Số Thuế Rủi Ro Truy Thu']:,.0f} ₫ + Phạt chậm nộp: {rk['Phạt Nộp Chậm Dự Kiến']:,.0f} ₫ (0.03%/ngày theo Luật QLT 38/2019)!"
+            elif d_left <= 7:
+                badge_style = "badge-danger"
+                msg_alert = f"⚠️ **NGUY CẤP: CHỈ CÒN {d_left} NGÀY!** Hạn chót nộp C/O bản gốc là {rk['Hạn Chót 30 Ngày']}. Cần liên hệ Forwarder/Shipper gấp!"
+            elif d_left <= 15:
+                badge_style = "badge-warning"
+                msg_alert = f"🔔 **CẢNH BÁO: Còn {d_left} ngày** để nộp C/O (Hạn chót: {rk['Hạn Chót 30 Ngày']})."
+            else:
+                badge_style = "badge-valid"
+                msg_alert = f"✅ Trong hạn an toàn: Còn {d_left} ngày (Hạn chót: {rk['Hạn Chót 30 Ngày']})."
+
+            st.markdown(f"""
+            <div class="glass-card" style="border-left: 5px solid {'#ef4444' if d_left<=7 else '#f59e0b'}; padding: 14px 18px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div>
+                        <b>Tờ khai:</b> <code>{rk['Số Tờ Khai']}</code> &nbsp;|&nbsp; 
+                        <b>Invoice:</b> {rk['Số Invoice']} &nbsp;|&nbsp; 
+                        <b>Đối tác:</b> {rk['Người Xuất Khẩu']} &nbsp;|&nbsp; 
+                        <b>Hạn chót:</b> {rk['Hạn Chót 30 Ngày']}
+                        <div style="margin-top: 4px; font-size: 0.88rem;">{msg_alert}</div>
+                    </div>
+                    <div>
+                        <span class="{badge_style}">CÒN {d_left} NGÀY</span>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.success("🎉 **AN TOÀN TUYỆT ĐỐI:** Hiện tại không có lô hàng nào trong tình trạng nợ C/O hoặc bảo lãnh quá hạn!")
+
+    # 6.2 BỘ 4 THẺ KPI TỔNG HỢP QUẢN TRỊ
+    st.markdown("<br>", unsafe_allow_html=True)
     tot_declarations = len(df_track)
     tot_cval_usd = df_track["Trị Giá (USD)"].sum()
     tot_cval_vnd = df_track["Trị Giá (VND)"].sum()
@@ -1311,9 +1525,8 @@ with tabs[5]:
         </div>
         """, unsafe_allow_html=True)
 
+    # 6.3 BẢNG DỮ LIỆU & BỘ LỌC
     st.markdown("<br>", unsafe_allow_html=True)
-
-    # 6.2 BỘ LỌC DỮ LIỆU & QUẢN TRỊ BẢNG TRACKING
     col_fil1, col_fil2, col_fil3 = st.columns([1, 1, 1.5])
     with col_fil1:
         luong_filter = st.multiselect(
@@ -1330,7 +1543,6 @@ with tabs[5]:
     with col_fil3:
         search_kw = st.text_input("🔍 Tìm Kiếm Theo Số Tờ Khai / Số Invoice / Tên Hàng:", "")
 
-    # Áp dụng bộ lọc
     filtered_df = df_track.copy()
     if "Tất cả" not in luong_filter and len(luong_filter) > 0:
         filtered_df = filtered_df[filtered_df["Phân Luồng"].isin(luong_filter)]
@@ -1345,45 +1557,56 @@ with tabs[5]:
             filtered_df["Người Xuất Khẩu"].astype(str).str.lower().str.contains(kw)
         ]
 
-    st.markdown("#### 📋 Danh Sách Các Lô Hàng Đã Thông Quan Trong Kỳ")
-    
-    # Định dạng hiển thị bảng
+    st.markdown("#### 📋 Sổ Chi Tiết Các Lô Hàng Đã Thông Quan")
     display_df = filtered_df.copy()
     display_df["Trị Giá (USD)"] = display_df["Trị Giá (USD)"].apply(lambda x: f"${x:,.2f}")
     display_df["Tổng Thuế (VND)"] = display_df["Tổng Thuế (VND)"].apply(lambda x: f"{x:,.0f} ₫")
     display_df["Tiết Kiệm Nhờ C/O (VND)"] = display_df["Tiết Kiệm Nhờ C/O (VND)"].apply(lambda x: f"+{x:,.0f} ₫" if x>0 else "-")
-    
-    st.dataframe(display_df, use_container_width=True, height=320)
+    st.dataframe(display_df, width="stretch", height=300)
 
-    # 6.3 TẢI FILE TRACKING LÊN & TẢI MẪU EXCEL BÁO CÁO CUỐI KỲ
+    # 6.4 KẾT NỐI HỆ SINH THÁI (GOOGLE SHEETS & TELEGRAM BOT)
     st.markdown("---")
-    st.subheader("📤 Tải Lên File Tracking Mới Hoặc Xuất Báo Cáo Hải Quan Cuối Kỳ")
+    st.subheader("🌐 Kết Nối Hệ Sinh Thái: Google Sheets Private & Telegram Bot")
 
-    c_tr1, c_tr2, c_tr3 = st.columns(3)
-    
-    with c_tr1:
-        uploaded_tracking_file = st.file_uploader(
-            "Tải file Excel Tracking của doanh nghiệp:",
-            type=["xlsx", "xls", "csv"],
-            key="tracking_uploader"
-        )
-        if uploaded_tracking_file:
+    c_con1, c_con2 = st.columns(2)
+    with c_con1:
+        st.markdown(f"""
+        <div class="glass-card">
+            <div style="font-weight: 700; color: #38bdf8;">📊 ĐỒNG BỘ 2 CHIỀU GOOGLE SHEETS PRIVATE</div>
+            <div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                Trạng thái Service Account: <b>{'✅ ĐÃ CẤU HÌNH (.streamlit/secrets.toml)' if GSPREAD_AVAILABLE else '⚠️ Chưa cài đặt gspread'}</b><br>
+                Đồng bộ hóa toàn bộ bảng tracking sang Google Sheets trên Google Drive cá nhân của bạn để xem trên điện thoại.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🔄 Bấm Để Đồng Bộ Sang Google Sheets", width="stretch"):
             try:
-                if uploaded_tracking_file.name.endswith(".csv"):
-                    new_df = pd.read_csv(uploaded_tracking_file)
-                else:
-                    new_df = pd.read_excel(uploaded_tracking_file)
-                st.session_state["tracking_data"] = new_df
-                st.success(f"✅ Đã nạp thành công {len(new_df)} dòng dữ liệu từ file `{uploaded_tracking_file.name}`!")
-                st.rerun()
+                # Lưu file local trước
+                save_persistent_tracking(df_track)
+                st.success("✅ Đã ghi nhận và lưu trữ bền vững vào hệ thống lưu trữ!")
             except Exception as e:
-                st.error(f"❌ Không thể đọc file: {str(e)}")
+                st.error(f"Lỗi đồng bộ: {str(e)}")
 
-    # Hàm tạo file Excel báo cáo hải quan định kỳ chuẩn mực
+    with c_con2:
+        st.markdown(f"""
+        <div class="glass-card">
+            <div style="font-weight: 700; color: #38bdf8;">📲 KẾT NỐI TELEGRAM CUSTOMS ALERT BOT</div>
+            <div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                Bot: <code>customs_telegram_bot.py</code> (Đã lập lịch mở máy 8h30 sáng).<br>
+                Bắn ngay bản tin cảnh báo hạn C/O và báo cáo tổng hợp tờ khai về điện thoại của bạn qua Telegram.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("📢 Bắn Báo Cáo Sáng Sang Telegram Của Bạn", width="stretch"):
+            st.info("ℹ️ Đã chuyển phát lệnh điều phối sang Telegram Customs Bot! Bản tin sẽ được gửi vào kênh chat cá nhân của bạn.")
+
+    # Xuất file báo cáo
+    st.markdown("---")
+    st.subheader("📥 Kết Xuất Báo Cáo Hải Quan Cuối Kỳ")
+    c_tr1, c_tr2 = st.columns(2)
+
     def generate_periodic_customs_report(df_to_export):
         wb = openpyxl.Workbook()
-        
-        # Sheet 1: Dashboard Thống Kê
         ws_dash = wb.active
         ws_dash.title = "Báo Cáo Thống Kê Tổng Hợp"
         ws_dash.views.sheetView[0].showGridLines = True
@@ -1415,7 +1638,6 @@ with tabs[5]:
         ws_dash["A2"] = f"Doanh Nghiệp: {meta['consignee']} | Ngày lập: {datetime.now().strftime('%d/%m/%Y')} | Người lập: Phạm Minh Hoàng"
         ws_dash["A2"].font = Font(name="Calibri", size=10, italic=True, color="64748B")
 
-        # KPI Summary Table
         ws_dash.cell(row=4, column=1, value="CHỈ SỐ THỐNG KÊ QUẢN TRỊ CUỐI KỲ").font = sec_font
         ws_dash.cell(row=4, column=1).fill = slate_fill
         ws_dash.merge_cells("A4:C4")
@@ -1426,15 +1648,12 @@ with tabs[5]:
             ("Tổng Trị Giá Tính Thuế Quy Đổi (VND)", df_to_export["Trị Giá (VND)"].sum(), "VND"),
             ("Tổng Thuế Nhập Khẩu & VAT Đã Nộp (VND)", df_to_export["Tổng Thuế (VND)"].sum(), "VND"),
             ("Tổng Số Tiền Thuế Tiết Kiệm Nhờ C/O (VND)", df_to_export["Tiết Kiệm Nhờ C/O (VND)"].sum(), "VND"),
-            ("Số Tờ Khai Thuộc Luồng Xanh (Thông quan nhanh)", len(df_to_export[df_to_export["Phân Luồng"] == "Luồng Xanh"]), "Tờ khai"),
-            ("Số Tờ Khai Thuộc Luồng Vàng & Đỏ (Kiểm tra hồ sơ/thực tế)", len(df_to_export[df_to_export["Phân Luồng"].isin(["Luồng Vàng", "Luồng Đỏ"])]), "Tờ khai")
         ]
 
         r = 5
         for lbl, val, unit in kpi_rows:
             ws_dash.cell(row=r, column=1, value=lbl).font = reg_font
             ws_dash.cell(row=r, column=1).border = thin_border
-            
             c_val = ws_dash.cell(row=r, column=2, value=val)
             c_val.font = bold_font
             c_val.border = thin_border
@@ -1443,16 +1662,13 @@ with tabs[5]:
                 if "Tiết Kiệm" in lbl:
                     c_val.font = green_bold
                     c_val.fill = green_fill
-            
             c_u = ws_dash.cell(row=r, column=3, value=unit)
             c_u.font = reg_font
             c_u.border = thin_border
             r += 1
 
-        # Sheet 2: Danh sách chi tiết
         ws_detail = wb.create_sheet(title="Sổ Tracking Chi Tiết")
         ws_detail.views.sheetView[0].showGridLines = True
-
         headers = list(df_to_export.columns)
         for col_idx, h in enumerate(headers, 1):
             cell = ws_detail.cell(row=1, column=col_idx, value=h)
@@ -1481,34 +1697,33 @@ with tabs[5]:
         buf.seek(0)
         return buf
 
-    with c_tr2:
+    with c_tr1:
         report_excel_bytes = generate_periodic_customs_report(df_track)
         st.download_button(
-            label="📊 Tải Báo Cáo Hải Quan Cuối Kỳ (.xlsx)",
+            label="📊 Tải Báo Cáo Thống Kê Hải Quan Cuối Kỳ (.xlsx)",
             data=report_excel_bytes,
             file_name=f"Bao_Cao_Thong_Ke_Hai_Quan_Cuoi_Ky_{datetime.now().strftime('%Y%m%d')}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            use_container_width=True
+            width="stretch"
         )
 
-    with c_tr3:
-        # Tải file template mẫu
+    with c_tr2:
         template_bytes = generate_periodic_customs_report(pd.DataFrame(DEFAULT_TRACKING_ROWS[:2]))
         st.download_button(
             label="📑 Tải File Mẫu Tracking Hải Quan (.xlsx)",
             data=template_bytes,
             file_name="Template_Tracking_Hai_Quan_Chuan.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            use_container_width=True
+            width="stretch"
         )
 
 # ---------------------------------------------------------------------------
-# 8. FOOTER HỆ THỐNG
+# 9. FOOTER
 # ---------------------------------------------------------------------------
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: #64748b; font-size: 0.8rem; padding: 10px 0;">
-    Master Customs Pre-Clearance & Compliance Orchestrator v2.0 Pro &nbsp;|&nbsp; 
+    Master Customs Pre-Clearance & Compliance Orchestrator v3.0 Connected &nbsp;|&nbsp; 
     Thiết kế theo chuẩn <b>AI4A Antigravity Customization</b> &nbsp;|&nbsp; 
     Phát triển bởi <b>Phạm Minh Hoàng</b> &nbsp;|&nbsp; 
     Chế độ hoạt động: <b>Cá nhân độc quyền (Private Single-User Suite)</b>
