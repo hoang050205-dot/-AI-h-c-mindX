@@ -671,29 +671,42 @@ def ocr_extract_from_pil_image(image: Image.Image, gemini_api_key: str = "") -> 
         except Exception:
             pass
 
-    # 2. Thử Windows Native OCR (winocr)
+    # 2. Thử Windows Native OCR (winocr) kèm cơ chế Tự xoay hướng (Auto-Orientation)
     if WINOCR_AVAILABLE:
         try:
-            res = winocr.recognize_pil_sync(image, 'en')
-            txt = res.get('text', '')
-            if txt and len(txt.strip()) > 10:
-                return txt, "Windows Native OCR (Offline)"
+            angles = [0, 270, 90] if image.width > image.height else [0]
+            best_txt = ""
+            for ang in angles:
+                test_img = image.rotate(ang, expand=True) if ang != 0 else image
+                res = winocr.recognize_pil_sync(test_img, 'en')
+                t = res.get('text', '')
+                if len(t) > len(best_txt):
+                    best_txt = t
+            if best_txt and len(best_txt.strip()) > 10:
+                return best_txt, "Windows Native OCR (Auto-Orientation)"
         except Exception:
             pass
 
-    # 3. Thử Tesseract OCR (pytesseract)
+    # 3. Thử Tesseract OCR (pytesseract) kèm cơ chế Tự xoay hướng
     if PYTESSERACT_AVAILABLE:
         try:
-            try:
-                txt = pytesseract.image_to_string(image, lang='vie+eng')
-            except Exception:
-                txt = pytesseract.image_to_string(image, lang='eng')
-            if txt and len(txt.strip()) > 10:
-                return txt, "Tesseract OCR Engine"
+            angles = [0, 270, 90] if image.width > image.height else [0]
+            best_txt = ""
+            for ang in angles:
+                test_img = image.rotate(ang, expand=True) if ang != 0 else image
+                try:
+                    t = pytesseract.image_to_string(test_img, lang='vie+eng')
+                except Exception:
+                    t = pytesseract.image_to_string(test_img, lang='eng')
+                if len(t) > len(best_txt):
+                    best_txt = t
+            if best_txt and len(best_txt.strip()) > 10:
+                return best_txt, "Tesseract OCR (Auto-Orientation)"
         except Exception:
             pass
 
     return "", "Chưa có OCR tương thích (Cần cài Tesseract hoặc nhập Gemini API Key)"
+
 
 
 def process_single_uploaded_file(uf, gemini_api_key: str = "") -> dict:
@@ -808,7 +821,7 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
 
     # 1. Số Hóa Đơn (Invoice No)
     inv_val = extract_with_patterns([
-        r'(?:invoice\s*(?:no|number|\#)|inv\s*no\.?)[^\w\n]*([A-Z0-9\-_/]{4,})',
+        r'(?:commercial\s*invoice|invoice\s*(?:no|number|\#)|inv\s*no\.?|packing\s*list\s*no\.?)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'(?:số\s*hóa\s*đơn|so\s*hoa\s*don|hóa\s*đơn\s*số)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'\binvoice[^\w\n]{1,10}([A-Z0-9\-_/]{4,})'
     ], raw_text)
@@ -834,7 +847,8 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
 
     # 3. Số Vận Đơn (B/L No)
     bl_val = extract_with_patterns([
-        r'(?:b/?l\s*no\.?|bill\s*of\s*lading\s*no\.?|b/?l\s*number)[^\w\n]*([A-Z0-9\-_/]{4,})',
+        r'\b(SITG[A-Z0-9]{8,})\b',
+        r'(?:b/?l\s*no\.?|bil\s*no\.?|bill\s*of\s*lading\s*no\.?|b/?l\s*number)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'(?:số\s*vận\s*đơn|so\s*van\s*don|vận\s*đơn\s*đường\s*biển\s*số)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'\b(?:b/?l|bill\s*of\s*lading)\b[^\w\n]{1,10}([A-Z0-9\-_/]{5,})'
     ], raw_text)
@@ -846,7 +860,7 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
 
     # 4. Số Hợp Đồng (Contract No)
     ct_val = extract_with_patterns([
-        r'(?:contract\s*no\.?|sales\s*contract\s*no\.?)[^\w\n]*([A-Z0-9\-_/]{4,})',
+        r'(?:contract\s*no\.?|sales\s*contract\s*no\.?|p/?o\s*no\.?)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'(?:hợp\s*đồng(?:\s+thương\s+mại)?\s*số|hop\s*dong\s*so)[^\w\n]*([A-Z0-9\-_/]{4,})',
         r'\bcontract\b[^\w\n]{1,10}([A-Z0-9\-_/]{4,})'
     ], raw_text)
@@ -860,7 +874,7 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
     gw_m = re.search(r'(?:gross\s*weight|g\.?w\.?|trọng\s*lượng\s*(?:cả\s*bì|tổng)|trong\s*luong)[^\w\n]*([0-9,.]+)\s*(?:kgs?|kg|m/?t|tấn)?', raw_text, re.IGNORECASE)
     if gw_m:
         try:
-            val_str = gw_m.group(1).replace(",", "")
+            val_str = gw_m.group(1).replace(",", "").rstrip(".")
             gw_val = float(val_str)
             updated_meta["gross_weight"] = gw_val
             detected_summary["gross_weight"] = (f"{gw_val:,.1f} kg", True)
@@ -873,7 +887,7 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
     nw_m = re.search(r'(?:net\s*weight|n\.?w\.?|trọng\s*lượng\s*tịnh|trong\s*luong\s*tinh)[^\w\n]*([0-9,.]+)\s*(?:kgs?|kg|m/?t|tấn)?', raw_text, re.IGNORECASE)
     if nw_m:
         try:
-            val_str = nw_m.group(1).replace(",", "")
+            val_str = nw_m.group(1).replace(",", "").rstrip(".")
             nw_val = float(val_str)
             updated_meta["net_weight"] = nw_val
             detected_summary["net_weight"] = (f"{nw_val:,.1f} kg", True)
@@ -883,10 +897,10 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
         detected_summary["net_weight"] = (f"{updated_meta.get('net_weight', 0):,.1f} kg", False)
 
     # 7. Tổng Trị Giá Hóa Đơn (USD)
-    amt_m = re.search(r'(?:total\s*(?:amount|value|cif|fob)?|grand\s*total|tổng\s*(?:tiền|trị\s*giá|cộng)|tong\s*tien)[^\w\n0-9$€]*(?:usd|eur|vnd)?\s*([0-9,.]+)', raw_text, re.IGNORECASE)
+    amt_m = re.search(r'(?:total\s*(?:amount|value|cif|fob|cfr)?|grand\s*total|tổng\s*(?:tiền|trị\s*giá|cộng)|tong\s*tien)[^\w\n0-9$€]*(?:usd|eur|vnd)?\s*([0-9,.]+)', raw_text, re.IGNORECASE)
     if amt_m:
         try:
-            val_str = amt_m.group(1).replace(",", "")
+            val_str = amt_m.group(1).replace(",", "").rstrip(".")
             amt_val = float(val_str)
             updated_meta["invoice_amount"] = amt_val
             detected_summary["invoice_amount"] = (f"{amt_val:,.2f} USD", True)
@@ -894,6 +908,14 @@ def auto_extract_metadata_from_text(raw_text: str, current_meta: dict, current_g
             detected_summary["invoice_amount"] = (f"{updated_meta.get('invoice_amount', 0):,.2f} USD", False)
     else:
         detected_summary["invoice_amount"] = (f"{updated_meta.get('invoice_amount', 0):,.2f} USD", False)
+
+    # Mô Tả Kỹ Thuật Hàng Hóa (Goods Description)
+    desc_m = re.search(r'(?:description|tên\s*hàng\s*(?:hóa)?)[^\w\n]*([A-Z0-9\s.,()\-\/]{5,60})', raw_text, re.IGNORECASE)
+    if desc_m:
+        d_val = desc_m.group(1).strip()
+        if len(d_val) > 4:
+            updated_goods["raw_description"] = d_val
+
 
     # 8. Container & Seal
     cont_m = re.search(r'\b([A-Z]{4}[0-9]{7})\b', raw_text)
